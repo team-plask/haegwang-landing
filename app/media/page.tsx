@@ -4,7 +4,6 @@ import { ReusableTabs, type TabDefinition } from "@/components/reusable-tabs";
 import React from "react";
 import { MediaListSection, type PostCardFromDB } from "@/sections/media-list-section";
 import { type PracticeInfo } from "@/sections/areas/practice-info-section"; // For practice area type
-import { type Database } from "@/database.types";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,11 +11,7 @@ export const metadata: Metadata = {
   description: '법무법인 해광 및 소속 변호사들의 언론 보도 내용을 확인하세요. 저희의 전문성과 활동을 다양한 미디어를 통해 소개합니다.',
 };
 
-export default async function MediaPage({
-  searchParams
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default async function MediaPage() {
   const supabase = await createClient();
 
   // 1. Fetch all practice areas for tabs

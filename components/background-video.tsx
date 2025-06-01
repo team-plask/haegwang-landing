@@ -5,11 +5,10 @@ import { cn } from "@/lib/utils";
 
 interface BackgroundVideoProps {
   videoSource: string;
-  overlayColor?: string; // Optional: if you want to control the overlay color via props
   isLoading?: boolean; // 로딩 상태 prop 추가
 }
 
-export function BackgroundVideo({ videoSource, overlayColor="brand", isLoading = false }: BackgroundVideoProps) {
+export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVideoProps) {
     return (
       <motion.div
         initial={{ opacity: 0.5 }}

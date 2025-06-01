@@ -26,16 +26,12 @@ interface PracticeAreaWithDetails extends PracticeInfo {
 
 // This type reflects the raw structure from Supabase more accurately for the lawyers part
 interface RawPracticeAreaFromSupabase extends Omit<PracticeInfo, 'key_services' | 'lawyers'> { // Omit fields that need special handling or have different structure initially
-  key_services: any; // Keep as any for now if its structure is complex and not the focus
+  key_services: string[] | null; // Fix any type - assuming it's an array of strings based on usage
   lawyers: SupabasePracticeAreaLawyer[]; // Array of objects, each with a 'lawyers' key
   posts: PostCardFromDB[];
 }
 
-export default async function AreasPage({ 
-  searchParams 
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default async function AreasPage() {
   const supabase = await createClient();
 
   const { data: practiceAreasData, error } = await supabase

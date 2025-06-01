@@ -18,11 +18,7 @@ interface RawSuccessPostFromSupabase extends Omit<PostCardFromDB, 'practice_area
   practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug">;
 }
 
-export default async function SuccessStoriesPage({
-  searchParams
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default async function SuccessStoriesPage() {
   const supabase = await createClient();
 
   // 1. Fetch all practice areas for tabs

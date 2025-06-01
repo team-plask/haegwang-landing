@@ -22,27 +22,6 @@ export type Post = {
   authors?: Author[] | null; // Add authors here
 };
 
-const Logo = ({ isLink = true }: { isLink?: boolean }) => {
-  const logoContent = (
-    <div className="font-normal flex space-x-2 items-center text-sm text-black relative z-20">
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm" />
-      <span className="font-medium text-black dark:text-white">DevStudio</span>
-    </div>
-  );
-
-  if (isLink) {
-    return (
-      <Link
-        href="/"
-        className="px-2 py-1 mr-4"
-      >
-        {logoContent}
-      </Link>
-    );
-  }
-  return <div className="px-2 py-1 mr-4">{logoContent}</div>;
-};
-
 export const PostCard = ({ post, index }: { post: Post; index: number }) => {
   const truncate = (text: string, length: number) => {
     return text.length > length ? text.slice(0, length) + "..." : text;
@@ -117,14 +96,13 @@ export const PostCard = ({ post, index }: { post: Post; index: number }) => {
 };
 
 interface IBlurImage {
-  height?: any;
-  width?: any;
-  src?: string | any;
-  objectFit?: any;
-  className?: string | any;
-  alt?: string | undefined;
-  layout?: any;
-  [x: string]: any;
+  height?: number | `${number}`;
+  width?: number | `${number}`;
+  src?: string;
+  className?: string;
+  alt?: string;
+  layout?: "fixed" | "intrinsic" | "responsive" | "fill";
+  [x: string]: unknown;
 }
 
 export const BlurImage = ({
@@ -132,7 +110,6 @@ export const BlurImage = ({
   width,
   src,
   className,
-  objectFit,
   alt,
   layout,
   ...rest
@@ -146,7 +123,7 @@ export const BlurImage = ({
         className
       )}
       onLoadingComplete={() => setLoading(false)}
-      src={src}
+      src={src || ''}
       width={width}
       height={height}
       loading="lazy"

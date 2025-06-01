@@ -1,11 +1,10 @@
 import { createClient } from '@/utils/supabase/server';
 import { LawyerProfileSection, type LawyerProfileFromDB } from '@/sections/lawyers/lawyer-profile-section';
 import { notFound } from 'next/navigation';
-import { PageHeader } from '@/components/page-header'; // Assuming a generic PageHeader might be wanted
 import { LawyerSpecSection, type LawyerSpecFromDB } from '@/sections/lawyers/lawyer-spec-section';
 import { SuccessSection, type PostCardFromDB } from '@/sections/areas/success-section';
 import type { Database } from '@/database.types'; // Import Database type
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate at most every hour
 
@@ -22,15 +21,13 @@ interface LawyerPageData extends LawyerProfileFromDB, LawyerSpecFromDB {
 }
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
+  { params }: Props,
 ): Promise<Metadata> {
-  const slug = params.slug;
+  const { slug } = await params;
   const supabase = await createClient();
 
   const { data: lawyer } = await supabase
@@ -93,13 +90,17 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     return null;
   }
 
+  // Transform practice areas from join table structure
+  // The query returns an array of { practice_areas: { area_name, slug } }
   const transformedPracticeAreas = Array.isArray(data.practice_areas) 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ? data.practice_areas.map((pa_join: any) => pa_join.practice_areas) 
     : [];
 
   let transformedSuccessStories: PostCardFromDB[] = [];
   if (data.authored_posts && Array.isArray(data.authored_posts)) {
     transformedSuccessStories = data.authored_posts
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((authoredPostEntry: any) => {
         const postData = authoredPostEntry.post;
         if (!postData || postData.post_type !== "승소사례") {
@@ -107,6 +108,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
         }
 
         const allAuthorsForThisPost = (postData.all_authors_for_post && Array.isArray(postData.all_authors_for_post)) 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ? postData.all_authors_for_post.map((authorLink: any) => ({ lawyers: authorLink.lawyers })) 
           : [];
 
@@ -124,6 +126,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   }
 
   // Exclude original 'authored_posts' and 'practice_areas' before spreading, then add transformed versions
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { authored_posts, practice_areas, ...restOfLawyerData } = data;
   
   const finalData: LawyerPageData = {
@@ -148,10 +151,10 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   return finalData;
 }
 
-export default async function LawyerProfilePage({ params }: { params: { slug: string } }) {
+export default async function LawyerProfilePage({ params }: { params: Promise<{ slug: string }> }) {
   await Promise.resolve();
 
-  const slug = params.slug;
+  const { slug } = await params;
   const lawyerData = await getLawyerBySlug(slug);
 
   if (!lawyerData) {

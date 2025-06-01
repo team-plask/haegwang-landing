@@ -24,7 +24,7 @@ function DescriptiveFeatureCard({
   if (icon && isValidElement(icon)) {
     const currentProps = icon.props as HTMLAttributes<HTMLElement>;
     const existingClassName = currentProps.className || '';
-    styledIcon = cloneElement(icon as React.ReactElement<any>, {
+    styledIcon = cloneElement(icon as React.ReactElement<HTMLAttributes<HTMLElement>>, {
       className: `${existingClassName} text-white`,
     });
   }

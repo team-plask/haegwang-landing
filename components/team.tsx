@@ -54,7 +54,7 @@ export default function Team({ members: teamData }: { members: TeamMember[] }) {
                                 <div className="flex flex-col items-center group cursor-pointer p-2 rounded-lg transition-all duration-300 hover:bg-brand/5">
                                     <div className="relative size-20 md:size-28  p-0.5 overflow-hidden">
                                         <div className="relative w-full h-full overflow-hidden">
-                                            <img 
+                                            <Image 
                                                 className="absolute inset-0 w-full h-full object-cover object-top" 
                                                 src={member.avatar as string} 
                                                 alt={member.name} 

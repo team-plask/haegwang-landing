@@ -1,4 +1,4 @@
-import { SectionHeading } from "@/components/section-heading";
+
 
 export interface TimelineItem {
   name: string;
