@@ -1,103 +1,85 @@
-import Image from "next/image";
+import { HeroSection } from "@/sections/hero-section";
+import { PracticeSection, PracticeAreas } from "@/sections/practice-section";
+import { createClient } from "@/utils/supabase/server";
+import { TeamSection, TeamMembers } from "@/sections/team-section";
+import { MediaSection, MediaProps } from "@/sections/media-section";
+import ContactSection from "@/sections/contact-section";
+import type { Metadata } from 'next';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: '법무법인 해광 - 신뢰와 전문성으로 법률문제를 해결합니다',
+  description: '풍부한 재판 및 수사 경험을 갖춘 전문가들이 송무, 기업자문, 형사, 가사, 행정 등 다양한 법률 분야에서 최상의 솔루션을 제공합니다.',
+};
+
+
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: practiceAreas, error } = await supabase
+    .from("practice_areas")
+    .select("id, area_name, introduction, slug, icon, image_url");
+
+  if (error) {
+    console.error("Error fetching practice areas:", error);
+    // 에러 처리 로직 (예: 에러 페이지 표시)
+  }
+
+  const { data: teamMembers, error: teamMembersError } = await supabase
+    .from("lawyers")
+    .select("id, name, lawyer_type, profile_picture_url, slug")
+    .order("lawyer_type", { ascending: true })
+    .neq("lawyer_type", "소속변호사");
+
+  if (teamMembersError) {
+    console.error("Error fetching team members:", teamMembersError);
+  }
+
+  const { data: rawMedia, error: mediaError } = await supabase
+    .from("posts")
+    .select("id, title, content_payload, thumbnail_url, external_link, practice_area:practice_areas(area_name), post_authors(lawyers(name, profile_picture_url))")
+    .eq("post_type", "언론보도")
+    .limit(3);
+  console.log("rawMedia Error:", mediaError);
+  console.log("rawMedia Data:", JSON.stringify(rawMedia, null, 2));
+
+  if (mediaError) {
+    console.error("Error fetching media:", mediaError);
+  }
+
+  const media = rawMedia
+    ?.map(item => {
+      let paObject = null;
+      if (Array.isArray(item.practice_area)) {
+        paObject = item.practice_area.length > 0 ? item.practice_area[0] : null;
+      } else if (item.practice_area) { // It's an object
+        paObject = item.practice_area;
+      }
+
+      if (!paObject || !paObject.area_name) { 
+        console.log("Filtering out item due to invalid practice_area object or area_name:", JSON.stringify(item.practice_area, null, 2));
+        return null;
+      }
+      return {
+        ...item,
+        practice_area: paObject, // Ensure the final object has the correctly shaped practice_area
+      };
+    })
+    .filter(item => item !== null) as MediaProps | undefined;
+
+  console.log("Processed media Data:", JSON.stringify(media, null, 2));
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="">
+      <HeroSection />
+      {practiceAreas && practiceAreas.length > 0 && (
+        <PracticeSection practiceAreas={practiceAreas as PracticeAreas} />
+      )}
+      {teamMembers && teamMembers.length > 0 && (
+        <TeamSection teamMembers={teamMembers as TeamMembers} />
+      )}
+      {media && media.length > 0 && (
+        <MediaSection media={media} />
+      )}
+      <ContactSection />
     </div>
   );
 }
