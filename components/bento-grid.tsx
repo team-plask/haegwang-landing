@@ -53,7 +53,7 @@ export const BentoGridItem = ({
           <div className="absolute inset-x-0 top-0 w-full h-[60%]">
             {header}
             {/* 추가 그라데이션 레이어로 더 부드러운 전환 */}
-            <div className="absolute inset-0 bg-gradient-to-t from-white/100 from-0% via-white/70 via-30% via-white/20 via-50% to-transparent to-100% dark:from-black/100 dark:from-0% dark:via-black/75 dark:via-30% dark:via-black/35 dark:via-60% dark:to-transparent dark:to-90%" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/100 from-10% via-white/70 via-30% via-white/0 via-40% to-transparent to-75% dark:from-black/100 dark:from-0% dark:via-black/75 dark:via-30% dark:via-black/35 dark:via-60% dark:to-transparent dark:to-90%" />
           </div>
         )}
         

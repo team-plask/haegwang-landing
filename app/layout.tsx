@@ -4,6 +4,8 @@ import "./globals.css";
 import localFont from "next/font/local";
 import HeroHeader from "@/components/header";
 import FooterSection from "@/sections/footer/footer-section";
+import { Suspense } from "react";
+import { StaffToolbar } from "@/components/staff-toolbar";
 
 const pretendard = localFont({
   src: "../public/font/PretendardVariable.woff2",
@@ -35,6 +37,9 @@ export default async function RootLayout({
         <HeroHeader />
         {children}
         <FooterSection />
+        <Suspense>
+          <StaffToolbar />
+        </Suspense>
       </body>
     </html>
   );

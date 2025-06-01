@@ -35,7 +35,7 @@ export default async function AreasPage() {
   const supabase = await createClient();
 
   // Debug: Count total practice areas
-  const { count: totalCount, error: countError } = await supabase
+  const { count: totalCount } = await supabase
     .from("practice_areas")
     .select("*", { count: 'exact', head: true });
 
