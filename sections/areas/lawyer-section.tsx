@@ -15,12 +15,13 @@ export function LawyerSection({ lawyers }: { lawyers: LawyerList[] | null | unde
         name: member.name,
         role: member.lawyer_type,
         avatar: member.profile_picture_url,
+        slug: member.slug || undefined,
       }));
       
     return (
         <section className="w-full mx-auto py-8 md:py-16">
           <div className="container mx-auto max-w-7xl px-4 md:px-8">
-            <SectionHeading title="변호사 소개" subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다." />
+            <SectionHeading title="변호사 소개" subtitle=" " />
             <Team members={mappedTeamMembers} />
           </div>
         </section>

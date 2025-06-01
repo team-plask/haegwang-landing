@@ -34,15 +34,22 @@ interface RawPracticeAreaFromSupabase extends Omit<PracticeInfo, 'key_services' 
 export default async function AreasPage() {
   const supabase = await createClient();
 
+  // Debug: Count total practice areas
+  const { count: totalCount, error: countError } = await supabase
+    .from("practice_areas")
+    .select("*", { count: 'exact', head: true });
+
+  console.log("[AreasPage] Total practice areas in database:", totalCount);
+
   const { data: practiceAreasData, error } = await supabase
     .from("practice_areas")
     .select(`
       id, area_name, introduction, icon, image_url, key_services, slug,
-      lawyers: lawyer_practice_areas!inner(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug)),
-      posts ( 
-        id, title, content_payload, external_link, post_type,
-        practice_area: practice_area_id!inner(area_name),
-        post_authors!inner(
+      lawyers: lawyer_practice_areas!left(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug)),
+      posts!left ( 
+        id, title, content_payload, external_link, post_type, slug,
+        practice_area: practice_area_id!inner(id, area_name, slug),
+        post_authors!left(
           lawyers!inner(name, profile_picture_url, id, slug)
         )
       )
@@ -53,6 +60,9 @@ export default async function AreasPage() {
     console.error("Error fetching practice areas with details:", error);
     return <div className="p-4 text-center text-red-500">업무 분야 정보를 불러오는데 실패했습니다. 상세 정보 로딩 오류.</div>;
   }
+  
+  console.log("[AreasPage] Total practice areas fetched:", practiceAreasData?.length);
+  console.log("[AreasPage] Practice areas:", practiceAreasData?.map(pa => ({ id: pa.id, name: pa.area_name, slug: pa.slug })));
   
   // 타입 단언을 사용하여 Supabase 응답을 우리가 정의한 타입으로 간주합니다.
   // 실제 데이터 구조와 타입이 일치하는지 주의해야 합니다.
@@ -113,7 +123,8 @@ export default async function AreasPage() {
         tabs={tabDefinitions}
         components={tabComponents}
         queryParamName={queryParamName}
-        defaultTabId={defaultInitialTabId} 
+        defaultTabId={defaultInitialTabId}
+        layout="grid"
       />
     </>
   );

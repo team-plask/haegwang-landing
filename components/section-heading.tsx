@@ -6,6 +6,8 @@ export const SectionHeading = ({ title, subtitle }: { title: string, subtitle: s
             <h2 className="relative text-brand text-xl md:text-3xl tracking-tighter lg:max-w-xl font-bold text-left w-fit">
                 {title}
                 <Image 
+                    width={16}
+                    height={16}
                     src="/logo/logo_symbol.png" 
                     alt="Logo Symbol"
                     className="absolute top-0 right-0 h-3 w-3 md:h-4 md:w-4 -mt-3 -mr-5" // Adjust size and position as needed

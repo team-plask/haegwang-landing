@@ -61,19 +61,21 @@ export async function generateMetadata(
 
 async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   const supabase = await createClient();
+  console.log('[getLawyerBySlug] Fetching lawyer with slug:', slug);
+  
   const { data, error } = await supabase
     .from('lawyers')
     .select(`
       id, name, lawyer_type, profile_picture_url, slug,
       phone_number, fax_number, email, introduction,
       education, experience, awards_publications,
-      practice_areas:lawyer_practice_areas!inner(
+      practice_areas:lawyer_practice_areas!left(
         practice_areas!inner(area_name, slug)
       ),
-      authored_posts:post_authors!inner(
+      authored_posts:post_authors!left(
         post:posts!inner(
-          id, title, content_payload, external_link, post_type,
-          practice_area:practice_area_id!inner(id, area_name, slug),
+          id, title, content_payload, external_link, post_type, slug,
+          practice_area:practice_area_id!left(id, area_name, slug),
           all_authors_for_post:post_authors!inner(
             lawyers!inner(name, profile_picture_url, id, slug)
           )
@@ -84,21 +86,27 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     .maybeSingle();
 
   if (error) {
+    console.error('[getLawyerBySlug] Supabase error:', error);
     return null;
   }
   if (!data) {
+    console.log('[getLawyerBySlug] No data found for slug:', slug);
     return null;
   }
 
+  console.log('[getLawyerBySlug] Found lawyer:', data.name);
+  console.log('[getLawyerBySlug] Practice areas count:', data.practice_areas?.length || 0);
+  console.log('[getLawyerBySlug] Authored posts count:', data.authored_posts?.length || 0);
+
   // Transform practice areas from join table structure
   // The query returns an array of { practice_areas: { area_name, slug } }
-  const transformedPracticeAreas = Array.isArray(data.practice_areas) 
+  const transformedPracticeAreas = Array.isArray(data.practice_areas) && data.practice_areas.length > 0
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ? data.practice_areas.map((pa_join: any) => pa_join.practice_areas) 
+    ? data.practice_areas.map((pa_join: any) => pa_join.practice_areas).filter(pa => pa) // Filter out any null/undefined
     : [];
 
   let transformedSuccessStories: PostCardFromDB[] = [];
-  if (data.authored_posts && Array.isArray(data.authored_posts)) {
+  if (data.authored_posts && Array.isArray(data.authored_posts) && data.authored_posts.length > 0) {
     transformedSuccessStories = data.authored_posts
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((authoredPostEntry: any) => {
@@ -117,6 +125,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
           title: postData.title,
           content_payload: postData.content_payload,
           external_link: postData.external_link,
+          slug: postData.slug,
           post_type: postData.post_type as Database["public"]["Enums"]["post_type_enum"],
           practice_area: postData.practice_area,
           post_authors: allAuthorsForThisPost,

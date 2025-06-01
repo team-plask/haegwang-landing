@@ -13,6 +13,7 @@ export function TeamSection({ teamMembers }: { teamMembers: TeamMembers }) {
     name: member.name,
     role: member.lawyer_type,
     avatar: member.profile_picture_url,
+    slug: member.slug || undefined,
   }));
   return (
     <section className="w-full mx-auto py-12 md:py-32">

@@ -73,15 +73,7 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
             </div>
           )}
         </div>
-      </div>
-      <div className="fixed bottom-8 right-8 space-y-3 z-20">
-        <button className="bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
-          <Mail size={24} className="text-[#0A204E]" />
-        </button>
-        <button className="bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
-          <span className="text-xs font-bold text-[#0A204E]">Blog</span>
-        </button>
-      </div>
+        </div>
     </section>
   );
 };

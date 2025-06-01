@@ -31,7 +31,7 @@ export default async function SuccessStoriesPage() {
   const { data: allSuccessPostsData, error: postsError } = await supabase
     .from("posts")
     .select(`
-      id, title, content_payload, external_link, post_type,
+      id, title, content_payload, external_link, post_type, slug,
       practice_area: practice_area_id!inner(id, area_name, slug),
       post_authors!inner(
         lawyers!inner(name, profile_picture_url, id, slug)
@@ -130,6 +130,7 @@ export default async function SuccessStoriesPage() {
           components={tabComponents}
           queryParamName={queryParamName}
           defaultTabId={defaultInitialTabId}
+          layout="grid"
         />
       ) : (
          <div className="p-4 text-center">등록된 업무사례가 없습니다.</div>

@@ -4,7 +4,7 @@ import { Heading } from "@/components/heading";
 
 export type PostCardFromDB = Pick<
   Database["public"]["Tables"]["posts"]["Row"],
-  "id" | "title" | "content_payload" | "thumbnail_url" | "external_link"
+  "id" | "title" | "content_payload" | "thumbnail_url" | "external_link" | "slug" | "post_type"
 > & {
   practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "area_name" | "slug"> | null;
 };
@@ -31,12 +31,19 @@ export function MediaSection({ media }: { media: MediaProps }) {
       description = dbPost.content_payload;
     }
 
+    // Media posts usually have external links, but check just in case
+    const isExternalLink = !!dbPost.external_link;
+    const displaySlug = isExternalLink 
+      ? (dbPost.external_link || "#")
+      : dbPost.slug ? `/media/${dbPost.slug}` : "#";
+
     return {
       title: dbPost.title,
-      display_slug: dbPost.external_link || "#",
+      display_slug: displaySlug,
       display_image: dbPost.thumbnail_url,
       display_description: description,
       practice_area_name: dbPost.practice_area?.area_name || null,
+      is_external_link: isExternalLink,
     };
   };
 
