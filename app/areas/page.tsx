@@ -34,11 +34,6 @@ interface RawPracticeAreaFromSupabase extends Omit<PracticeInfo, 'key_services' 
 export default async function AreasPage() {
   const supabase = await createClient();
 
-  // Debug: Count total practice areas
-  const { count: totalCount } = await supabase
-    .from("practice_areas")
-    .select("*", { count: 'exact', head: true });
-
   const { data: practiceAreasData, error } = await supabase
     .from("practice_areas")
     .select(`
