@@ -23,7 +23,7 @@ export default function VerticalTabs({ tabs, contents, defaultValue }: VerticalT
       orientation="vertical"
       className="w-full flex flex-row py-3 md:py-6"
     >
-      <TabsList className="flex-col rounded-none border-l bg-transparent p-0 w-60 flex-shrink-0">
+      <TabsList className="flex-col justify-start h-fit rounded-none border-l bg-transparent p-0 w-60 flex-shrink-0">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}

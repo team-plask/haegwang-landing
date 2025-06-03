@@ -39,8 +39,6 @@ export default async function AreasPage() {
     .from("practice_areas")
     .select("*", { count: 'exact', head: true });
 
-  console.log("[AreasPage] Total practice areas in database:", totalCount);
-
   const { data: practiceAreasData, error } = await supabase
     .from("practice_areas")
     .select(`
@@ -54,15 +52,12 @@ export default async function AreasPage() {
         )
       )
     `)
-    .order("id", { ascending: true });
+    .order("display_order", { ascending: true });
 
   if (error) {
     console.error("Error fetching practice areas with details:", error);
     return <div className="p-4 text-center text-red-500">업무 분야 정보를 불러오는데 실패했습니다. 상세 정보 로딩 오류.</div>;
   }
-  
-  console.log("[AreasPage] Total practice areas fetched:", practiceAreasData?.length);
-  console.log("[AreasPage] Practice areas:", practiceAreasData?.map(pa => ({ id: pa.id, name: pa.area_name, slug: pa.slug })));
   
   // 타입 단언을 사용하여 Supabase 응답을 우리가 정의한 타입으로 간주합니다.
   // 실제 데이터 구조와 타입이 일치하는지 주의해야 합니다.

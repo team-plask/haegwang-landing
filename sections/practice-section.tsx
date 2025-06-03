@@ -24,9 +24,8 @@ export function PracticeSection({ practiceAreas }: { practiceAreas: PracticeArea
             <Image
               src="/logo/Asset 3.png"
               alt=""
-              layout="fill"
-              objectFit="contain"
-              className="filter brightness-0 invert"
+              fill
+              className="filter brightness-0 invert object-contain"
             />
           </div>
         </InView>
@@ -46,8 +45,8 @@ export function PracticeSection({ practiceAreas }: { practiceAreas: PracticeArea
                           <Image
                           src={area.image_url}
                           alt={area.area_name}
-                          layout="fill"
-                          objectFit="cover"
+                          fill
+                          className="object-cover"
                           />
                       </div>
                       ) : undefined

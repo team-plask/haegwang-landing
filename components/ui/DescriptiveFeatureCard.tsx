@@ -60,9 +60,8 @@ function DescriptiveFeatureCard({
             <Image
               src={imageUrl}
               alt={imageAlt}
-              layout="fill"
-              objectFit="cover"
-              className="bg-muted" // Add bg-muted as a fallback
+              fill
+              className="bg-muted object-cover"
             />
           </div>
         </div>

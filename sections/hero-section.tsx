@@ -23,10 +23,9 @@ export function HeroSection() {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search submitted:", searchValue);
-    // 검색 로직 구현
+    // TODO: 검색 기능 구현
   };
 
   return (
@@ -78,7 +77,7 @@ export function HeroSection() {
                 "예: 기업 법률 자문"
               ]} 
               onChange={handleSearchChange} 
-              onSubmit={handleSearchSubmit} 
+              onSubmit={handleSubmit} 
             />
           </motion.div>
       </div>

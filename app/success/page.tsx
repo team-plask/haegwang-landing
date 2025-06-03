@@ -58,12 +58,11 @@ export default async function SuccessStoriesPage() {
       ...rawPost,
       practice_area: rawPost.practice_area, 
     };
-  }).filter(post => { // This filter should ideally not remove anything if data is consistent
-    const hasPracticeArea = post.practice_area !== undefined && post.practice_area !== null;
-    if (!hasPracticeArea) {
-      console.log("Filtering out post due to undefined/null practice_area:", post.id, post.title);
+  }).filter((post: PostCardFromDB) => {
+    if (!post.practice_area || !post.practice_area.area_name) {
+      return false;
     }
-    return hasPracticeArea;
+    return true;
   });
  
   if (practiceAreas.length === 0) {

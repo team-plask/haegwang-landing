@@ -186,6 +186,7 @@ export type Database = {
         Row: {
           area_name: string
           created_at: string | null
+          display_order: number | null
           icon: string | null
           id: string
           image_url: string | null
@@ -197,6 +198,7 @@ export type Database = {
         Insert: {
           area_name: string
           created_at?: string | null
+          display_order?: number | null
           icon?: string | null
           id?: string
           image_url?: string | null
@@ -208,6 +210,7 @@ export type Database = {
         Update: {
           area_name?: string
           created_at?: string | null
+          display_order?: number | null
           icon?: string | null
           id?: string
           image_url?: string | null

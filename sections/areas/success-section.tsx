@@ -16,12 +16,8 @@ export type PostCardFromDB = Pick<
 export type SuccessProps = PostCardFromDB[];
 
 export function SuccessSection({ success }: { success: SuccessProps }) {
-  console.log("[SuccessSection] Received success props:", JSON.stringify(success, null, 2));
 
   const transformPostData = (dbPost: PostCardFromDB): Post => {
-    console.log("[SuccessSection] Transforming dbPost:", JSON.stringify(dbPost, null, 2));
-    console.log("[SuccessSection] dbPost.slug:", dbPost.slug);
-    console.log("[SuccessSection] dbPost.external_link:", dbPost.external_link);
     
     const authors: Author[] = dbPost.post_authors.map(pa => ({
       name: pa.lawyers.name,
@@ -55,9 +51,6 @@ export function SuccessSection({ success }: { success: SuccessProps }) {
       ? (dbPost.external_link || "#")
       : dbPost.slug ? `/success/${dbPost.slug}` : "#";
 
-    console.log("[SuccessSection] Generated displaySlug:", displaySlug);
-    console.log("[SuccessSection] isExternalLink:", isExternalLink);
-
     const transformed = {
       title: dbPost.title,
       display_slug: displaySlug,
@@ -67,12 +60,10 @@ export function SuccessSection({ success }: { success: SuccessProps }) {
       authors: authors,
       is_external_link: isExternalLink,
     };
-    console.log("[SuccessSection] Transformed post data:", JSON.stringify(transformed, null, 2));
     return transformed;
   };
 
   if (!success || success.length === 0) {
-    console.log("[SuccessSection] No success stories to display or success array is empty.");
     return null; // Or some placeholder indicating no data
   }
 

@@ -16,7 +16,8 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: practiceAreas, error } = await supabase
     .from("practice_areas")
-    .select("id, area_name, introduction, slug, icon, image_url");
+    .select("id, area_name, introduction, slug, icon, image_url")
+    .order("display_order", { ascending: true });
 
   if (error) {
     console.error("Error fetching practice areas:", error);
@@ -38,8 +39,6 @@ export default async function Home() {
     .select("id, title, content_payload, thumbnail_url, external_link, practice_area:practice_areas(area_name), post_authors(lawyers(name, profile_picture_url))")
     .eq("post_type", "언론보도")
     .limit(3);
-  console.log("rawMedia Error:", mediaError);
-  console.log("rawMedia Data:", JSON.stringify(rawMedia, null, 2));
 
   if (mediaError) {
     console.error("Error fetching media:", mediaError);
@@ -55,7 +54,6 @@ export default async function Home() {
       }
 
       if (!paObject || !paObject.area_name) { 
-        console.log("Filtering out item due to invalid practice_area object or area_name:", JSON.stringify(item.practice_area, null, 2));
         return null;
       }
       return {
@@ -64,8 +62,6 @@ export default async function Home() {
       };
     })
     .filter(item => item !== null) as MediaProps | undefined;
-
-  console.log("Processed media Data:", JSON.stringify(media, null, 2));
 
   return (
     <div className="">

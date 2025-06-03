@@ -38,12 +38,11 @@ export default async function MediaPage() {
   const allMediaPosts = (allMediaPostsData as unknown as PostCardFromDB[]) || [];
 
   // Filter out posts without practice area
-  const filteredMediaPosts = allMediaPosts.filter(post => {
-    const hasPracticeArea = post.practice_area !== undefined && post.practice_area !== null;
-    if (!hasPracticeArea) {
-      console.log("Filtering out post due to undefined/null practice_area:", post.id, post.title);
+  const filteredMediaPosts = allMediaPosts.filter((post: PostCardFromDB) => {
+    if (!post.practice_area || !post.practice_area.area_name) {
+      return false;
     }
-    return hasPracticeArea;
+    return true;
   });
  
   if (practiceAreas.length === 0) {

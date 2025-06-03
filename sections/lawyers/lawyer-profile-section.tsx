@@ -1,8 +1,6 @@
 import { Database } from "@/database.types";
-import { Background } from "@/components/grid-background";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, Printer, Download } from "lucide-react";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
@@ -53,7 +51,7 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
                 <div className="flex items-center gap-3">
                   <span className="font-semibold w-16">E-mail</span>
                   <a href={`mailto:${email}`} className="hover:text-blue-300 transition-colors">
-                    {email}
+                    {email.toLowerCase()}
                   </a>
                 </div>
               )}

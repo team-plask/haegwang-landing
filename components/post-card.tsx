@@ -123,7 +123,6 @@ interface IBlurImage {
   src?: string;
   className?: string;
   alt?: string;
-  layout?: "fixed" | "intrinsic" | "responsive" | "fill";
   [x: string]: unknown;
 }
 
@@ -133,7 +132,6 @@ export const BlurImage = ({
   src,
   className,
   alt,
-  layout,
   ...rest
 }: IBlurImage) => {
   const [isLoading, setLoading] = useState(true);
@@ -144,14 +142,13 @@ export const BlurImage = ({
         isLoading ? "blur-sm scale-105" : "blur-0 scale-100",
         className
       )}
-      onLoadingComplete={() => setLoading(false)}
+      onLoad={() => setLoading(false)}
       src={src || ''}
       width={width}
       height={height}
       loading="lazy"
       decoding="async"
       blurDataURL={src}
-      layout={layout}
       alt={alt ? alt : "Avatar"}
       {...rest}
     />

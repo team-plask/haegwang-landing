@@ -35,7 +35,7 @@ export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVi
         <motion.div
           className="absolute inset-0 h-full w-full"
           style={{
-            background: `linear-gradient(to bottom, transparent 10%, var(--color-brand) 100%)`,
+            background: `linear-gradient(to bottom, transparent 100%, var(--color-brand) 100%)`,
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoading ? 0 : 1 }}

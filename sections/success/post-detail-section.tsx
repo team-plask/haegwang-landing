@@ -31,7 +31,6 @@ interface PostDetailSectionProps {
 }
 
 export default function PostDetailSection({ post, authors }: PostDetailSectionProps) {
-  console.log("[PostDetailSection] post.content_payload:", post.content_payload);
   
   // Transform post data to BlogInfoProps
   const blogInfo: BlogInfoProps = {
@@ -50,9 +49,6 @@ export default function PostDetailSection({ post, authors }: PostDetailSectionPr
   
   if (post.post_type === "승소사례") {
     const successContent = contentPayload as SuccessContentPayload;
-    console.log("[PostDetailSection] successContent:", successContent);
-    console.log("[PostDetailSection] main_markdown_content:", successContent?.main_markdown_content);
-    console.log("[PostDetailSection] case_overview_markdown:", successContent?.case_overview_markdown);
     
     parsedContent = {
       post_type: "업무사례", // Map 승소사례 to 업무사례 for component compatibility
@@ -60,7 +56,6 @@ export default function PostDetailSection({ post, authors }: PostDetailSectionPr
       main_markdown_content: successContent?.main_markdown_content || successContent?.case_overview_markdown || undefined
     };
     
-    console.log("[PostDetailSection] parsedContent:", parsedContent);
   } else if (post.post_type === "법인소식") {
     const newsContent = contentPayload as NewsOrBlogContentPayload;
     parsedContent = {

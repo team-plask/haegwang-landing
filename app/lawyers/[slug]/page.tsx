@@ -61,7 +61,6 @@ export async function generateMetadata(
 
 async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   const supabase = await createClient();
-  console.log('[getLawyerBySlug] Fetching lawyer with slug:', slug);
   
   const { data, error } = await supabase
     .from('lawyers')
@@ -90,13 +89,8 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     return null;
   }
   if (!data) {
-    console.log('[getLawyerBySlug] No data found for slug:', slug);
     return null;
   }
-
-  console.log('[getLawyerBySlug] Found lawyer:', data.name);
-  console.log('[getLawyerBySlug] Practice areas count:', data.practice_areas?.length || 0);
-  console.log('[getLawyerBySlug] Authored posts count:', data.authored_posts?.length || 0);
 
   // Transform practice areas from join table structure
   // The query returns an array of { practice_areas: { area_name, slug } }

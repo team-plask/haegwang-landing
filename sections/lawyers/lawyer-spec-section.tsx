@@ -10,22 +10,13 @@ export type LawyerSpecFromDB = Pick<
 export type LawyerSpecs = LawyerSpecFromDB[];
 
 // Define interfaces for the specific JSON structures
-interface EducationEntry {
-  major?: string | null;
-  degree: string;
-  school?: string | null;
-  graduation_year: string;
-}
-
-interface ExperienceEntry {
-  end_date: string;
-  position: string;
-  start_date: string;
-  organization: string;
+interface SimpleEntry {
+  title: string;
+  description?: string;
 }
 
 interface AwardPublicationEntry {
-  type: "award" | "book" | "article"; // Assuming 'article' could be a type
+  type: "award" | "book" | "article";
   year: string;
   title: string;
   issuer_or_publisher: string;
@@ -34,12 +25,15 @@ interface AwardPublicationEntry {
 // Helper functions to format the data
 const formatEducation = (data: Json | undefined | null): React.ReactNode => {
   if (!data || !Array.isArray(data)) return <p className="text-muted-foreground px-4 py-3 text-xs">학력 정보 없음</p>;
-  const entries = data as unknown as EducationEntry[];
+  const entries = data as unknown as SimpleEntry[];
   return (
     <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
       {entries.map((entry, index) => (
         <li key={index}>
-          {entry.school || "학교 정보 없음"}{entry.major ? ` ${entry.major}` : ""} - {entry.degree} ({entry.graduation_year})
+          {entry.title}
+          {entry.description && entry.description.trim() && (
+            <span className="text-sm text-gray-600"> - {entry.description}</span>
+          )}
         </li>
       ))}
     </ul>
@@ -48,12 +42,15 @@ const formatEducation = (data: Json | undefined | null): React.ReactNode => {
 
 const formatExperience = (data: Json | undefined | null): React.ReactNode => {
   if (!data || !Array.isArray(data)) return <p className="text-muted-foreground px-4 py-3 text-xs">경력 정보 없음</p>;
-  const entries = data as unknown as ExperienceEntry[];
+  const entries = data as unknown as SimpleEntry[];
   return (
     <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
       {entries.map((entry, index) => (
         <li key={index}>
-          {entry.organization}: {entry.position} ({entry.start_date} ~ {entry.end_date})
+          {entry.title}
+          {entry.description && entry.description.trim() && (
+            <span className="text-sm text-gray-600"> - {entry.description}</span>
+          )}
         </li>
       ))}
     </ul>
@@ -62,16 +59,42 @@ const formatExperience = (data: Json | undefined | null): React.ReactNode => {
 
 const formatAwardsPublications = (data: Json | undefined | null): React.ReactNode => {
   if (!data || !Array.isArray(data)) return <p className="text-muted-foreground px-4 py-3 text-xs">수상/저서 정보 없음</p>;
-  const entries = data as unknown as AwardPublicationEntry[];
-  return (
-    <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
-      {entries.map((entry, index) => (
-        <li key={index}>
-          <strong>{entry.type === "award" ? "수상" : entry.type === "book" ? "저서" : "논문/활동"}:</strong> {entry.title} ({entry.issuer_or_publisher}, {entry.year})
-        </li>
-      ))}
-    </ul>
-  );
+  
+  // Check if the data follows the new SimpleEntry format or the old AwardPublicationEntry format
+  const firstEntry = data[0];
+  const isSimpleFormat = firstEntry && 
+    typeof firstEntry === 'object' && 
+    firstEntry !== null &&
+    'title' in firstEntry && 
+    !('type' in firstEntry);
+  
+  if (isSimpleFormat) {
+    const entries = data as unknown as SimpleEntry[];
+    return (
+      <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
+        {entries.map((entry, index) => (
+          <li key={index}>
+            {entry.title}
+            {entry.description && entry.description.trim() && (
+              <span className="text-sm text-gray-600"> - {entry.description}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  } else {
+    // Handle old format for backward compatibility
+    const entries = data as unknown as AwardPublicationEntry[];
+    return (
+      <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
+        {entries.map((entry, index) => (
+          <li key={index}>
+            <strong>{entry.type === "award" ? "수상" : entry.type === "book" ? "저서" : "논문/활동"}:</strong> {entry.title} ({entry.issuer_or_publisher}, {entry.year})
+          </li>
+        ))}
+      </ul>
+    );
+  }
 };
 
 export function LawyerSpecSection({ lawyerSpecs }: { lawyerSpecs: LawyerSpecs }) {
