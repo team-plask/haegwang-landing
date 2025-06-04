@@ -31,7 +31,7 @@ export function HeroSection() {
   return (
     <section className="relative h-screen w-full bg-brand">
       <BackgroundVideo 
-        videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/4.mp4"
+        videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/8.mp4"
         isLoading={isLoading}
       />
       <div className="relative flex flex-col items-center justify-center z-10 h-full w-full">   
