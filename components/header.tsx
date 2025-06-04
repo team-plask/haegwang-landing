@@ -73,10 +73,10 @@ export default function HeroHeader() {
             업무분야
           </Link>
           <Link href="/success" className="text-md/6 font-semibold text-brand">
-            성공사례
+            업무사례
           </Link>
           <Link href="/media" className="text-md/6 font-semibold text-brand">
-            법률소식
+            언론보도
           </Link>
         </div>
       </nav>

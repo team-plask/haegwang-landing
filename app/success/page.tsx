@@ -13,9 +13,13 @@ export const metadata: Metadata = {
 };
 
 // Interface for the raw post structure from Supabase, where practice_area might be an array
-interface RawSuccessPostFromSupabase extends Omit<PostCardFromDB, 'practice_area'> {
-  // practice_area should be a single object as per the !inner join, not an array
-  practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug">;
+interface RawSuccessPostFromSupabase extends Omit<PostCardFromDB, 'practice_area' | 'post_authors'> {
+  // practice_area might be null when using !left join
+  practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug"> | null;
+  // post_authors might be null or empty when using !left join
+  post_authors: {
+    lawyers: Pick<Database["public"]["Tables"]["lawyers"]["Row"], "name" | "profile_picture_url" | "id" | "slug"> | null;
+  }[] | null;
 }
 
 export default async function SuccessStoriesPage() {
@@ -32,9 +36,9 @@ export default async function SuccessStoriesPage() {
     .from("posts")
     .select(`
       id, title, content_payload, external_link, post_type, slug,
-      practice_area: practice_area_id!inner(id, area_name, slug),
-      post_authors!inner(
-        lawyers!inner(name, profile_picture_url, id, slug)
+      practice_area: practice_area_id!left(id, area_name, slug),
+      post_authors!left(
+        lawyers!left(name, profile_picture_url, id, slug)
       )
     `)
     .eq("post_type", "승소사례") // Filter for success stories
@@ -44,26 +48,26 @@ export default async function SuccessStoriesPage() {
     return <div className="p-4 text-center text-red-500">데이터를 불러오는데 실패했습니다. (상세 내용은 서버 콘솔 확인)</div>;
   }
 
-
   const practiceAreas = (practiceAreasData as PracticeInfo[]) || [];
   // Cast to the raw type first
   const rawSuccessPosts = (allSuccessPostsData as unknown as RawSuccessPostFromSupabase[]) || [];
-
-
+  
   // Transform raw posts to match PostCardFromDB
-  const allSuccessPosts: PostCardFromDB[] = rawSuccessPosts.map(rawPost => {
-    // Since !inner join guarantees practice_area exists and is an object, direct assignment is fine.
-    // The RawSuccessPostFromSupabase type now reflects this.
-    return {
-      ...rawPost,
-      practice_area: rawPost.practice_area, 
-    };
-  }).filter((post: PostCardFromDB) => {
-    if (!post.practice_area || !post.practice_area.area_name) {
-      return false;
-    }
-    return true;
-  });
+  const allSuccessPosts: PostCardFromDB[] = rawSuccessPosts
+    .filter(rawPost => rawPost.practice_area !== null) // Only filter out posts that truly have no practice area
+    .map(rawPost => {
+      // Since we're using !left join, practice_area might be null
+      // Also handle post_authors that might have null lawyers
+      const validPostAuthors = (rawPost.post_authors || [])
+        .filter(pa => pa.lawyers !== null)
+        .map(pa => ({ lawyers: pa.lawyers! }));
+      
+      return {
+        ...rawPost,
+        practice_area: rawPost.practice_area!, // We know it's not null from the filter above
+        post_authors: validPostAuthors // Filtered array with non-null lawyers
+      };
+    });
  
   if (practiceAreas.length === 0) {
     return (

@@ -18,7 +18,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
 
   return (
-    <section className="bg-brand relative w-full py-14 sm:py-18 lg:py-28 lg:mt-20">
+    <section className="bg-brand relative w-full py-14 sm:py-18 lg:py-28 mt-20">
       <div className="absolute inset-0 z-0">
         <Background />
       </div>

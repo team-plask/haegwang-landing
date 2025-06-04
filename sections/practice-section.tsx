@@ -52,7 +52,7 @@ export function PracticeSection({ practiceAreas }: { practiceAreas: PracticeArea
                       ) : undefined
                   }
                   icon={<IconComponent name={area.icon} className="w-4 h-4 text-neutral-500" />}
-                  slug={area.slug ?? undefined}
+                  slug={`/areas?slug=${area.slug}`}
                   />
               ))}
               </BentoGrid>
