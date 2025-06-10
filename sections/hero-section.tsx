@@ -2,14 +2,15 @@
 import { useState, useEffect } from 'react'
 import { BackgroundVideo } from "@/components/background-video";
 import { TextBorderEffect } from "@/components/text-border-effect";
-import HeroBadge from "@/components/ui/hero-badge";
 import { Searchbar } from "@/components/searchbar";
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 export function HeroSection() {
   const [isLoading, setIsLoading] = useState(true)
   const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,13 +26,15 @@ export function HeroSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 검색 기능 구현
+    if (searchValue.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+    }
   };
 
   return (
     <section className="relative h-screen w-full bg-brand">
       <BackgroundVideo 
-        videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/8.mp4"
+        videoSource="/1.mp4"
         isLoading={isLoading}
       />
       <div className="relative flex flex-col items-center justify-center z-10 h-full w-full">   
@@ -39,9 +42,9 @@ export function HeroSection() {
             " sm:flex sm:justify-center transition-all duration-1000 ease-out transform delay-500",
             isLoading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
           )}>
-              <div className="relative rounded-full px-3 py-1 text-xs md:text-sm/6 text-white/40 ring-1 ring-white/30 hover:ring-white/80 bg-brand/10">
+              <div className="relative rounded-full px-3 py-1 text-xs md:text-sm/6 text-brand/60 ring-1 ring-brand/40 hover:ring-white/80 bg-white/40">
                   검사장 출신들로 이루어진 전문가 팀{' '}
-                <a href="#" className="font-semibold text-white">
+                <a href="#" className="font-semibold text-brand">
                   <span aria-hidden="true" className="absolute inset-0" />
                   변호사 보러가기 <span aria-hidden="true">&rarr;</span>
                 </a>

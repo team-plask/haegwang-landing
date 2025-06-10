@@ -16,6 +16,9 @@ import {
   Recycle,
   Library,
   HelpCircle,
+  MapPin,
+  Globe,
+  Anchor,
   type LucideIcon 
 } from "lucide-react";
 
@@ -38,6 +41,9 @@ const iconMap: Record<string, LucideIcon> = {
   Recycle,
   Library,
   HelpCircle,
+  MapPin,
+  Globe,
+  Anchor,
 };
 
 export const IconComponent = ({ name, className }: { name: string | null; className?: string }) => {

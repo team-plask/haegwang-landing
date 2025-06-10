@@ -78,6 +78,9 @@ export default function HeroHeader() {
           <Link href="/media" className="text-md/6 font-semibold text-brand">
             언론보도
           </Link>
+          <Link href="/contact" className="text-md/6 font-semibold text-brand">
+            오시는 길
+          </Link>
         </div>
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">

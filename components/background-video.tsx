@@ -23,8 +23,8 @@ export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVi
           playsInline
           className={cn(
             "h-full w-full object-cover transition-opacity duration-500 ease-in-out",
-            isLoading ? "opacity-100" : "opacity-80",
-            "[mask-image:linear-gradient(to_bottom,white_80%,transparent)] dark:[mask-image:radial-gradient(circle_at_center,white,transparent),linear-gradient(to_bottom,white_80%,transparent)]"
+            isLoading ? "opacity-100" : "opacity-100",
+
           )}
         >
           <source
