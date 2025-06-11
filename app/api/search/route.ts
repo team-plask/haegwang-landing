@@ -62,6 +62,45 @@ export async function GET(request: NextRequest) {
         .or(`area_name.ilike.%${query}%,introduction.ilike.%${query}%`)
     ]);
 
+    // Helper function to safely extract practice area names
+    const extractPracticeAreas = (relations: unknown): string[] => {
+      if (!Array.isArray(relations)) return [];
+      return relations
+        .map((relation: unknown) => {
+          if (relation && typeof relation === 'object' && 'practice_areas' in relation) {
+            const practiceAreas = (relation as { practice_areas: unknown }).practice_areas;
+            if (practiceAreas && typeof practiceAreas === 'object' && 'area_name' in practiceAreas) {
+              return (practiceAreas as { area_name: string }).area_name;
+            }
+          }
+          return null;
+        })
+        .filter((area): area is string => area !== null);
+    };
+
+    // Helper function to safely extract author names
+    const extractAuthors = (relations: unknown): string[] => {
+      if (!Array.isArray(relations)) return [];
+      return relations
+        .map((relation: unknown) => {
+          if (relation && typeof relation === 'object' && 'lawyers' in relation) {
+            const lawyers = (relation as { lawyers: unknown }).lawyers;
+            if (lawyers && typeof lawyers === 'object' && 'name' in lawyers) {
+              return (lawyers as { name: string }).name;
+            }
+          }
+          return null;
+        })
+        .filter((name): name is string => name !== null);
+    };
+
+    // Helper function to safely extract practice area name
+    const extractPracticeAreaName = (practiceAreas: unknown): string | undefined => {
+      if (practiceAreas && typeof practiceAreas === 'object' && 'area_name' in practiceAreas) {
+        return (practiceAreas as { area_name: string }).area_name;
+      }
+      return undefined;
+    };
 
     // 결과 변환
     const lawyers: LawyerSearchResult[] = (lawyersResult.data || []).map(lawyer => ({
@@ -72,9 +111,7 @@ export async function GET(request: NextRequest) {
       introduction: lawyer.introduction,
       profile_picture_url: lawyer.profile_picture_url,
       slug: lawyer.slug,
-      practice_areas: lawyer.lawyer_practice_areas
-        ?.map((lpa: any) => lpa.practice_areas?.area_name)
-        .filter(Boolean) || []
+      practice_areas: extractPracticeAreas(lawyer.lawyer_practice_areas)
     }));
 
     const cases: CaseSearchResult[] = (casesResult.data || []).map(post => ({
@@ -84,8 +121,8 @@ export async function GET(request: NextRequest) {
       content_payload: post.content_payload,
       thumbnail_url: post.thumbnail_url,
       slug: post.slug,
-      practice_area: (post.practice_areas as any)?.area_name,
-      authors: post.post_authors?.map((pa: any) => pa.lawyers?.name).filter(Boolean) || []
+      practice_area: extractPracticeAreaName(post.practice_areas),
+      authors: extractAuthors(post.post_authors)
     }));
 
     const media: MediaSearchResult[] = (mediaResult.data || []).map(post => ({
@@ -96,8 +133,8 @@ export async function GET(request: NextRequest) {
       thumbnail_url: post.thumbnail_url,
       external_link: post.external_link,
       slug: post.slug,
-      practice_area: (post.practice_areas as any)?.area_name,
-      authors: post.post_authors?.map((pa: any) => pa.lawyers?.name).filter(Boolean) || []
+      practice_area: extractPracticeAreaName(post.practice_areas),
+      authors: extractAuthors(post.post_authors)
     }));
 
     const practiceAreas: PracticeAreaSearchResult[] = (practiceAreasResult.data || []).map(area => ({
@@ -122,7 +159,7 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json(results);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

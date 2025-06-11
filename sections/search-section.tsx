@@ -134,7 +134,6 @@ export function SearchSection() {
               ) : (
                 <SearchResultList
                   results={getCurrentResults()}
-                  activeTab={activeTab}
                   query={query}
                 />
               )}

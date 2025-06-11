@@ -32,7 +32,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4424642665c3fb7a7bc599e71a8205&libraries=services,clusterer"></script>
       </head>
       <body
         className={`${pretendard.variable} ${geistMono.variable} antialiased`}

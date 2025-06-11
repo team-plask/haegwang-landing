@@ -14,7 +14,6 @@ import {
 
 interface SearchResultListProps {
   results: SearchItem[];
-  activeTab: string;
   query: string;
 }
 
@@ -88,7 +87,7 @@ function CaseCard({ caseItem, query }: { caseItem: CaseSearchResult; query: stri
     return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
   };
 
-  const getContentText = (content: any) => {
+  const getContentText = (content: unknown) => {
     if (typeof content === 'string') return content;
     if (content && typeof content === 'object') {
       return JSON.stringify(content).slice(0, 200) + '...';
@@ -157,7 +156,7 @@ function MediaCard({ media, query }: { media: MediaSearchResult; query: string }
     return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
   };
 
-  const getContentText = (content: any) => {
+  const getContentText = (content: unknown) => {
     if (typeof content === 'string') return content;
     if (content && typeof content === 'object') {
       return JSON.stringify(content).slice(0, 200) + '...';
@@ -280,7 +279,7 @@ function PracticeAreaCard({ area, query }: { area: PracticeAreaSearchResult; que
   );
 }
 
-export function SearchResultList({ results, activeTab, query }: SearchResultListProps) {
+export function SearchResultList({ results, query }: SearchResultListProps) {
   if (results.length === 0) {
     return (
       <div className="text-center py-12">
@@ -310,7 +309,7 @@ export function SearchResultList({ results, activeTab, query }: SearchResultList
 
   return (
     <div className="grid gap-6">
-      {results.map((result, index) => {
+      {results.map((result) => {
         switch (result.type) {
           case 'lawyer':
             return <LawyerCard key={result.id} lawyer={result} query={query} />;

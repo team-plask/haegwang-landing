@@ -1,6 +1,7 @@
 import ContactSection from "@/sections/contact/contact-section";
 import PageHeader from "@/components/page-header";
 import { ReusableTabs, TabDefinition } from "@/components/reusable-tabs";
+import { Suspense } from "react";
 
 const officesData = [
   {
@@ -69,13 +70,15 @@ export default function ContactPage() {
         subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
         breadcrumbs={[{ name: "홈", href: "/" }, { name: "오시는 길", href: "/contact" }]}
       />
-      <ReusableTabs
-        tabs={tabs}
-        components={tabComponents}
-        queryParamName="office"
-        defaultTabId="seoul"
-        layout="grid"
-      />
+      <Suspense fallback={<div className="flex justify-center py-12"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-brand"></div></div>}>
+        <ReusableTabs
+          tabs={tabs}
+          components={tabComponents}
+          queryParamName="office"
+          defaultTabId="seoul"
+          layout="grid"
+        />
+      </Suspense>
     </div>
   );
 }
