@@ -46,6 +46,9 @@ const iconMap: Record<string, LucideIcon> = {
   Anchor,
 };
 
+// Add aliases for common variations
+iconMap.Users2 = Users;
+
 export const IconComponent = ({ name, className }: { name: string | null; className?: string }) => {
   if (!name) return null;
   
