@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
-  "id" | "name" | "lawyer_type" | "profile_picture_url" | "slug" | "phone_number" | "fax_number" | "email" | "introduction"
+  "id" | "name" | "lawyer_type" | "profile_original_url" | "slug" | "phone_number" | "fax_number" | "email" | "introduction"
 > & {
   practice_areas: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "area_name" | "slug">[];
 };
 
 export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }) => {
-  const { name, lawyer_type, profile_picture_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
+  const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
 
   return (
     <section className="w-full bg-brand text-white relative">
@@ -58,10 +58,10 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
             </div>
           </div>
 
-          {profile_picture_url && (
+          {profile_original_url && (
             <div className="relative w-full h-auto md:h-[500px] flex justify-center md:justify-end">
               <Image
-                src={profile_picture_url}
+                src={profile_original_url}
                 alt={name ?? "Lawyer profile picture"}
                 width={400}
                 height={600}

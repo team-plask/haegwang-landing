@@ -65,7 +65,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   const { data, error } = await supabase
     .from('lawyers')
     .select(`
-      id, name, lawyer_type, profile_picture_url, slug,
+      id, name, lawyer_type, profile_original_url, slug,
       phone_number, fax_number, email, introduction,
       education, experience, awards_publications,
       practice_areas:lawyer_practice_areas!left(
@@ -133,12 +133,12 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
   const { authored_posts, practice_areas, ...restOfLawyerData } = data;
   
   const finalData: LawyerPageData = {
-    ...(restOfLawyerData as Omit<typeof data, 'authored_posts' | 'practice_areas' | 'id' | 'name' | 'lawyer_type' | 'profile_picture_url' | 'slug' | 'phone_number' | 'fax_number' | 'email' | 'introduction' | 'education' | 'experience' | 'awards_publications'>), // Ensure correct base type for spread
+    ...(restOfLawyerData as Omit<typeof data, 'authored_posts' | 'practice_areas' | 'id' | 'name' | 'lawyer_type' | 'profile_original_url' | 'slug' | 'phone_number' | 'fax_number' | 'email' | 'introduction' | 'education' | 'experience' | 'awards_publications'>), // Ensure correct base type for spread
     // Explicitly map known fields from restOfLawyerData to ensure type safety for LawyerProfileFromDB and LawyerSpecFromDB parts
     id: restOfLawyerData.id,
     name: restOfLawyerData.name,
     lawyer_type: restOfLawyerData.lawyer_type,
-    profile_picture_url: restOfLawyerData.profile_picture_url,
+    profile_original_url: restOfLawyerData.profile_original_url,
     slug: restOfLawyerData.slug,
     phone_number: restOfLawyerData.phone_number,
     fax_number: restOfLawyerData.fax_number,
