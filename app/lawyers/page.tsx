@@ -1,6 +1,7 @@
 import { PageHeader } from '@/components/page-header';
 import { TeamSection, TeamMembers } from '@/sections/lawyers/team-section';
 import { createClient } from '@/utils/supabase/server';
+import { sortLawyers } from '@/utils/lawyer-sorting';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,16 +13,17 @@ async function getLawyersData(): Promise<TeamMembers> {
   const supabase = await createClient();
   const { data: lawyers, error } = await supabase
     .from('lawyers')
-    .select('id, name, lawyer_type, profile_picture_url, slug');
+    .select('id, name, lawyer_type, profile_picture_url, slug, order');
 
   if (error) {
     console.error("Error fetching lawyers:", error);
     return []; // Return empty array or handle error as appropriate
   }
-  // Ensure that the fetched data conforms to TeamMembers type.
-  // Supabase client might return a more generic type, so casting or validation might be needed
-  // depending on strictness of type checking and actual returned data structure.
-  return lawyers as TeamMembers; 
+
+  // Sort lawyers according to business rules
+  const sortedLawyers = sortLawyers(lawyers || []);
+
+  return sortedLawyers as TeamMembers; 
 }
 
 export default async function LawyersPage() {

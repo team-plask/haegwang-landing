@@ -5,6 +5,7 @@ import { ReusableTabs, type TabDefinition } from "@/components/reusable-tabs";
 import React from "react"; // Import React for JSX
 import { LawyerSection, type LawyerList } from "@/sections/areas/lawyer-section";
 import { SuccessSection, type PostCardFromDB } from "@/sections/areas/success-section";
+import { sortLawyers } from "@/utils/lawyer-sorting";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ export default async function AreasPage() {
     .from("practice_areas")
     .select(`
       id, area_name, introduction, icon, image_url, key_services, slug,
-      lawyers: lawyer_practice_areas!left(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug)),
+      lawyers: lawyer_practice_areas!left(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug, order)),
       posts!left ( 
         id, title, content_payload, external_link, post_type, slug,
         practice_area: practice_area_id!inner(id, area_name, slug),
@@ -72,12 +73,17 @@ export default async function AreasPage() {
   }
 
   // Transform rawPracticeAreas to the PracticeAreaWithDetails structure
-  const practiceAreas: PracticeAreaWithDetails[] = rawPracticeAreas.map(rawArea => ({
-    ...rawArea,
-    lawyers: rawArea.lawyers ? rawArea.lawyers.map(item => item.lawyers) : [],
-    // Ensure key_services is handled if its type in PracticeInfo is more specific than 'any'
-    // For now, assuming PracticeInfo's key_services can handle 'any' or it's correctly typed there.
-  }));
+  const practiceAreas: PracticeAreaWithDetails[] = rawPracticeAreas.map(rawArea => {
+    const lawyers = rawArea.lawyers ? rawArea.lawyers.map(item => item.lawyers) : [];
+    const sortedLawyers = sortLawyers(lawyers);
+    
+    return {
+      ...rawArea,
+      lawyers: sortedLawyers,
+      // Ensure key_services is handled if its type in PracticeInfo is more specific than 'any'
+      // For now, assuming PracticeInfo's key_services can handle 'any' or it's correctly typed there.
+    };
+  });
 
   const tabDefinitions: TabDefinition[] = practiceAreas.map(area => ({
     id: area.slug,

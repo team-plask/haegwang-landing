@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { TeamSection, TeamMembers } from "@/sections/team-section";
 import { MediaSection, MediaProps } from "@/sections/media-section";
 import ContactSection from "@/sections/contact-section";
+import { sortLawyers } from "@/utils/lawyer-sorting";
 import type { Metadata } from 'next';
 import { Database } from "@/database.types";
 
@@ -34,8 +35,7 @@ export default async function Home() {
 
   const teamMembersPromise = supabase
     .from("lawyers")
-    .select("id, name, lawyer_type, profile_picture_url, slug")
-    .order("lawyer_type", { ascending: true })
+    .select("id, name, lawyer_type, profile_picture_url, slug, order")
     .neq("lawyer_type", "소속변호사");
 
   const rawMediaPromise = supabase
@@ -92,14 +92,17 @@ export default async function Home() {
       item !== null && item.practice_area !== null
     ) as MediaProps | undefined;
 
+  // Sort team members according to business rules
+  const sortedTeamMembers = teamMembers ? sortLawyers(teamMembers) : null;
+
   return (
     <div className="">
       <HeroSection />
       {practiceAreas && practiceAreas.length > 0 && (
         <PracticeSection practiceAreas={practiceAreas as PracticeAreas} />
       )}
-      {teamMembers && teamMembers.length > 0 && (
-        <TeamSection teamMembers={teamMembers as TeamMembers} />
+      {sortedTeamMembers && sortedTeamMembers.length > 0 && (
+        <TeamSection teamMembers={sortedTeamMembers as TeamMembers} />
       )}
       {media && media.length > 0 && (
         <MediaSection media={media} />

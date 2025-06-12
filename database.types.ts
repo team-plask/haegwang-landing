@@ -55,7 +55,9 @@ export type Database = {
           office_location:
             | Database["public"]["Enums"]["office_location_enum"]
             | null
+          order: number | null
           phone_number: string | null
+          profile_original_url: string | null
           profile_picture_url: string | null
           slug: string | null
           updated_at: string | null
@@ -75,7 +77,9 @@ export type Database = {
           office_location?:
             | Database["public"]["Enums"]["office_location_enum"]
             | null
+          order?: number | null
           phone_number?: string | null
+          profile_original_url?: string | null
           profile_picture_url?: string | null
           slug?: string | null
           updated_at?: string | null
@@ -95,7 +99,9 @@ export type Database = {
           office_location?:
             | Database["public"]["Enums"]["office_location_enum"]
             | null
+          order?: number | null
           phone_number?: string | null
+          profile_original_url?: string | null
           profile_picture_url?: string | null
           slug?: string | null
           updated_at?: string | null
@@ -229,7 +235,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      lawyer_type_enum: "대표변호사" | "소속변호사" | "구성원 변호사"
+      lawyer_type_enum: "대표변호사" | "소속변호사" | "구성원변호사"
       office_location_enum: "서울" | "대구" | "부산"
       post_type_enum: "승소사례" | "법인소식" | "블로그" | "언론보도"
     }
@@ -347,7 +353,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      lawyer_type_enum: ["대표변호사", "소속변호사", "구성원 변호사"],
+      lawyer_type_enum: ["대표변호사", "소속변호사", "구성원변호사"],
       office_location_enum: ["서울", "대구", "부산"],
       post_type_enum: ["승소사례", "법인소식", "블로그", "언론보도"],
     },

@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { sortLawyers } from "@/utils/lawyer-sorting";
 
 import { 
   SearchResults, 
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
       supabase
         .from('lawyers')
         .select(`
-          id, name, lawyer_type, introduction, profile_picture_url, slug,
+          id, name, lawyer_type, introduction, profile_picture_url, slug, order,
           lawyer_practice_areas(practice_areas(area_name))
         `)
         .or(`name.ilike.%${query}%,introduction.ilike.%${query}%`)
@@ -103,7 +104,7 @@ export async function GET(request: NextRequest) {
     };
 
     // 결과 변환
-    const lawyers: LawyerSearchResult[] = (lawyersResult.data || []).map(lawyer => ({
+    const lawyersData = (lawyersResult.data || []).map(lawyer => ({
       type: 'lawyer' as const,
       id: lawyer.id,
       name: lawyer.name,
@@ -111,8 +112,12 @@ export async function GET(request: NextRequest) {
       introduction: lawyer.introduction,
       profile_picture_url: lawyer.profile_picture_url,
       slug: lawyer.slug,
+      order: lawyer.order,
       practice_areas: extractPracticeAreas(lawyer.lawyer_practice_areas)
     }));
+
+    // Sort lawyers according to business rules
+    const lawyers: LawyerSearchResult[] = sortLawyers(lawyersData);
 
     const cases: CaseSearchResult[] = (casesResult.data || []).map(post => ({
       type: 'case' as const,

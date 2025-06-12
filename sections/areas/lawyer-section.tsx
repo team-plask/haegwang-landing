@@ -3,7 +3,7 @@ import Team from "@/components/team";
 import { SectionHeading } from "@/components/section-heading";
 export type LawyerList = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
-  "id" | "name" | "lawyer_type" | "profile_picture_url" | "slug"
+  "id" | "name" | "lawyer_type" | "profile_picture_url" | "slug" | "order"
 >;
 
 export function LawyerSection({ lawyers }: { lawyers: LawyerList[] | null | undefined }) {

@@ -16,6 +16,7 @@ export type LawyerSearchResult = {
   introduction: string | null;
   profile_picture_url: string | null;
   slug: string | null;
+  order: number | null;
   practice_areas?: string[];
 };
 
