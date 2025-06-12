@@ -76,7 +76,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
           id, title, content_payload, external_link, post_type, slug,
           practice_area:practice_area_id!left(id, area_name, slug),
           all_authors_for_post:post_authors!inner(
-            lawyers!inner(name, profile_picture_url, id, slug)
+            lawyers!inner(name, profile_original_url, id, slug)
           )
         )
       )

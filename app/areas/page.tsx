@@ -39,7 +39,7 @@ export default async function AreasPage() {
     .from("practice_areas")
     .select(`
       id, area_name, introduction, icon, image_url, key_services, slug,
-      lawyers: lawyer_practice_areas!left(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug, order)),
+              lawyers: lawyer_practice_areas!left(lawyers!inner(id, name, lawyer_type, profile_picture_url, slug, order)),
       posts!left ( 
         id, title, content_payload, external_link, post_type, slug,
         practice_area: practice_area_id!inner(id, area_name, slug),
@@ -111,7 +111,7 @@ export default async function AreasPage() {
   return (
     <>
       <PageHeader
-        title="업무 영역"
+        title="업무 분야"
         subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
         breadcrumbs={[{ name: "홈", href: "/" }, { name: "업무 영역", href: "/areas" }]}
       />

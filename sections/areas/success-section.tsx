@@ -7,7 +7,7 @@ export type PostCardFromDB = Pick<
   "id" | "title" | "content_payload" | "external_link" | "slug"
 > & {
   post_type: Database["public"]["Enums"]["post_type_enum"];
-  practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug">;
+  practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug"> | null;
   post_authors: {
     lawyers: Pick<Database["public"]["Tables"]["lawyers"]["Row"], "name" | "profile_picture_url" | "id" | "slug">;
   }[];
@@ -56,7 +56,7 @@ export function SuccessSection({ success }: { success: SuccessProps }) {
       display_slug: displaySlug,
       display_image: null,
       display_description: description,
-      practice_area_name: dbPost.practice_area.area_name,
+      practice_area_name: dbPost.practice_area?.area_name || "미분류",
       authors: authors,
       is_external_link: isExternalLink,
     };

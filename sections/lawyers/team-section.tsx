@@ -4,7 +4,7 @@ import Team from "@/components/team";
 
 export type TeamMemberFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
-  "id" | "name" | "lawyer_type" | "profile_picture_url" | "slug"
+  "id" | "name" | "lawyer_type" | "profile_picture_url" | "slug" | "order"
 >;
 
 export type TeamMembers = TeamMemberFromDB[];

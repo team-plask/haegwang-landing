@@ -1,14 +1,37 @@
 "use client";
-import React from "react";
-import { motion } from "motion/react";
+import React, { useRef, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface BackgroundVideoProps {
   videoSource: string;
-  isLoading?: boolean; // 로딩 상태 prop 추가
+  isLoading?: boolean;
+  onVideoLoaded?: () => void;
 }
 
-export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVideoProps) {
+export function BackgroundVideo({ videoSource, isLoading = false, onVideoLoaded }: BackgroundVideoProps) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const handleLoadedData = () => {
+      onVideoLoaded?.();
+    };
+
+    const handleCanPlay = () => {
+      onVideoLoaded?.();
+    };
+
+    const checkVideoLoaded = useCallback(() => {
+      const video = videoRef.current;
+      if (video && video.readyState >= 3) { // HAVE_FUTURE_DATA or better
+        onVideoLoaded?.();
+      }
+    }, [onVideoLoaded]);
+
+    useEffect(() => {
+      // 컴포넌트 마운트 시 비디오가 이미 로드되어 있는지 확인
+      checkVideoLoaded();
+    }, [checkVideoLoaded]);
+
     return (
       <motion.div
         initial={{ opacity: 0.5 }}
@@ -17,14 +40,20 @@ export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVi
         className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden"
       >
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
+          onLoadedData={handleLoadedData}
+          onCanPlay={handleCanPlay}
+          onLoadStart={() => {
+            // 로드 시작 시에도 체크
+            setTimeout(checkVideoLoaded, 100);
+          }}
           className={cn(
             "h-full w-full object-cover transition-opacity duration-500 ease-in-out",
             isLoading ? "opacity-100" : "opacity-100",
-
           )}
         >
           <source
@@ -43,4 +72,4 @@ export function BackgroundVideo({ videoSource, isLoading = false }: BackgroundVi
         />
       </motion.div>
     );
-  };
+  }

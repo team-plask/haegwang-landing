@@ -3,8 +3,6 @@
 import { Database } from "@/database.types";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
@@ -15,7 +13,6 @@ export type LawyerProfileFromDB = Pick<
 
 export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }) => {
   const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <section className="w-full bg-brand text-white relative overflow-hidden">
@@ -66,23 +63,13 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
           <div className="relative w-full flex justify-center md:justify-end items-end h-full max-h-[450px] md:max-h-[500px]">
             {profile_original_url ? (
               <div className="relative max-w-xs md:max-w-none h-full flex items-end">
-                {/* Skeleton loader */}
-                {!imageLoaded && (
-                  <Skeleton className="w-[280px] h-[400px] md:w-[350px] md:h-[480px] rounded-lg bg-white/10" />
-                )}
-                
-                {/* Actual image */}
                 <Image
                   src={profile_original_url}
                   alt={name ?? "Lawyer profile picture"}
                   width={350}
                   height={480}
-                  className={`object-cover object-top rounded-lg transition-opacity duration-300 max-h-[400px] md:max-h-[480px] ${
-                    imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
-                  }`}
+                  className="object-cover object-top rounded-lg max-h-[400px] md:max-h-[480px]"
                   priority
-                  onLoad={() => setImageLoaded(true)}
-                  onError={() => setImageLoaded(true)} // Show something even if image fails
                 />
               </div>
             ) : (

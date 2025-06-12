@@ -101,9 +101,9 @@ export function LawyerSpecSection({ lawyerSpecs }: { lawyerSpecs: LawyerSpecs })
   const spec = lawyerSpecs[0];
 
   const tabs = [
-    { value: "education", label: "학력" },
     { value: "experience", label: "주요경력" },
     { value: "awards_publications", label: "논문/저서" },
+    { value: "education", label: "학력" },
   ];
 
   const contents: Record<string, React.ReactNode> = {
@@ -116,7 +116,7 @@ export function LawyerSpecSection({ lawyerSpecs }: { lawyerSpecs: LawyerSpecs })
     <section className="w-full mx-auto py-6 md:py-12">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
         <SectionHeading title="주요이력" subtitle="Experience" />   
-        <VerticalTabs tabs={tabs} contents={contents} defaultValue="education" />
+        <VerticalTabs tabs={tabs} contents={contents} defaultValue="experience" />
       </div>
     </section>
   );

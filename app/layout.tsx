@@ -6,6 +6,7 @@ import HeroHeader from "@/components/header";
 import FooterSection from "@/sections/footer/footer-section";
 import { Suspense } from "react";
 import { StaffToolbar } from "@/components/staff-toolbar";
+import { Providers } from "@/components/providers";
 
 const pretendard = localFont({
   src: "../public/font/PretendardVariable.woff2",
@@ -36,12 +37,14 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${geistMono.variable} antialiased`}
       >
-        <HeroHeader />
-        {children}
-        <FooterSection />
-        <Suspense>
-          <StaffToolbar />
-        </Suspense>
+        <Providers>
+          <HeroHeader />
+          {children}
+          <FooterSection />
+          <Suspense>
+            <StaffToolbar />
+          </Suspense>
+        </Providers>
       </body>
     </html>
   );

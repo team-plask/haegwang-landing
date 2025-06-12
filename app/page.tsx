@@ -1,10 +1,9 @@
-import { HeroSection } from "@/sections/hero-section";
-import { PracticeSection, PracticeAreas } from "@/sections/practice-section";
+import { PracticeAreas } from "@/sections/practice-section";
 import { createClient } from "@/utils/supabase/server";
-import { TeamSection, TeamMembers } from "@/sections/team-section";
-import { MediaSection, MediaProps } from "@/sections/media-section";
-import ContactSection from "@/sections/contact-section";
+import { TeamMembers } from "@/sections/team-section";
+import { MediaProps } from "@/sections/media-section";
 import { sortLawyers } from "@/utils/lawyer-sorting";
+import { HomeContent } from "@/components/home-content";
 import type { Metadata } from 'next';
 import { Database } from "@/database.types";
 
@@ -84,7 +83,7 @@ export default async function Home() {
       return {
         ...item,
         practice_area: paObject, 
-        post_authors: validAuthors as { lawyers: { name: string; profile_picture_url: string | null } }[] // 타입 단언
+        post_authors: validAuthors as unknown as { lawyers: { name: string; profile_picture_url: string | null } }[] // 타입 단언
       };
     })
     // Filter out nulls from the map operation and ensure practice_area is valid for MediaProps
@@ -96,18 +95,10 @@ export default async function Home() {
   const sortedTeamMembers = teamMembers ? sortLawyers(teamMembers) : null;
 
   return (
-    <div className="">
-      <HeroSection />
-      {practiceAreas && practiceAreas.length > 0 && (
-        <PracticeSection practiceAreas={practiceAreas as PracticeAreas} />
-      )}
-      {sortedTeamMembers && sortedTeamMembers.length > 0 && (
-        <TeamSection teamMembers={sortedTeamMembers as TeamMembers} />
-      )}
-      {media && media.length > 0 && (
-        <MediaSection media={media} />
-      )}
-      <ContactSection />
-    </div>
+    <HomeContent 
+      practiceAreas={practiceAreas as PracticeAreas}
+      teamMembers={sortedTeamMembers as TeamMembers}
+      media={media as MediaProps}
+    />
   );
 }
