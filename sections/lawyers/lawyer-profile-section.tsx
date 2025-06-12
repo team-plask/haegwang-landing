@@ -1,6 +1,10 @@
+"use client";
+
 import { Database } from "@/database.types";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
@@ -11,11 +15,12 @@ export type LawyerProfileFromDB = Pick<
 
 export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }) => {
   const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <section className="w-full bg-brand text-white relative">
+    <section className="w-full bg-brand text-white relative overflow-hidden">
       <div className="container mx-auto max-w-7xl md:h-[500px] pt-30 md:pt-0 md:mt-20 px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center h-full">
           <div className="md:col-span-2 space-y-6">
             <div>
               <h1 className="text-5xl md:text-7xl font-bold mb-2">{name}</h1>
@@ -58,18 +63,34 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
             </div>
           </div>
 
-          {profile_original_url && (
-            <div className="relative w-full h-auto md:h-[500px] flex justify-center md:justify-end">
-              <Image
-                src={profile_original_url}
-                alt={name ?? "Lawyer profile picture"}
-                width={400}
-                height={600}
-                className="object-cover rounded-lg max-w-xs md:max-w-none"
-                priority
-              />
-            </div>
-          )}
+          <div className="relative w-full flex justify-center md:justify-end items-end h-full max-h-[450px] md:max-h-[500px]">
+            {profile_original_url ? (
+              <div className="relative max-w-xs md:max-w-none h-full flex items-end">
+                {/* Skeleton loader */}
+                {!imageLoaded && (
+                  <Skeleton className="w-[280px] h-[400px] md:w-[350px] md:h-[480px] rounded-lg bg-white/10" />
+                )}
+                
+                {/* Actual image */}
+                <Image
+                  src={profile_original_url}
+                  alt={name ?? "Lawyer profile picture"}
+                  width={350}
+                  height={480}
+                  className={`object-cover object-top rounded-lg transition-opacity duration-300 max-h-[400px] md:max-h-[480px] ${
+                    imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                  }`}
+                  priority
+                  onLoad={() => setImageLoaded(true)}
+                  onError={() => setImageLoaded(true)} // Show something even if image fails
+                />
+              </div>
+            ) : (
+              <div className="w-[280px] h-[400px] md:w-[350px] md:h-[480px] rounded-lg bg-white/10 flex items-center justify-center">
+                <span className="text-white/50 text-lg">No Image</span>
+              </div>
+            )}
+          </div>
         </div>
         </div>
     </section>
