@@ -7,6 +7,7 @@ import FooterSection from "@/sections/footer/footer-section";
 import { Suspense } from "react";
 import { StaffToolbar } from "@/components/staff-toolbar";
 import { Providers } from "@/components/providers";
+import Script from "next/script";
 
 const pretendard = localFont({
   src: "../public/font/PretendardVariable.woff2",
@@ -32,15 +33,13 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4424642665c3fb7a7bc599e71a8205&libraries=services,clusterer"
-        ></script>
-      </head>
       <body
         className={`${pretendard.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4424642665c3fb7a7bc599e71a8205&libraries=services,clusterer"
+          strategy="beforeInteractive"
+        />
         <Providers>
           <HeroHeader />
           {children}
