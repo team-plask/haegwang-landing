@@ -74,7 +74,8 @@ export function HeroSection({ onVideoLoaded }: HeroSectionProps = {}) {
   return (
     <section className="relative h-screen w-full bg-brand">
       <BackgroundVideo 
-        videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8.mp4"
+        // videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8.mp4"
+        videoSource="/ocean_1.mp4"
         isLoading={!isVideoLoaded}
         onVideoLoaded={handleVideoLoaded}
       />

@@ -1,17 +1,18 @@
 import Timeline, { TimelineItem } from "@/components/timeline";
+import TimelineDemo from "@/components/ui/timeline-demo";
 
 const timeline: TimelineItem[] = [
   {
     name: "법무법인 해광 설립",
     dateTime: "2021-03-01",
     date: "2021년 3월",
-    description: "이동근, 서민석, 최창영 등 전직 부장판사 18인이 참여하여 설립, 수사 및 송무 전문 로펌으로 출발",
+    description: "서민석 등 전직 부장판사 18인이 참여하여 설립, 수사 및 송무 전문 로펌으로 출발",
   },
   {
     name: "유한책임법무법인 전환",
     dateTime: "2022-06-01",
     date: "2022년 6월",
-    description: "임성근, 정연택, 김병민, 유영춘 변호사 등 영입으로 기업·금융·회계 자문 등 서비스 다각화 및 변호사 27명 규모로 성장",
+    description: "임성근, 정연택, 유영춘 변호사 등 영입으로 기업·금융·회계 자문 등 서비스 다각화 및 변호사 27명 규모로 성장",
   },
   {
     name: "전국 네트워크 구축 및 고위 인재 영입",
@@ -58,7 +59,8 @@ export default function AboutHero() {
     </div>
     <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-linear-to-t from-white sm:h-32" />
   </div>
-      <Timeline timelineitems={timeline} />
+      {/* <Timeline timelineitems={timeline} /> */}
+      <TimelineDemo />
     </div>
   );
 }

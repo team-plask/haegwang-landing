@@ -10,7 +10,7 @@ interface BrandLoadingProps {
 }
 
 export function BrandLoading({ 
-  message = "로딩 중...", 
+  message = "법무법인(유한) 해광", 
   isVisible,
   onTimeout,
   maxWaitTime = 5000 // 5초 기본값

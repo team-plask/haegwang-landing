@@ -29,7 +29,7 @@ export default async function SuccessStoriesPage() {
   const { data: practiceAreasData, error: practiceAreasError } = await supabase
     .from("practice_areas")
     .select("id, area_name, icon, slug") // Fetch fields needed for tabs
-    .order("id", { ascending: true });
+    .order("display_order", { ascending: true });
 
   // 2. Fetch all success story posts
   const { data: allSuccessPostsData, error: postsError } = await supabase

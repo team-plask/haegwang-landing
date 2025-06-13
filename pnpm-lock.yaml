@@ -99,6 +99,9 @@ importers:
       eslint-config-next:
         specifier: 15.3.2
         version: 15.3.2(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+      kakao.maps.d.ts:
+        specifier: ^0.1.40
+        version: 0.1.40
       supabase:
         specifier: ^2.23.4
         version: 2.23.4

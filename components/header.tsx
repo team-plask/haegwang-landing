@@ -47,7 +47,7 @@ export default function HeroHeader() {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background shadow-sm backdrop-blur-sm' : 'bg-background shadow-none backdrop-blur-none'} ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-6">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <Link href="/" prefetch={true} className="-m-1.5 p-1.5">
             <span className="sr-only">법무법인(유한)해광</span>
             <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={150} height={40} className="h-10 w-auto" />
           </Link>
@@ -63,22 +63,22 @@ export default function HeroHeader() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <Link href="/about" className="text-md/6 font-semibold text-brand">
+          <Link href="/about" prefetch={true} className="text-md/6 font-semibold text-brand">
             법인 소개
           </Link>
-          <Link href="/lawyers" className="text-md/6 font-semibold text-brand">
+          <Link href="/lawyers" prefetch={true} className="text-md/6 font-semibold text-brand">
             변호사 소개
           </Link>
-          <Link href="/areas" className="text-md/6 font-semibold text-brand">
+          <Link href="/areas" prefetch={true} className="text-md/6 font-semibold text-brand">
             업무분야
           </Link>
-          <Link href="/success" className="text-md/6 font-semibold text-brand">
+          <Link href="/success" prefetch={true} className="text-md/6 font-semibold text-brand">
             업무사례
           </Link>
-          <Link href="/media" className="text-md/6 font-semibold text-brand">
+          <Link href="/media" prefetch={true} className="text-md/6 font-semibold text-brand">
             언론보도
           </Link>
-          <Link href="/contact" className="text-md/6 font-semibold text-brand">
+          <Link href="/contact" prefetch={true} className="text-md/6 font-semibold text-brand">
             오시는 길
           </Link>
         </div>
@@ -87,7 +87,7 @@ export default function HeroHeader() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5">
+            <Link href="/" prefetch={true} className="-m-1.5 p-1.5">
               <span className="sr-only">법무법인(유한)해광</span>
               <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={150} height={40} className="h-10 w-auto" />
             </Link>
@@ -105,33 +105,45 @@ export default function HeroHeader() {
               <div className="space-y-2 py-6">
                 <Link
                   href="/about"
+                  prefetch={true}
                   className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   법인 소개
                 </Link>
                 <Link
                   href="/lawyers"
+                  prefetch={true}
                   className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   변호사 소개
                 </Link>
                 <Link
                   href="/areas"
+                  prefetch={true}
                   className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   업무분야
                 </Link>
                 <Link
                   href="/success"
+                  prefetch={true}
                   className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                  성공사례
+                  업무사례
                 </Link>
                 <Link
                   href="/media"
+                  prefetch={true}
                   className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                  법률소식
+                  언론보도
+                </Link>
+                <Link
+                  href="/contact"
+                  prefetch={true}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-lg/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  오시는 길
                 </Link>
               </div>
             </div>

@@ -35,7 +35,7 @@ export function HomeContent({
     <>
       {/* 홈페이지 전용 비디오 로딩 */}
       <BrandLoading 
-        message="페이지를 불러오는 중..." 
+        message="법무법인(유한) 해광" 
         isVisible={!isVideoLoaded}
         onTimeout={handleVideoLoaded}
         maxWaitTime={4000}

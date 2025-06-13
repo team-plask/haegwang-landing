@@ -18,7 +18,7 @@ export default async function MediaPage() {
   const { data: practiceAreasData, error: practiceAreasError } = await supabase
     .from("practice_areas")
     .select("id, area_name, icon, slug") // Fetch fields needed for tabs
-    .order("id", { ascending: true });
+    .order("display_order", { ascending: true });
 
   // 2. Fetch all media posts
   const { data: allMediaPostsData, error: postsError } = await supabase
