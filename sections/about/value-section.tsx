@@ -29,7 +29,7 @@ const values = [
 
 export default function ValuesSection() {
   return (
-    <section className="relative mx-auto mt-32 w-full px-6 md:py-32 lg:px-8 bg-brand/10">
+    <section className="relative mx-auto mt-32 w-full px-6 py-16 md:py-32 lg:px-8 bg-brand/10">
         <div className="container mx-auto max-w-7xl py-1 md:py-3">
             <h2 className="relative text-brand text-4xl md:text-5xl tracking-tighter lg:max-w-xl font-bold text-left w-fit">
                     고객과의 약속

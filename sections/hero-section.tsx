@@ -48,7 +48,7 @@ export function HeroSection() {
         console.log('Fallback: Video loading timeout, proceeding anyway');
         handleVideoLoaded();
       }
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(immediateCheck);
@@ -81,7 +81,7 @@ export function HeroSection() {
         message="법무법인(유한) 해광" 
         isVisible={!isVideoLoaded}
         onTimeout={handleVideoLoaded}
-        maxWaitTime={4000}
+        maxWaitTime={5000}
       />
       
       <section className="relative h-screen w-full bg-brand">

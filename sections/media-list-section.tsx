@@ -48,7 +48,7 @@ export function MediaListSection({ media }: { media: MediaProps }) {
 
   return (
     <section className="w-full items-center justify-center py-12 md:py-16 mx-auto">
-      <div className="container max-w-6xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
+      <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
         <div className="w-full flex flex-col gap-6">
           {media && media.length > 0 && 
             media.map((postItem, index) => (

@@ -49,7 +49,7 @@ export function MediaSection({ media }: { media: MediaProps }) {
 
   return (
     <section className="w-full items-center justify-center py-12 md:py-32 mx-auto bg-gray-100">
-      <div className="container max-w-6xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
+      <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
         <Heading 
           badge="언론보도" 
           title="해광의 최신 소식을 확인해보세요" 

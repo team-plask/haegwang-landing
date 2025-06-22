@@ -67,7 +67,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="mt-6 max-w-3xl mx-auto text-center text-xl text-white/50">
+          <p className="mt-6 max-w-3xl mx-auto text-center text-md md:text-xl text-white/50">
             {subtitle}
           </p>
         )}

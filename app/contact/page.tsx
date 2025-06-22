@@ -2,6 +2,12 @@ import ContactSection from "@/sections/contact/contact-section";
 import PageHeader from "@/components/page-header";
 import { ReusableTabs, TabDefinition } from "@/components/reusable-tabs";
 import { Suspense } from "react";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '오시는 길 - 법무법인 해광',
+  description: '법무법인 해광의 서울, 대구, 부산 사무소 위치와 연락처를 안내합니다. 각 사무소의 상세 위치와 대중교통 이용 방법을 확인하세요.',
+};
 
 const officesData = [
   {

@@ -1,4 +1,3 @@
-
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
@@ -7,6 +6,7 @@ import FooterSection from "@/sections/footer/footer-section";
 import { Suspense } from "react";
 import { StaffToolbar } from "@/components/staff-toolbar";
 import { Providers } from "@/components/providers";
+import { PageLoadingIndicator } from "@/components/page-loading-indicator";
 import Script from "next/script";
 
 const pretendard = localFont({
@@ -37,6 +37,7 @@ export default async function RootLayout({
           strategy="beforeInteractive"
         />
         <Providers>
+          <PageLoadingIndicator />
           <HeroHeader />
           {children}
           <FooterSection />

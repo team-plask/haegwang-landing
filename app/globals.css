@@ -122,3 +122,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes shimmer {
+  0% { 
+    transform: translateX(-100%) scaleX(0); 
+    opacity: 0;
+  }
+  50% { 
+    transform: translateX(0%) scaleX(1); 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%) scaleX(0); 
+    opacity: 0;
+  }
+}
