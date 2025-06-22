@@ -1,9 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Post, Author, BlurImage } from "@/components/post-card";
 
 // Re-export types for use in other components

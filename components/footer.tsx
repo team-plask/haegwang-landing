@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 export interface LinkItem {
@@ -31,7 +30,7 @@ export function FooterWithGrid({
   logoAlt,
   logoWidth = 100, // Default width
   logoHeight = 50, // Default height
-  linkSections,
+  linkSections: _linkSections, // eslint-disable-line @typescript-eslint/no-unused-vars
   copyrightNotices,
   addressBlocks,
 }: FooterProps) {
