@@ -80,7 +80,7 @@ export default function Team({ members: teamData }: { members: TeamMember[] }) {
                             );
 
                             return member.slug ? (
-                                <Link key={index} href={`/lawyers/${member.slug}`}>
+                                <Link key={index} href={`/lawyers/${member.slug}`} prefetch={true}>
                                     {content}
                                 </Link>
                             ) : (

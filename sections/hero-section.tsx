@@ -3,20 +3,24 @@ import { useState, useEffect, useRef } from 'react'
 import { BackgroundVideo } from "@/components/background-video";
 import { TextBorderEffect } from "@/components/text-border-effect";
 import { Searchbar } from "@/components/searchbar";
+import { BrandLoading } from "@/components/ui/brand-loading";
+import { usePageLoading } from "@/components/page-loading-provider";
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
-interface HeroSectionProps {
-  onVideoLoaded?: () => void;
-}
-
-export function HeroSection({ onVideoLoaded }: HeroSectionProps = {}) {
+export function HeroSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
   const [showContent, setShowContent] = useState(false)
   const [searchValue, setSearchValue] = useState('');
   const isVideoLoadedRef = useRef(false);
+  const { setLoading } = usePageLoading();
   const router = useRouter();
+
+  // 홈페이지에서는 전역 로딩을 즉시 끄고 비디오 로딩만 처리
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   // 비디오 로딩 완료 후 콘텐츠 애니메이션 시작
   useEffect(() => {
@@ -56,7 +60,6 @@ export function HeroSection({ onVideoLoaded }: HeroSectionProps = {}) {
     if (!isVideoLoadedRef.current) {
       isVideoLoadedRef.current = true;
       setIsVideoLoaded(true);
-      onVideoLoaded?.();
     }
   }
 
@@ -72,92 +75,85 @@ export function HeroSection({ onVideoLoaded }: HeroSectionProps = {}) {
   };
 
   return (
-    <section className="relative h-screen w-full bg-brand">
-      <BackgroundVideo 
-        // videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8.mp4"
-        videoSource="/ocean_1.mp4"
-        isLoading={!isVideoLoaded}
-        onVideoLoaded={handleVideoLoaded}
+    <>
+      {/* 홈페이지 전용 비디오 로딩 */}
+      <BrandLoading 
+        message="법무법인(유한) 해광" 
+        isVisible={!isVideoLoaded}
+        onTimeout={handleVideoLoaded}
+        maxWaitTime={4000}
       />
-      <div className="relative flex flex-col items-center justify-center z-10 h-full w-full">   
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: showContent ? 1 : 0, 
-              y: showContent ? 0 : 20 
-            }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="sm:flex sm:justify-center"
-          >
-              <div className="relative rounded-full px-3 py-1 text-xs md:text-sm/6 text-brand/60 ring-1 ring-brand/40 hover:ring-white/80 bg-white/40">
-                  검사장 출신들로 이루어진 전문가 팀{' '}
-                <a href="#" className="font-semibold text-brand">
-                  <span aria-hidden="true" className="absolute inset-0" />
-                  변호사 보러가기 <span aria-hidden="true">&rarr;</span>
-                </a>
-              </div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: showContent ? 1 : 0, 
-              y: showContent ? 0 : 20 
-            }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="w-full max-w-7xl px-4 flex justify-center"
-          >
-            <TextBorderEffect text="법무법인(유한) 해광" />
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: showContent ? 1 : 0, 
-              y: showContent ? 0 : 20 
-            }}
-            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-            className="w-full max-w-4xl px-4"
-          >
-            <Searchbar 
-              placeholders={[
-                "검색어를 입력하세요...",
-                "예: 형사 전문 변호사",
-                "예: 부동산 분쟁 해결",
-                "예: 기업 법률 자문"
-              ]} 
-              onChange={handleSearchChange} 
-              onSubmit={handleSubmit} 
-            />
-          </motion.div>
-      </div>
+      
+      <section className="relative h-screen w-full bg-brand">
+        <BackgroundVideo 
+          videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8_8.mp4"
+          isLoading={!isVideoLoaded}
+          onVideoLoaded={handleVideoLoaded}
+        />
+        <div className="relative flex flex-col items-center justify-center z-10 h-full w-full">   
 
-      {/* Scroll Down Icon */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showContent ? 1 : 0 }}
-        transition={{ duration: 1.0, delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
-      >
-        <motion.svg
-          animate={{
-            y: showContent ? [0, 8, 0] : 0,
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-10 h-10 text-white/90"
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: showContent ? 1 : 0, 
+                y: showContent ? 0 : 20 
+              }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="w-full max-w-xl px-4 flex justify-center"
+            >
+              <TextBorderEffect 
+                text="해광" 
+                letterSpacing={60}
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: showContent ? 1 : 0, 
+                y: showContent ? 0 : 20 
+              }}
+              transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+              className=" max-w-4xl px-4"
+            >
+                <div className="relative rounded-full px-3 py-1 text-xs md:text-sm/6 text-brand/60 ring-1 ring-brand/40 hover:ring-white/80 bg-white/40">
+                    부장판사 출신들로 이루어진 전문가 팀{' '}
+                  <a href="#" className="font-semibold text-brand">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    변호사 보러가기 <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+            </motion.div>
+        </div>
+
+        {/* Scroll Down Icon */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showContent ? 1 : 0 }}
+          transition={{ duration: 1.0, delay: 1.2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-        </motion.svg>
-      </motion.div>
-    </section>
+          <motion.svg
+            animate={{
+              y: showContent ? [0, 8, 0] : 0,
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-10 h-10 text-white/90"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+          </motion.svg>
+        </motion.div>
+      </section>
+    </>
   );
 }

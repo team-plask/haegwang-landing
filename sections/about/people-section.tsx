@@ -1,7 +1,7 @@
 export default function PeopleSection() {
   return (
     <section className="w-full mx-auto py-16 md:py-32">
-            <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
             <h2 className="text-4xl font-bold tracking-tight text-brand sm:text-5xl py-3 lg:py-6">해광의 변호사들은</h2>
@@ -30,39 +30,131 @@ export default function PeopleSection() {
             </p>
           </div>
 
-          {/* 이미지 영역 */}
+          {/* 모바일 전용 이미지 그리드 */}
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:hidden">
+            <div className="space-y-4 sm:space-y-6">
+              <img
+                alt="이완희 변호사"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/4.png"
+                className="w-full aspect-4/5 object-cover rounded-xl shadow-lg"
+              />
+              <img
+                alt="소속 변호사들"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/2.png"
+                className="w-full aspect-4/3 object-cover rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="space-y-4 sm:space-y-6">
+              <img
+                alt="황철규, 김후균 변호사"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/6.png"
+                className="w-full aspect-4/3 object-cover rounded-xl shadow-lg"
+              />
+              <img
+                alt="상담 장면"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/1.png"
+                className="w-full aspect-4/3 object-cover rounded-xl shadow-lg"
+              />
+            </div>
+          </div>
+
+          {/* 데스크톱 전용 - 기존 구조 완전 복원 */}
           <div className="flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents">
-            <div className="w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end">
+            <div className="hidden lg:block lg:w-0 lg:flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end">
               <img
                 alt=""
-                src="https://images.unsplash.com/photo-1670272502246-768d249768ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1152&q=80"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/4.png"
                 className="aspect-7/5 w-148 max-w-none rounded-2xl bg-gray-50 object-cover"
               />
             </div>
-            <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
+            <div className="hidden lg:contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
               <div className="order-first flex w-64 flex-none justify-end self-end lg:w-auto">
                 <img
                   alt=""
-                  src="https://images.unsplash.com/photo-1605656816944-971cd5c1407f?ixlib=rb-4.0.3&auto=format&fit=crop&w=768&h=604&q=80"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/6.png"
                   className="aspect-4/3 w-[24rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
                 />
               </div>
               <div className="flex w-96 flex-auto justify-end lg:w-auto lg:flex-none">
                 <img
                   alt=""
-                  src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&auto=format&fit=crop&w=1152&h=842&q=80"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/2.png"
                   className="aspect-7/5 w-148 max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
                 />
               </div>
               <div className="hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none">
                 <img
                   alt=""
-                  src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=768&h=604&q=80"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/1.png"
                   className="aspect-4/3 w-[24rem] max-w-none rounded-2xl bg-gray-50 object-cover"
                 />
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 캐러셀 갤러리 섹션 */}
+      <div className="mx-auto max-w-7xl px-6 mt-20 lg:mt-32">
+        <div className="text-left mb-12">
+          <h3 className="text-3xl font-bold text-brand md:text-5xl mb-4">더 많은 모습들</h3>
+          <p className="text-lg text-gray-600">법무법인(유한) 해광의 다양한 활동과 구성원들의 모습을 만나보세요</p>
+        </div>
+        
+        {/* 캐러셀 컨테이너 */}
+        <div className="relative">
+          {/* 좌측 그라데이션 */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          {/* 우측 그라데이션 */}
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          
+          {/* 스크롤 가능한 캐러셀 */}
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex gap-6 pb-4" style={{ width: 'max-content' }}>
+              {/* 추가 이미지들 */}
+              <div className="flex-none">
+                <img
+                  alt="임성근, 이완희 변호사"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/5.png"
+                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
+              </div>
+              <div className="flex-none">
+                <img
+                  alt="유헌종 변호사"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/7.png"
+                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
+              </div>
+              <div className="flex-none">
+                <img
+                  alt="황철규, 김형욱, 최임열 변호사"
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/8.png"
+                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
+              </div>
+              <div className="flex-none">
+                <img
+                  alt="임성근 변호사" 
+                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/3.png"
+                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* 스크롤 힌트 */}
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l4-4m0 0l4 4m-4-4v12" />
+            </svg>
+            좌우로 스크롤하여 더 많은 사진을 확인하세요
+            <svg className="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l4-4m0 0l4 4m-4-4v12" />
+            </svg>
+          </p>
         </div>
       </div>
 

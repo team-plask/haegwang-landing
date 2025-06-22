@@ -64,7 +64,7 @@ export function BackgroundVideo({ videoSource, isLoading = false, onVideoLoaded 
         <motion.div
           className="absolute inset-0 h-full w-full"
           style={{
-            background: `linear-gradient(to bottom, transparent 50%, var(--color-brand) 100%)`,
+            background: `linear-gradient(to bottom, transparent 70%, var(--color-brand) 100%)`,
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoading ? 0 : 1 }}

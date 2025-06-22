@@ -1,5 +1,5 @@
 import { Database } from "@/database.types";
-import { PostCard, Post } from "@/components/post-card";
+import { PostListCard, Post } from "@/components/post-list-card";
 import { Heading } from "@/components/heading";
 
 export type PostCardFromDB = Pick<
@@ -49,14 +49,33 @@ export function MediaSection({ media }: { media: MediaProps }) {
 
   return (
     <section className="w-full items-center justify-center py-12 md:py-32 mx-auto bg-gray-100">
-      <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
-        <Heading badge="언론보도" title="해광의 최신 소식을 확인해보세요" description="법무법인(유한) 해광은 민사부터 기업 법무까지 다양한 업무를 진행합니다." />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+      <div className="container max-w-6xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
+        <Heading 
+          badge="언론보도" 
+          title="해광의 최신 소식을 확인해보세요" 
+          description="법무법인(유한) 해광은 민사부터 기업 법무까지 다양한 업무를 진행합니다." 
+        />
+        
+        <div className="w-full flex flex-col gap-6 mt-8">
           {media && media.length > 0 && 
             media.map((postItem, index) => (
-              <PostCard key={postItem.id} post={transformPostData(postItem)} index={index} />
+              <PostListCard key={postItem.id} post={transformPostData(postItem)} index={index} />
           ))}
         </div>
+        
+        {media && media.length > 0 && (
+          <div className="mt-12">
+            <a
+              href="/media"
+              className="inline-flex items-center px-6 py-3 bg-brand text-white font-medium rounded-full hover:bg-brand/90 transition-colors duration-200"
+            >
+              더 많은 소식 보기
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

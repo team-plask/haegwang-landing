@@ -82,7 +82,7 @@ export default function HeroBadge({
 
   if (href) {
     return (
-      <Link href={href} className={cn("group", "cursor-pointer")}>
+      <Link href={href} prefetch={true} className={cn("group", "cursor-pointer")}>
         {badgeInnerContent}
       </Link>
     );

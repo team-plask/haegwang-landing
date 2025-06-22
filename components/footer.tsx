@@ -38,7 +38,7 @@ export function FooterWithGrid({
   return (
     <div className="bg-gray-50 dark:bg-neutral-800">
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-        {linkSections && linkSections.length > 0 && (
+        {/* {linkSections && linkSections.length > 0 && (
           <div className="grid grid-cols-2 gap-10 border-b border-neutral-200 pb-10 pt-10 md:grid-cols-4 dark:border-neutral-700">
             {linkSections.map((section, sectionIdx) => (
               <ul
@@ -52,6 +52,7 @@ export function FooterWithGrid({
                   <li key={idx} className="mb-4 text-sm font-normal">
                     <Link
                       href={item.href}
+                      prefetch={true}
                       className="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
                     >
                       {item.title}
@@ -61,7 +62,7 @@ export function FooterWithGrid({
               </ul>
             ))}
           </div>
-        )}
+        )} */}
 
         <Image 
           src={logoSrc} 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Map from '@/components/map';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { SectionHeading } from '@/components/section-heading';
 
 interface OfficeInfo {
@@ -27,7 +27,15 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* 지도 */}
           <div className="h-full order-1 lg:order-1 flex justify-center items-center">
-            <Map center={officeInfo.mapCenter} />
+            <div className="w-full">
+              <Map
+                center={officeInfo.mapCenter}
+                style={{ width: "100%", height: "600px", borderRadius: "12px" }}
+                level={3}
+              >
+                <MapMarker position={officeInfo.mapCenter} />
+              </Map>
+            </div>
           </div>
 
           {/* 사무소 정보 */}

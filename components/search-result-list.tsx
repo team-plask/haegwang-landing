@@ -30,7 +30,7 @@ function LawyerCard({ lawyer, query }: { lawyer: LawyerSearchResult; query: stri
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
     >
-      <Link href={`/lawyers/${lawyer.slug || lawyer.id}`} className="block">
+      <Link href={`/lawyers/${lawyer.slug || lawyer.id}`} prefetch={true} className="block">
         <div className="flex items-start space-x-4">
           <div className="flex-shrink-0">
             {lawyer.profile_picture_url ? (
@@ -101,7 +101,7 @@ function CaseCard({ caseItem, query }: { caseItem: CaseSearchResult; query: stri
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
     >
-      <Link href={`/success/${caseItem.slug}`} className="block">
+      <Link href={`/success/${caseItem.slug}`} prefetch={true} className="block">
         <div className="flex items-start space-x-4">
           <div className="flex-shrink-0">
             {caseItem.thumbnail_url ? (
@@ -239,7 +239,7 @@ function PracticeAreaCard({ area, query }: { area: PracticeAreaSearchResult; que
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
     >
-      <Link href={`/areas?area=${area.slug}`} className="block">
+      <Link href={`/areas?area=${area.slug}`} prefetch={true} className="block">
         <div className="flex items-start space-x-4">
           <div className="flex-shrink-0">
             {area.image_url ? (

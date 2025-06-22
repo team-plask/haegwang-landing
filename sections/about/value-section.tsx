@@ -4,13 +4,13 @@ const values = [
   {
     name: '직접 상담과 대응',
     description:
-      '전직 부장판사, 부장검사 출신 대표변호사들이 직접 의뢰인을 상담하고, 수사 및 소송 전 단계에 걸쳐 신속하고 전략적인 대응을 수행하며, 각종 서면 작성 및 최종 검토, 법정 출석까지 직접 수행합니다.',
+      '전직 부장판사, 부장검사 출신 대표변호사들이 직접 의뢰인을 상담하고, 수사 및 소송의 모든 단계에 걸쳐 신속하고 전략적인 대응을 수행하며, 각종 서면 작성 및 최종 검토, 법정 출석까지 직접 수행합니다.',
     icon: ShieldCheck,
   },
   {
-    name: '함께 아파하고 함께 성공하기',
+    name: '공감과 적극적 대응',
     description:
-      '수사 및 재판 실무 경험을 바탕으로 의뢰인의 고통에 공감하며, 함께 해결책을 모색하고 최종 목표 달성을 위해 최선을 다하는 동반자로서의 법률서비스를 제공합니다.',
+      '재판 및 수사 실무 경험을 바탕으로 의뢰인의 고통에 공감하며, 함께 해결책을 모색하고 최종 목표 달성을 위해 최선을 다하는 동반자로서의 법률서비스를 제공합니다.',
     icon: Handshake,
   },
   {
@@ -40,7 +40,7 @@ export default function ValuesSection() {
                     />
                 </h2>
                 <p className="text-muted-foreground max-w-xl text-left text-lg font-light md:text-xl py-2 md:py-6">
-                    법무법인 해광은 의의뢰인에게 전문적인 법률서비스를 제공하고 의뢰인과 함께 성공하며 의뢰인의 신뢰를 얻을 수 있는 로펌이 될 것을 약속드립니다.  
+                    법무법인(유한) 해광은 의뢰인에게 전문적인 법률서비스를 제공하고 의뢰인과 함께 성공하며 의뢰인의 신뢰를 얻을 수 있는 로펌이 될 것을 약속드립니다.  
                 </p>
             <dl className="mx-auto mt-6 md:mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             {values.map((value) => (
