@@ -21,8 +21,9 @@ const officesData = [
       ],
       description: "교대역 1번 출구에서 100m 직진"
     },
-    phone: "02-535-0090\n02-3487-0991\n02-525-2292",
-    fax: "02-535-0091\n02-3487-0997\n02-525-2293",
+    phone: "02-535-0090 (6층)\n02-3487-0991 (7층)\n02-525-2292 (9층)",
+    fax: "02-535-0091 (6층)\n02-3487-0997 (7층)\n02-525-2293 (9층)",
+    parking: "다이소, 하나은행 건물 뒷 편 주차장",
     mapCenter: { lat: 37.4942200198785, lng: 127.01657607757 }
   },
   {
@@ -37,7 +38,8 @@ const officesData = [
     },
     phone: "053-751-8338",
     fax: "053-751-8339",
-    mapCenter: { lat: 35.8714354, lng: 128.6014445 }
+    parking: "건물 지하 주차장\n주차요금: 시간당 1,500원\n방문객 2시간 무료",
+    mapCenter: { lat: 35.8616365285967, lng: 128.628627402457 }
   },
   {
     title: "부산 사무소",
@@ -52,7 +54,8 @@ const officesData = [
     },
     phone: "051-714-2103",
     fax: "051-714-2104",
-    mapCenter: { lat: 35.1587485, lng: 129.0534328 }
+    parking: "건물 후면 주차장\n주차요금: 시간당 1,000원\n방문객 1시간 무료",
+    mapCenter: { lat: 35.1918406080859, lng: 129.074690763385 }
   }
 ];
 
@@ -73,8 +76,7 @@ export default function ContactPage() {
     <div>
       <PageHeader
         title="오시는 길"
-        subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
-        breadcrumbs={[{ name: "홈", href: "/" }, { name: "오시는 길", href: "/contact" }]}
+        subtitle="법무법인(유한) 해광의 주소를 확인하고 연락주세요."
       />
       <Suspense fallback={<div className="flex justify-center py-12"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-brand"></div></div>}>
         <ReusableTabs

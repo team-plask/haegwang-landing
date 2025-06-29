@@ -36,6 +36,10 @@ export default async function RootLayout({
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=617032173ca1f64853d20794c26e2b90&libraries=services,clusterer&autoload=false"
           strategy="beforeInteractive"
         />
+        <Script
+          src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qb1hpg1q8y"
+          strategy="beforeInteractive"
+        />
         <Providers>
           <PageLoadingIndicator />
           <HeroHeader />

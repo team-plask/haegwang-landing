@@ -18,7 +18,7 @@ interface RawSuccessPostFromSupabase extends Omit<PostCardFromDB, 'practice_area
   practice_area: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "id" | "area_name" | "slug"> | null;
   // post_authors might be null or empty when using !left join
   post_authors: {
-    lawyers: Pick<Database["public"]["Tables"]["lawyers"]["Row"], "name" | "profile_picture_url" | "id" | "slug"> | null;
+    lawyers: Pick<Database["public"]["Tables"]["lawyers"]["Row"], "name" | "profile_picture_url" | "profile_original_url" | "id" | "slug"> | null;
   }[] | null;
 }
 
@@ -38,7 +38,7 @@ export default async function SuccessStoriesPage() {
       id, title, content_payload, external_link, post_type, slug,
       practice_area: practice_area_id!left(id, area_name, slug),
       post_authors!left(
-        lawyers!left(name, profile_picture_url, id, slug)
+        lawyers!left(name, profile_picture_url, profile_original_url, id, slug)
       )
     `)
     .eq("post_type", "승소사례") // Filter for success stories
@@ -75,7 +75,6 @@ export default async function SuccessStoriesPage() {
         <PageHeader
           title="업무사례"
           subtitle="해광의 성공적인 업무 수행 사례들을 살펴보세요."
-          breadcrumbs={[{ name: "홈", href: "/" }, { name: "업무사례", href: "/success" }]}
         />
         <div className="p-4 text-center">등록된 업무 분야가 없습니다. 업무사례를 표시할 수 없습니다.</div>
       </>
@@ -125,7 +124,6 @@ export default async function SuccessStoriesPage() {
       <PageHeader
         title="업무사례"
         subtitle="해광의 성공적인 업무 수행 사례들을 살펴보세요."
-        breadcrumbs={[{ name: "홈", href: "/" }, { name: "업무사례", href: "/success" }]}
       />
       {practiceAreas.length > 0 && allSuccessPosts.length > 0 ? (
         <ReusableTabs

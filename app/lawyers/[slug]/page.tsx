@@ -3,8 +3,10 @@ import { LawyerProfileSection, type LawyerProfileFromDB } from '@/sections/lawye
 import { notFound } from 'next/navigation';
 import { LawyerSpecSection, type LawyerSpecFromDB } from '@/sections/lawyers/lawyer-spec-section';
 import { SuccessSection, type PostCardFromDB } from '@/sections/areas/success-section';
-import type { Database } from '@/database.types'; // Import Database type
+import { MediaListSection, type PostCardFromDB as MediaPostCardFromDB } from '@/sections/media-list-section';
+import type { Database } from '@/database.types';
 import type { Metadata } from 'next';
+import { SectionHeading } from '@/components/section-heading';
 
 export const revalidate = 3600; // Revalidate at most every hour
 
@@ -18,6 +20,7 @@ export const revalidate = 3600; // Revalidate at most every hour
 
 interface LawyerPageData extends LawyerProfileFromDB, LawyerSpecFromDB {
   success_stories: PostCardFromDB[];
+  media_posts: MediaPostCardFromDB[];
 }
 
 type Props = {
@@ -46,7 +49,7 @@ export async function generateMetadata(
   const title = `${lawyer.name} ${lawyer.lawyer_type || '변호사'} - 법무법인 해광`;
   const description = lawyer.introduction 
     ? lawyer.introduction.substring(0, 150) + '...' 
-    : `${lawyer.name} 변호사의 상세 프로필입니다. 법무법인 해광의 전문 변호사 정보를 확인하세요.`;
+    : `${lawyer.name} 변호사의 상세 프로필입니다. 법무법인 해광의 변호사 정보를 확인하세요.`;
 
   return {
     title: title,
@@ -73,10 +76,10 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
       ),
       authored_posts:post_authors!left(
         post:posts!inner(
-          id, title, content_payload, external_link, post_type, slug,
+          id, title, content_payload, external_link, post_type, slug, thumbnail_url,
           practice_area:practice_area_id!left(id, area_name, slug),
           all_authors_for_post:post_authors!inner(
-            lawyers!inner(name, profile_original_url, id, slug)
+            lawyers!inner(name, profile_original_url, profile_picture_url, id, slug)
           )
         )
       )
@@ -100,7 +103,10 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     : [];
 
   let transformedSuccessStories: PostCardFromDB[] = [];
+  let transformedMediaPosts: MediaPostCardFromDB[] = [];
+  
   if (data.authored_posts && Array.isArray(data.authored_posts) && data.authored_posts.length > 0) {
+    // Transform success stories
     transformedSuccessStories = data.authored_posts
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((authoredPostEntry: any) => {
@@ -126,6 +132,34 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
         };
       })
       .filter((post): post is PostCardFromDB => post !== null);
+
+    // Transform media posts (언론보도, 법인소식, 블로그)
+    transformedMediaPosts = data.authored_posts
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((authoredPostEntry: any) => {
+        const postData = authoredPostEntry.post;
+        if (!postData || !["언론보도", "법인소식", "블로그"].includes(postData.post_type)) {
+          return null;
+        }
+
+        const allAuthorsForThisPost = (postData.all_authors_for_post && Array.isArray(postData.all_authors_for_post)) 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ? postData.all_authors_for_post.map((authorLink: any) => ({ lawyers: authorLink.lawyers })) 
+          : [];
+
+        return {
+          id: postData.id,
+          title: postData.title,
+          content_payload: postData.content_payload,
+          thumbnail_url: postData.thumbnail_url || null,
+          external_link: postData.external_link,
+          slug: postData.slug,
+          post_type: postData.post_type as Database["public"]["Enums"]["post_type_enum"],
+          practice_area: postData.practice_area,
+          post_authors: allAuthorsForThisPost,
+        };
+      })
+      .filter((post): post is NonNullable<typeof post> => post !== null);
   }
 
   // Exclude original 'authored_posts' and 'practice_areas' before spreading, then add transformed versions
@@ -149,6 +183,7 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     awards_publications: restOfLawyerData.awards_publications,
     practice_areas: transformedPracticeAreas, // Use transformed practice_areas
     success_stories: transformedSuccessStories,
+    media_posts: transformedMediaPosts,
   };
 
   return finalData;
@@ -164,7 +199,7 @@ export default async function LawyerProfilePage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  const { success_stories, ...lawyerProfileAndSpecs } = lawyerData;
+  const { success_stories, media_posts, ...lawyerProfileAndSpecs } = lawyerData;
 
   const lawyerSpecsArray: LawyerSpecFromDB[] = [{
     education: lawyerProfileAndSpecs.education,
@@ -179,6 +214,16 @@ export default async function LawyerProfilePage({ params }: { params: Promise<{ 
       <LawyerSpecSection lawyerSpecs={lawyerSpecsArray} />
       {success_stories && success_stories.length > 0 && (
         <SuccessSection success={success_stories} />
+      )}
+      {media_posts && media_posts.length > 0 && (
+        <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8 py-6 md:py-12">
+        <SectionHeading title="언론 보도" subtitle="법무법인 해광의 최신 뉴스를 확인하세요." />  
+        <MediaListSection 
+          media={media_posts} 
+          currentPage={1} 
+          totalPages={1} 
+        />
+        </div>
       )}
       {/* You might want to add more sections here, like detailed experience, education, etc. */}
     </>

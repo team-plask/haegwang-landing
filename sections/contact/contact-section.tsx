@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { SectionHeading } from '@/components/section-heading';
+import { GoogleMap, Marker, InfoWindow, useJsApiLoader } from '@react-google-maps/api';
 
 interface OfficeInfo {
   title: string;
@@ -12,6 +15,7 @@ interface OfficeInfo {
   };
   phone: string;
   fax: string;
+  parking: string;
   mapCenter: { lat: number; lng: number };
 }
 
@@ -20,6 +24,15 @@ interface ContactSectionProps {
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
+  const { isLoaded, loadError } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
+  });
+
+  if (loadError) {
+    return <div>지도를 로드하는 중 오류가 발생했습니다.</div>;
+  }
+
   return (
     <section className="w-full py-16">
       <div className="max-w-7xl mx-auto px-4">
@@ -27,15 +40,19 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* 지도 */}
           <div className="h-full order-1 lg:order-1 flex justify-center items-center">
-            <div className="w-full">
-              <Map
-                center={officeInfo.mapCenter}
-                style={{ width: "100%", height: "600px", borderRadius: "12px" }}
-                level={3}
-              >
-                <MapMarker position={officeInfo.mapCenter} />
-              </Map>
-            </div>
+            {isLoaded ? (
+                <GoogleMap
+                  mapContainerStyle={{ width: "100%", height: "600px", borderRadius: "12px" }}
+                  center={officeInfo.mapCenter}
+                  zoom={19}
+                >
+                  <Marker position={officeInfo.mapCenter} />
+                </GoogleMap>
+            ) : (
+              <div className="w-full h-[600px] bg-gray-200 rounded-lg flex items-center justify-center">
+                <div className="text-gray-500">지도 로딩 중...</div>
+              </div>
+            )}
           </div>
 
           {/* 사무소 정보 */}
@@ -51,6 +68,20 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">주소</h3>
                   <p className="text-gray-700 whitespace-pre-line">{officeInfo.address}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <svg className="w-6 h-6 text-brand mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">주차 안내</h3>
+                  <p className="text-gray-700 whitespace-pre-line">{officeInfo.parking}</p>
                 </div>
               </div>
             </div>
@@ -91,23 +122,17 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">전화</h3>
-                  <p className="text-gray-700 whitespace-pre-line">{officeInfo.phone}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 팩스 정보 */}
-            <div className="bg-white p-6 rounded-lg shadow-sm border">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <svg className="w-6 h-6 text-brand mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 0a1 1 0 100 2h.01a1 1 0 100-2H9zm2 0a1 1 0 100 2h.01a1 1 0 100-2H11z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">팩스</h3>
-                  <p className="text-gray-700 whitespace-pre-line">{officeInfo.fax}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">연락처</h3>
+                  <div className="flex gap-12">
+                    <div className='flex gap-4'>
+                      <h4 className="text-sm font-medium text-gray-900 mb-1">전화</h4>
+                      <p className="text-gray-700 whitespace-pre-line">{officeInfo.phone}</p>
+                    </div>
+                    <div className='flex gap-4'>
+                      <h4 className="text-sm font-medium text-gray-900 mb-1">FAX</h4>
+                      <p className="text-gray-700 whitespace-pre-line">{officeInfo.fax}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

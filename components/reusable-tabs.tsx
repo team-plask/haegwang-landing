@@ -52,7 +52,7 @@ export function ReusableTabs({
 }: ReusableTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const getActiveTabId = () => {
     const currentQueryTab = searchParams.get(queryParamName);
@@ -95,6 +95,12 @@ export function ReusableTabs({
       newUrl.searchParams.set(queryParamName, newTabId);
       router.push(newUrl.pathname + newUrl.search, { scroll: false });
     });
+  };
+
+  const handleTabPrefetch = (tabId: string) => {
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set(queryParamName, tabId);
+    router.prefetch(newUrl.pathname + newUrl.search);
   };
 
   if (!tabs || tabs.length === 0) {
@@ -146,7 +152,7 @@ export function ReusableTabs({
                   "transition-all duration-300 ease-out",
                   layout === 'scroll' ? "min-w-[150px] snap-center" : "w-full"
                 )}
-                disabled={isPending}
+                onMouseEnter={() => handleTabPrefetch(tab.id)}
               />
             ))}
           </RadioGroup>

@@ -102,7 +102,7 @@ export default function HeroHeader() {
         <div className="flex lg:flex-1">
           <Link href="/" prefetch={true} onClick={handleDesktopMenuClick} className="-m-1.5 p-1.5">
             <span className="sr-only">법무법인(유한)해광</span>
-            <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={150} height={40} className="h-10 w-auto" />
+            <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={100} height={40} className="w-40 md:w-60" />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -140,10 +140,6 @@ export default function HeroHeader() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link href="/" prefetch={true} className="-m-1.5 p-1.5" onClick={() => handleMenuClick('/', '홈')}>
-              <span className="sr-only">법무법인(유한)해광</span>
-              <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={150} height={40} className="h-10 w-auto" />
-            </Link>
             <button
               type="button"
               onClick={closeMobileMenu}

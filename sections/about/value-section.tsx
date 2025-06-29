@@ -2,7 +2,7 @@ import { ShieldCheck, Handshake, Scale, Star } from 'lucide-react'
 
 const values = [
   {
-    name: '직접 상담과 대응',
+    name: '직접 상담과 수행',
     description:
       '전직 부장판사, 부장검사 출신 대표변호사들이 직접 의뢰인을 상담하고, 수사 및 소송의 모든 단계에 걸쳐 신속하고 전략적인 대응을 수행하며, 각종 서면 작성 및 최종 검토, 법정 출석까지 직접 수행합니다.',
     icon: ShieldCheck,
@@ -20,9 +20,9 @@ const values = [
     icon: Scale,
   },
   {
-    name: '신뢰받는 전문 로펌',
+    name: '신뢰받는 법무법인',
     description:
-      '전문성과 진정성을 바탕으로, 의뢰인에게 최고의 법률서비스를 제공하고 함께 성공하며 고객의 신뢰를 받는 로펌이 되기 위해 끊임없이 정진합니다.',
+      '전문성과 진정성을 바탕으로, 의뢰인에게 최적의 법률서비스를 제공하고 함께 성공하며 고객의 신뢰를 받는 로펌이 되기 위해 끊임없이 정진합니다.',
     icon: Star,
   },
 ]

@@ -27,6 +27,36 @@ export const PostCard = ({ post, index }: { post: Post; index: number }) => {
     return text.length > length ? text.slice(0, length) + "..." : text;
   };
 
+  const stripMarkdown = (text: string) => {
+    return text
+      // Remove headers (# ## ### etc.)
+      .replace(/^#{1,6}\s+/gm, '')
+      // Remove bold and italic (**text**, *text*, __text__, _text_)
+      .replace(/(\*\*|__)(.*?)\1/g, '$2')
+      .replace(/(\*|_)(.*?)\1/g, '$2')
+      // Remove links [text](url)
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      // Remove images ![alt](url)
+      .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
+      // Remove inline code `code`
+      .replace(/`([^`]+)`/g, '$1')
+      // Remove code blocks ```code```
+      .replace(/```[\s\S]*?```/g, '')
+      // Remove blockquotes > 
+      .replace(/^>\s+/gm, '')
+      // Remove list markers (-, *, +, 1.)
+      .replace(/^[\s]*[-\*\+]\s+/gm, '')
+      .replace(/^[\s]*\d+\.\s+/gm, '')
+      // Remove horizontal rules ---
+      .replace(/^-{3,}$/gm, '')
+      // Remove table syntax |
+      .replace(/\|/g, ' ')
+      // Remove extra whitespace and newlines
+      .replace(/\n+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
   // Check if the link is external
   const isExternalLink = post.is_external_link || 
     post.display_slug.startsWith('http://') || 
@@ -61,7 +91,7 @@ export const PostCard = ({ post, index }: { post: Post; index: number }) => {
           {post.title}
         </p>
         <p className="line-clamp-3 text-left text-sm mt-2 text-neutral-600 dark:text-neutral-400">
-          {truncate(post.display_description, 100)}
+          {truncate(stripMarkdown(post.display_description), 100)}
         </p>
         {post.authors && post.authors.length > 0 && (
           <div className="flex items-center mt-4">

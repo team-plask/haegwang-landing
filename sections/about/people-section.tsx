@@ -1,32 +1,56 @@
+"use client";
+
+import { useRef, useState, useEffect } from 'react';
+
 export default function PeopleSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollButtons = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+      setTimeout(checkScrollButtons, 300);
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+      setTimeout(checkScrollButtons, 300);
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트 마운트 후 초기 스크롤 상태 체크
+    setTimeout(checkScrollButtons, 100);
+  }, []);
+
   return (
     <section className="w-full mx-auto py-16 md:py-32">
+      {/* Webkit 브라우저용 스크롤바 숨김 스타일 */}
+      <style jsx>{`
+        .carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
             <h2 className="text-4xl font-bold tracking-tight text-brand sm:text-5xl py-3 lg:py-6">해광의 변호사들은</h2>
-            <p className="mt-6 text-xl leading-8 text-gray-600">
-              법무법인(유한) 해광의 대표변호사 및 구성원 변호사들은 민사, 형사, 행정, 가사 등 다양한 분야에서
-              재판장과 대법원 재판연구관으로서 오랜 기간 재판업무를 담당했으며, 고등법원장, 지방법원장, 대법원
-              양형위원회 상임위원, 형사수석부장판사, 법원행정처 및 사법연수원 교수 등 사법행정 전반을 두루
-              경험했습니다. 또한 검찰에서도 형사, 특수, 강력, 마약 등 다양한 분야의 수사와 공판을 이끌었으며,
-              고검장, 검사장, 차장검사, 지청장, 법무부 및 연수원 교수 등 주요 직책을 두루 역임한 전문가들입니다.
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+            법무법인(유한) 해광은 대구고등법원장을 역임한 김찬돈 변호사, 울산지방법원장을 역임한 구남수 변호사, 서울고등법원 부장판사를 역임한 임성근 변호사, 서울고등법원 고법판사를 역임한 유헌종, 이완희 변호사, 특허법원과 수원고등법원 고법판사를 역임한 김동규 변호사, 서울중앙지방법원 등 경향각지의 부장판사를 역임한 민병훈, 서민석, 함석천, 박영호, 권성우, 박재영, 정연택, 손철, 권순엽 변호사등 각급 법원 부장판사 출신 변호사 15인과 부산고검장을 역임한 황철규 변호사, 부산지검 차장검사를 역임한 김후균 변호사, 충주지청장을 역임한 최임렬 변호사, 울산지검 부부장검사를 역임한 김형욱 변호사 등 각급 검사 출신 변호사 4인을 주축으로 하여 그 외 파트너 변호사 3인, 소속변호사 24인으로 구성되었습니다. 
             </p>
-            <p className="mt-6 text-base leading-7 text-gray-600">
-              이러한 법원·검찰 출신의 변호사들이 모여 경찰·검찰의 수사 대응, 민사·형사 소송뿐 아니라 기업, 공정거래,
-              금융, 지적재산권, 건설, 부동산, 조세, 가사, 행정 등 전방위적 분야에서 전문적이고 종합적인 법률서비스를
-              제공합니다. 주요 팀은 다음과 같습니다:
-              {/* <br /><br />
-              <strong>◯ 수사대응팀</strong> (압수수색, 사기, 횡령, 배임, 자본시장법 위반, 중대재해처벌법 위반 등),<br />
-              <strong>◯ 기업형사팀</strong> (기업범죄·재산범죄·금융범죄·고위공직자 범죄 등),<br />
-              <strong>◯ 기업상사팀</strong> (주주총회, 신주발행, 회사채 등 관련 본안 및 보전소송),<br />
-              <strong>◯ 금융팀</strong> (자본시장 제재, 가상자산, 금융소비자 보호 등),<br />
-              <strong>◯ 지식재산권팀</strong> (특허·저작권·영업비밀, 개인정보보호 등),<br />
-              <strong>◯ 부동산/건설팀</strong> (건설소송, 재개발·재건축, 토지수용 등),<br />
-              <strong>◯ 공정거래·조세팀</strong> (시장지배적지위 남용, 방문판매, 하도급, 조세불복 등),<br />
-              <strong>◯ 행정팀</strong> (도시정비, 헌법소송, 의료·환경·방위산업 분야 등),<br />
-              <strong>◯ 회생·파산팀</strong> (법인회생, 파산, 가처분·항고 등 신청 사건),<br />
-              <strong>◯ 가사팀</strong> (상속, 후견, 소년보호 등 가사 사건) */}
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+            법무법인(유한) 해광의 변호사들은 법원과 검찰에 근무하면서 또는 변호사 업무를 수행하면서 민사, 형사, 가사 소송, 특수, 강력 수사는 물론 행정, 조세, 공정거래, 지식재산권, 회생, 파산, 부동산, 건설, 금융 등 각 분야에서 두각을 나타낸 베테랑 들입니다. 
             </p>
           </div>
 
@@ -96,21 +120,50 @@ export default function PeopleSection() {
 
       {/* 캐러셀 갤러리 섹션 */}
       <div className="mx-auto max-w-7xl px-6 mt-20 lg:mt-32">
-        <div className="text-left mb-12">
-          <h3 className="text-3xl font-bold text-brand md:text-5xl mb-4">더 많은 모습들</h3>
-          <p className="text-lg text-gray-600">법무법인(유한) 해광의 다양한 활동과 구성원들의 모습을 만나보세요</p>
-        </div>
         
         {/* 캐러셀 컨테이너 */}
         <div className="relative">
-          {/* 좌측 그라데이션 */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          {/* 우측 그라데이션 */}
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-          
+          {/* 좌측 네비게이션 버튼 */}
+          <button
+            onClick={scrollLeft}
+            disabled={!canScrollLeft}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
+              canScrollLeft 
+                ? 'bg-white hover:bg-gray-50 text-gray-700 hover:shadow-xl' 
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* 우측 네비게이션 버튼 */}
+          <button
+            onClick={scrollRight}
+            disabled={!canScrollRight}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
+              canScrollRight 
+                ? 'bg-white hover:bg-gray-50 text-gray-700 hover:shadow-xl' 
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
           {/* 스크롤 가능한 캐러셀 */}
-          <div className="overflow-x-auto scrollbar-hide">
-            <div className="flex gap-6 pb-4" style={{ width: 'max-content' }}>
+          <div 
+            ref={scrollRef}
+            className="overflow-x-auto carousel-container"
+            style={{
+              scrollbarWidth: 'none', // Firefox
+              msOverflowStyle: 'none', // IE and Edge
+            }}
+            onScroll={checkScrollButtons}
+          >
+            <div className="flex gap-6 pb-4 px-16">
               {/* 추가 이미지들 */}
               <div className="flex-none">
                 <img
@@ -143,19 +196,7 @@ export default function PeopleSection() {
             </div>
           </div>
         </div>
-        
-        {/* 스크롤 힌트 */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l4-4m0 0l4 4m-4-4v12" />
-            </svg>
-            좌우로 스크롤하여 더 많은 사진을 확인하세요
-            <svg className="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l4-4m0 0l4 4m-4-4v12" />
-            </svg>
-          </p>
-        </div>
+      
       </div>
 
     </section>

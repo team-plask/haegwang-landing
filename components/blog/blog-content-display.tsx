@@ -120,16 +120,16 @@ export default function BlogContentDisplay({ parsedContent }: BlogContentDisplay
 
         {/* Result Card for '업무사례' - moved to the bottom */}
         {parsedContent.post_type === '업무사례' && parsedContent.result && (
-          <div className="rounded-xl bg-gradient-to-r from-brand/10 to-brand/5 dark:from-brand/20 dark:to-brand/10 border border-brand/20 dark:border-brand/30 p-6">
-            <div className="flex items-center">
-              <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand/20 dark:bg-brand/20">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="rounded-xl  border border-brand/40 p-6">
+            <div className="flex flex-col items-start gap-2">
+              <div className="mr-4 flex items-center justify-center rounded-full gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
+                <p className="text-sm font-semibold text-brand/80 dark:text-brand-foreground mb-1">최종 결과</p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-500 dark:text-brand-foreground mb-1">최종 결과</p>
-                <p className="font-bold text-xl text-brand dark:text-white">{parsedContent.result}</p>
+                <p className="ml-4 font-bold text-xl text-brand dark:text-white">{parsedContent.result}</p>
               </div>
             </div>
           </div>

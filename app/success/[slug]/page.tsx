@@ -10,6 +10,7 @@ interface PageProps {
 
 export default async function SuccessDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
   const supabase = await createClient();
   
   // Fetch post data with authors
@@ -27,7 +28,7 @@ export default async function SuccessDetailPage({ params }: PageProps) {
         lawyer:lawyers(*)
       )
     `)
-    .eq("slug", slug)
+    .eq("slug", decodedSlug)
     .eq("post_type", "승소사례")
     .single();
 
@@ -57,12 +58,13 @@ export default async function SuccessDetailPage({ params }: PageProps) {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
   const supabase = await createClient();
   
   const { data: post } = await supabase
     .from("posts")
     .select("title, content_payload")
-    .eq("slug", slug)
+    .eq("slug", decodedSlug)
     .eq("post_type", "승소사례")
     .single();
 

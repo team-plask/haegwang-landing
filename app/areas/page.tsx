@@ -44,7 +44,7 @@ export default async function AreasPage() {
         id, title, content_payload, external_link, post_type, slug,
         practice_area: practice_area_id!inner(id, area_name, slug),
         post_authors!left(
-          lawyers!inner(name, profile_picture_url, id, slug)
+          lawyers!inner(name, profile_picture_url, profile_original_url, id, slug)
         )
       )
     `)
@@ -65,7 +65,6 @@ export default async function AreasPage() {
         <PageHeader
           title="업무 영역"
           subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
-          breadcrumbs={[{ name: "홈", href: "/" }, { name: "업무 영역", href: "/areas" }]}
         />
         <div className="p-4 text-center">등록된 업무 분야 정보가 없습니다.</div>
       </>
@@ -113,7 +112,6 @@ export default async function AreasPage() {
       <PageHeader
         title="업무 분야"
         subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
-        breadcrumbs={[{ name: "홈", href: "/" }, { name: "업무 영역", href: "/areas" }]}
       />
       <ReusableTabs
         tabs={tabDefinitions}

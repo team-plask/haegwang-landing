@@ -47,7 +47,13 @@ export default async function Home() {
 
     const rawMediaPromise = supabase
       .from("posts")
-      .select("id, title, content_payload, thumbnail_url, external_link, practice_area:practice_areas(area_name), post_authors(lawyers(name, profile_picture_url))")
+      .select(`
+        id, title, content_payload, thumbnail_url, external_link, 
+        practice_area:practice_areas(area_name), 
+        post_authors(
+          lawyers(name, profile_picture_url)
+        )
+      `)
       .eq("post_type", "언론보도")
       .limit(3);
 
@@ -73,31 +79,27 @@ export default async function Home() {
 
     const typedRawMedia = rawMediaResult as RawMediaItemFromQuery[] | null;
 
-    const media = typedRawMedia
-      ?.map((item: RawMediaItemFromQuery) => {
-        let paObject: { area_name: string } | null = null;
-        if (Array.isArray(item.practice_area)) {
-          paObject = item.practice_area.length > 0 ? item.practice_area[0] : null;
-        } else if (item.practice_area) { 
-          paObject = item.practice_area;
-        }
+    // Simplify media data transformation 
+    const media = typedRawMedia?.map((item: RawMediaItemFromQuery) => {
+      // Handle practice_area - it can be null, single object, or array
+      let practiceAreaObj: { area_name: string } | null = null;
+      if (Array.isArray(item.practice_area)) {
+        practiceAreaObj = item.practice_area.length > 0 ? item.practice_area[0] : null;
+      } else if (item.practice_area) { 
+        practiceAreaObj = item.practice_area;
+      }
 
-        if (!paObject || !paObject.area_name) { 
-          return null;
-        }
-        // post_authors 내부의 lawyers가 null이 아닌 경우만 필터링
-        const validAuthors = item.post_authors?.filter(pa => pa.lawyers !== null) || [];
+      // Handle post_authors - filter out null lawyers
+      const validAuthors = item.post_authors?.filter(pa => pa.lawyers !== null) || [];
 
-        return {
-          ...item,
-          practice_area: paObject, 
-          post_authors: validAuthors as unknown as { lawyers: { name: string; profile_picture_url: string | null } }[] // 타입 단언
-        };
-      })
-      // Filter out nulls from the map operation and ensure practice_area is valid for MediaProps
-      .filter((item): item is Omit<RawMediaItemFromQuery, 'practice_area' | 'post_authors'> & { practice_area: { area_name: string }; post_authors: { lawyers: { name: string; profile_picture_url: string | null } }[] } => 
-        item !== null && item.practice_area !== null
-      ) as MediaProps | undefined;
+      return {
+        ...item,
+        practice_area: practiceAreaObj, 
+        post_authors: validAuthors as { lawyers: { name: string; profile_picture_url: string | null } }[]
+      };
+    }) || [];
+
+    console.log("Processed media data:", media);
 
     // Sort team members according to business rules
     const sortedTeamMembers = teamMembers ? sortLawyers(teamMembers) : null;
@@ -111,9 +113,7 @@ export default async function Home() {
         {sortedTeamMembers && sortedTeamMembers.length > 0 && (
           <TeamSection teamMembers={sortedTeamMembers as TeamMembers} />
         )}
-        {media && media.length > 0 && (
-          <MediaSection media={media as MediaProps} />
-        )}
+        <MediaSection media={media as MediaProps} />
         <ContactSection />
       </>
     );

@@ -32,17 +32,11 @@ async function getLawyersData(): Promise<TeamMembers> {
 export default async function LawyersPage() {
   const teamMembers = await getLawyersData();
 
-  const breadcrumbs = [
-    { name: '홈', href: '/' },
-    { name: '구성원 소개' },
-  ];
-
   return (
     <>
       <PageHeader
         title="구성원 소개"
-        subtitle="해광의 전문가 팀을 만나보세요. 각 분야 최고의 경력을 가진 변호사들이 여러분의 편입니다."
-        breadcrumbs={breadcrumbs}
+        subtitle="해광의 전문가를 만나보세요. \n 각 분야 최고의 변호사들이 여러분의 편입니다."
       />
       <TeamSection teamMembers={teamMembers} />
     </>

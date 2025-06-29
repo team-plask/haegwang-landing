@@ -22,6 +22,11 @@ interface AwardPublicationEntry {
   issuer_or_publisher: string;
 }
 
+interface ExperienceData {
+  award: SimpleEntry[];
+  experience: SimpleEntry[];
+}
+
 // Helper functions to format the data
 const formatEducation = (data: Json | undefined | null): React.ReactNode => {
   if (!data || !Array.isArray(data)) return <p className="text-muted-foreground px-4 py-3 text-xs">학력 정보 없음</p>;
@@ -41,20 +46,76 @@ const formatEducation = (data: Json | undefined | null): React.ReactNode => {
 };
 
 const formatExperience = (data: Json | undefined | null): React.ReactNode => {
-  if (!data || !Array.isArray(data)) return <p className="text-muted-foreground px-4 py-3 text-xs">경력 정보 없음</p>;
-  const entries = data as unknown as SimpleEntry[];
-  return (
-    <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
-      {entries.map((entry, index) => (
-        <li key={index}>
-          {entry.title}
-          {entry.description && entry.description.trim() && (
-            <span className="text-sm text-gray-600"> - {entry.description}</span>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
+  if (!data || typeof data !== 'object') return <p className="text-muted-foreground px-4 py-3 text-xs">경력 정보 없음</p>;
+  
+  // Check if it's the new format with award and experience properties
+  const experienceData = data as unknown as ExperienceData;
+  if (experienceData && typeof experienceData === 'object' && 'experience' in experienceData) {
+    const { award, experience } = experienceData;
+    
+    return (
+      <div className="space-y-6">
+          {/* Experience Section */}
+          {experience && Array.isArray(experience) && experience.length > 0 && (
+          <div>
+            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">주요 경력</h4>
+            <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground ml-4">
+              {experience.map((entry, index) => (
+                <li key={`exp-${index}`}>
+                  {entry.title}
+                  {entry.description && entry.description.trim() && (
+                    <span className="text-sm text-gray-600"> - {entry.description}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Awards Section */}
+        {award && Array.isArray(award) && award.length > 0 && (
+          <div>
+            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">수상 경력</h4>
+            <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground ml-4">
+              {award.map((entry, index) => (
+                <li key={`award-${index}`}>
+                  {entry.title}
+                  {entry.description && entry.description.trim() && (
+                    <span className="text-sm text-gray-600"> - {entry.description}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      
+        
+        {/* Show message if both are empty */}
+        {(!award || award.length === 0) && (!experience || experience.length === 0) && (
+          <p className="text-muted-foreground px-4 py-3 text-xs">경력 정보 없음</p>
+        )}
+      </div>
+    );
+  }
+  
+  // Fallback for old format (array of SimpleEntry)
+  if (Array.isArray(data)) {
+    const entries = data as unknown as SimpleEntry[];
+    return (
+      <ul className="list-disc space-y-2 pr-4 text-sm md:text-lg text-muted-foreground">
+        {entries.map((entry, index) => (
+          <li key={index}>
+            {entry.title}
+            {entry.description && entry.description.trim() && (
+              <span className="text-sm text-gray-600"> - {entry.description}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  
+  return <p className="text-muted-foreground px-4 py-3 text-xs">경력 정보 없음</p>;
 };
 
 const formatAwardsPublications = (data: Json | undefined | null): React.ReactNode => {

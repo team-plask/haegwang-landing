@@ -13,16 +13,14 @@ export interface BlogInfoProps {
 
 export default function BlogInfoCard({ blogInfo }: { blogInfo: BlogInfoProps }) {
   const displayDate = blogInfo.published_at || blogInfo.created_at || Date.now();
-  const hasThumbnail = blogInfo.thumbnail_url && blogInfo.thumbnail_url !== '';
 
   return (
     <div className="relative mb-12 overflow-hidden rounded-3xl">
       {/* Background - either image or solid color */}
       <div className="absolute inset-0">
-        {hasThumbnail ? (
           <>
             <Image
-              src={blogInfo.thumbnail_url!}
+              src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/practice_areas/1.jpg"
               alt={blogInfo.title}
               className="h-full w-full object-cover"
               fill
@@ -32,14 +30,10 @@ export default function BlogInfoCard({ blogInfo }: { blogInfo: BlogInfoProps }) 
             {/* Dark gradient overlay for better text visibility on images */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
           </>
-        ) : (
-          /* Solid color background with gradient when no thumbnail */
-          <div className="absolute inset-0 bg-gradient-to-br from-brand/90 to-brand dark:from-brand/80 dark:to-brand/60" />
-        )}
       </div>
       
       {/* Content overlay */}
-      <div className="relative z-10 flex min-h-[40vh] flex-col justify-end p-6 md:p-12">
+      <div className="relative z-10 flex min-h-[30vh] flex-col justify-end p-6 md:p-12">
         {/* Practice Area Badge */}
         {blogInfo.practice_area_name && (
           <div className="mb-4">
