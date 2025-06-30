@@ -58,15 +58,14 @@ export default async function Home() {
       .limit(3);
 
     const [
-      { data: practiceAreas, error: practiceAreasError },
-      { data: teamMembers, error: teamMembersError },
-      { data: rawMediaResult, error: rawMediaError } // 변수명 변경 rawMediaResult
+      { data: practiceAreas },
+      { data: teamMembers },
+      { data: rawMediaResult }
     ] = await Promise.all([
       practiceAreasPromise,
       teamMembersPromise,
       rawMediaPromise
     ]);
-
 
     const typedRawMedia = rawMediaResult as RawMediaItemFromQuery[] | null;
 
@@ -106,7 +105,7 @@ export default async function Home() {
         <ContactSection />
       </>
     );
-  } catch (error) {
+  } catch {
     // 에러 발생 시 기본 구조라도 보여주기
     return (
       <>
