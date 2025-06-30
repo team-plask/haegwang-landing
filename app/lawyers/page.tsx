@@ -36,7 +36,7 @@ export default async function LawyersPage() {
     <>
       <PageHeader
         title="구성원 소개"
-        subtitle="해광의 전문가를 만나보세요. \n 각 분야 최고의 변호사들이 여러분의 편입니다."
+        subtitle="해광의 전문가를 만나보세요. 각 분야 최고의 변호사들이 여러분의 편입니다."
       />
       <TeamSection teamMembers={teamMembers} />
     </>
