@@ -63,7 +63,6 @@ function PageLoadingProviderInner({ children }: PageLoadingProviderProps) {
       
       // 네비게이션이 150ms 이내에 완료되면 로딩 화면 건너뛰기
       if (navigationTime < 150) {
-        console.log('Fast navigation detected, skipping loading screen');
         return;
       }
 
@@ -96,7 +95,6 @@ function PageLoadingProviderInner({ children }: PageLoadingProviderProps) {
   useEffect(() => {
     if (isLoading) {
       const maxWaitTimer = setTimeout(() => {
-        console.log('PageLoading: Maximum wait time exceeded, forcing completion');
         setIsLoading(false);
       }, 1000); // 1초 최대 대기
 

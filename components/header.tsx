@@ -11,8 +11,8 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import Image from 'next/image'
 import Link from 'next/link'
+import { Logo } from '@/components/logo'
 
 export default function HeroHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -98,11 +98,11 @@ export default function HeroHeader() {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background shadow-sm backdrop-blur-sm' : 'bg-background shadow-none backdrop-blur-none'} ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-6">
+      <nav aria-label="Global" className="mx-auto flex max-w-[1400px] items-center justify-between py-4 px-4">
         <div className="flex lg:flex-1">
           <Link href="/" prefetch={true} onClick={handleDesktopMenuClick} className="-m-1.5 p-1.5">
             <span className="sr-only">법무법인(유한)해광</span>
-            <Image src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//logo.png" alt="법무법인(유한)해광" width={100} height={40} className="w-40 md:w-60" />
+            <Logo width={200} height={45} className="w-40 md:w-60" />
           </Link>
         </div>
         <div className="flex lg:hidden">

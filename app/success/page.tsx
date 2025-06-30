@@ -97,7 +97,7 @@ export default async function SuccessStoriesPage() {
     // Only add component if there are stories for this area
     if (areaSuccessStories.length > 0) {
       tabComponents[area.slug] = (
-        <SuccessSection success={areaSuccessStories} />
+        <SuccessSection success={areaSuccessStories} showHeading={false} />
       );
     } else {
       // Optionally, display a message if no stories for this specific tab

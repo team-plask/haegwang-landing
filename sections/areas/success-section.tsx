@@ -15,7 +15,7 @@ export type PostCardFromDB = Pick<
 
 export type SuccessProps = PostCardFromDB[];
 
-export function SuccessSection({ success }: { success: SuccessProps }) {
+export function SuccessSection({ success, showHeading = true }: { success: SuccessProps; showHeading?: boolean }) {
 
   const transformPostData = (dbPost: PostCardFromDB): Post => {
     
@@ -78,8 +78,8 @@ export function SuccessSection({ success }: { success: SuccessProps }) {
   return (
     <section className="w-full items-center justify-center py-8 md:py-16 mx-auto bg-gray-100">
       <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
-        <SectionHeading title="업무사례" subtitle="해광의 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다." />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        {showHeading && <SectionHeading title="업무사례" subtitle="" />}
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${showHeading ? 'mt-8' : ''}`}>
           {success && success.length > 0 && 
             success.map((postItem, index) => (
               <PostCard key={postItem.id} post={transformPostData(postItem)} index={index} />

@@ -15,7 +15,6 @@ export type PostCardFromDB = Pick<
 export type MediaProps = PostCardFromDB[];
 
 export function MediaSection({ media }: { media: MediaProps }) {
-  console.log("MediaSection received data:", media);
 
   const transformPostData = (dbPost: PostCardFromDB): Post => {
     let description = "";
@@ -48,8 +47,7 @@ export function MediaSection({ media }: { media: MediaProps }) {
       } else {
         description = "언론보도 내용을 확인해보세요.";
       }
-    } catch (error) {
-      console.error("Error processing content payload:", error);
+    } catch {
       description = "언론보도 내용을 확인해보세요.";
     }
 
@@ -66,8 +64,8 @@ export function MediaSection({ media }: { media: MediaProps }) {
           }
         });
       }
-    } catch (error) {
-      console.error("Error processing authors:", error);
+    } catch {
+      // Error handled silently
     }
 
     // If no authors, add default author
@@ -100,15 +98,13 @@ export function MediaSection({ media }: { media: MediaProps }) {
 
   // Add safety check for media data
   if (!media || !Array.isArray(media) || media.length === 0) {
-    console.log("No media data available");
     return (
       <section className="w-full items-center justify-center py-12 md:py-32 mx-auto bg-gray-100">
         <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
           <Heading 
             badge="언론보도" 
             title="해광의 최신 소식을 확인해보세요" 
-            description="법무법인(유한) 해광은 민사부터 기업 법무까지 다양한 업무를 진행합니다." 
-          />
+            />
           <div className="w-full flex flex-col gap-6 mt-8">
             <p className="text-center text-gray-500">현재 표시할 언론보도가 없습니다.</p>
           </div>
@@ -117,22 +113,17 @@ export function MediaSection({ media }: { media: MediaProps }) {
     );
   }
 
-  console.log("Rendering media items:", media.length);
-
   return (
     <section className="w-full items-center justify-center py-12 md:py-32 mx-auto bg-gray-100">
       <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
         <Heading 
           badge="언론보도" 
           title="해광의 최신 소식을 확인해보세요" 
-          description="법무법인(유한) 해광은 민사부터 기업 법무까지 다양한 업무를 진행합니다." 
-        />
+          />
         
         <div className="w-full flex flex-col gap-6 mt-8">
           {media.map((postItem, index) => {
-            console.log(`Rendering media item ${index}:`, postItem);
             const transformedPost = transformPostData(postItem);
-            console.log(`Transformed post ${index}:`, transformedPost);
             return (
               <PostListCard key={postItem.id || index} post={transformedPost} index={index} />
             );

@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Search } from 'lucide-react';
+import { PageHeader } from '@/components/page-header';
+import { motion } from 'framer-motion';
 import { SearchResultTabs } from '@/components/search-result-tabs';
 import { SearchResultList } from '@/components/search-result-list';
 import { Searchbar } from '@/components/searchbar';
-import { motion } from 'motion/react';
 import { SearchResults } from '@/types/search';
 
 const tabs = [

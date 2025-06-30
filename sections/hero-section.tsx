@@ -45,7 +45,6 @@ export function HeroSection() {
     // 안전장치: 3초 후에는 강제로 로딩 완료
     const fallbackTimer = setTimeout(() => {
       if (!isVideoLoadedRef.current) {
-        console.log('Fallback: Video loading timeout, proceeding anyway');
         handleVideoLoaded();
       }
     }, 5000);
@@ -86,7 +85,7 @@ export function HeroSection() {
       
       <section className="relative h-screen w-full bg-brand">
         <BackgroundVideo 
-          videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8_10.mp4"
+          videoSource="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//8_11.mp4"
           isLoading={!isVideoLoaded}
           onVideoLoaded={handleVideoLoaded}
         />
@@ -104,7 +103,7 @@ export function HeroSection() {
             >
               <TextBorderEffect 
                 text="해광" 
-                letterSpacing={60}
+                letterSpacing={65}
               />
             </motion.div>
 

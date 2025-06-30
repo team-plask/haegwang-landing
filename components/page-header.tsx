@@ -13,11 +13,10 @@ interface PageHeaderProps {
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
-  subtitle,
 }) => {
 
   return (
-    <section className="bg-brand relative w-full py-14 sm:py-18 lg:py-28 mt-20">
+    <section className="bg-brand relative w-full py-14 sm:py-18 lg:py-24 mt-16">
       <div className="absolute inset-0 z-0">
         <Background />
       </div>
@@ -28,11 +27,11 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         </h1>
 
         {/* Subtitle */}
-        {subtitle && (
+        {/* {subtitle && (
           <p className="mt-6 max-w-3xl mx-auto text-center text-md md:text-xl text-white/50">
             {subtitle}
           </p>
-        )}
+        )} */}
       </div>
     </section>
   );

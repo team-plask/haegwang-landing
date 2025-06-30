@@ -61,25 +61,14 @@ export function useKakaoMaps(): UseKakaoMapsReturn {
     script.async = true;
 
     script.onload = () => {
-      // Wait a bit for the script to fully initialize
-      setTimeout(() => {
-        if (
-          window.kakao && 
-          window.kakao.maps && 
-          window.kakao.maps.LatLng && 
-          typeof window.kakao.maps.LatLng === 'function'
-        ) {
-          console.log('Kakao Maps loaded successfully');
+      if (window.kakao && window.kakao.maps) {
+        window.kakao.maps.load(() => {
           setIsLoaded(true);
-        } else {
-          console.error('Kakao Maps script loaded but APIs not available');
-          setIsError(true);
-        }
-      }, 100);
+        });
+      }
     };
 
     script.onerror = () => {
-      console.error('Failed to load Kakao Maps script');
       setIsError(true);
     };
 

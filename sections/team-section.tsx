@@ -21,7 +21,7 @@ export function TeamSection({ teamMembers }: { teamMembers: TeamMembers }) {
     <section className="w-full mx-auto py-12 md:py-32 relative overflow-hidden">
       <GridPatternContainer className="opacity-10" />
       <div className="container mx-auto max-w-7xl px-4 md:px-8 relative z-10">
-        <Heading badge="구성원 소개" title="전문가들이 함께 합니다" description="법원장부터 검사장까지 전관 출신의 전문가들이 함께 합니다" textAlign="center" />
+        <Heading badge="변호사 소개" title="전문가들이 함께 합니다" textAlign="center" />
         <InView viewOptions={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: 0.4 }}>
           <Team members={mappedTeamMembers} />
         </InView>

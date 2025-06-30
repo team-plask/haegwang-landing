@@ -16,7 +16,7 @@ const timelineData = [
               법무법인 해광 설립
             </div>
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              서민석(전 서울중앙지법 부장판사) 등 전 부장판사 출신 3명의 변호사를 주축으로 수사대응 및 송무 전문 로펌 설립
+              서민석(전 서울중앙지법 부장판사) 등 부장판사 출신 3명의 변호사를 주축으로 수사대응 및 송무 전문 로펌 설립
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              김후균(전 울산지검 차장검사)를 대표변호사로 영입
+              김후균(전 울산지검 차장검사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              임성근(전 부산고등법원 부장판사)를 대표변호사로 영입
+              임성근(전 부산고등법원 부장판사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              정연택(전 사법연수원 교수)를 구성원변호사로 영입
+              정연택(전 사법연수원 교수) 구성원변호사 영입
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              유영춘 변호사를 구성원변호사로 영입
+              유영춘 구성원변호사 영입
             </div>
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
               법무법인(유한) 전환
@@ -83,7 +83,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              황철규(전 부산고등검찰청 검장), 이완희(전 서울고등법원 판사)를 대표변호사로 영입
+              황철규(전 부산고등검찰청 검사장), 이완희(전 서울고등법원 고법판사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -93,10 +93,10 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              김찬돈(전 대구고등법원장), 구남수(전 울산지방법원장)를 대표변호사로 영입
+              김찬돈(전 대구고등법원장), 구남수(전 울산지방법원장) 대표변호사 영입
             </div>
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              대구사무소 및 부산사무소 개소
+              대구 분사무소 및 부산 분사무소 개소
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              최임열(전 청주지방검찰청 충주지청장)를 대표변호사로 영입
+              최임열(전 청주지방검찰청 충주지청장) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              송태원 변호사를 구성원변호사로 영입
+              송태원 구성원변호사 영입
             </div>
           </div>
         </div>
@@ -133,10 +133,10 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              민병훈(전 서울중앙지방법원 부장판사)를 대표변호사로 영입
+              민병훈(전 서울중앙지방법원 부장판사) 대표변호사 영입
             </div>
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              조동화 변호사를 구성원 변호사로 영입
+              조동화 구성원변호사 영입
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              유헌종(전 서울고등법원 판사)를 대표변호사로 영입
+              유헌종(전 서울고등법원 고법판사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              함석천(전 대전지방법원 부장판사), 박영호(전 부산지방법원 부장판사), 김동규(전 수원고등법원 판사), 손철(전 수원지방법원 부장판사), 권순엽(전 대구지방법원 부장판사)를 대표변호사로 영입
+              함석천(전 대전지방법원 부장판사), 박영호(전 부산지방법원 부장판사), 김동규(전 수원고등법원 고법판사), 손철(전 수원지방법원 부장판사), 권순엽(전 대구지방법원 부장판사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -173,7 +173,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              박재영(전 서울고등법원 판사)를 대표변호사로 영입
+              박재영(전 서울고등법원 고법판사) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              김형욱(전 대검 중수부 연구관)를 대표변호사로 영입
+              김형욱(전 대검 중수부 연구관) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@ const timelineData = [
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
-              손병준(전 대전지법 부장판사)를 대표변호사로 영입
+              손병준(전 대전지법 부장판사) 대표변호사 영입
             </div>
           </div>
         </div>

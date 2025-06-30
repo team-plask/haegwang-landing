@@ -14,11 +14,14 @@ const pretendard = localFont({
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard",
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 

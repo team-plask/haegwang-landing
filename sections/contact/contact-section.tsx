@@ -44,7 +44,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
                 <GoogleMap
                   mapContainerStyle={{ width: "100%", height: "600px", borderRadius: "12px" }}
                   center={officeInfo.mapCenter}
-                  zoom={19}
+                  zoom={17}
                 >
                   <Marker position={officeInfo.mapCenter} />
                 </GoogleMap>

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
-import { IconMenu } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu } from "lucide-react";
 
 export interface BlogAuthorCardProps {
   name: string | null;
@@ -62,7 +62,7 @@ export default function BlogAuthorCard({ authors }: { authors: BlogAuthorCardPro
             onClick={() => setOpen(!open)}
             className="flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-neutral-200 dark:bg-neutral-800 dark:ring-neutral-700"
           >
-            <IconMenu className="h-6 w-6 text-black dark:text-white" />
+            <Menu className="h-6 w-6 text-black dark:text-white" />
           </button>
           <AnimatePresence>
             {open && (

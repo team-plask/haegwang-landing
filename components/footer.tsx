@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 export interface LinkItem {
@@ -16,20 +15,14 @@ export interface AddressBlock {
 }
 
 export interface FooterProps {
-  logoSrc: string;
-  logoAlt: string;
-  logoWidth?: number;
-  logoHeight?: number;
+  logo: React.ReactNode;
   linkSections: LinkSection[];
   copyrightNotices: string[];
   addressBlocks: AddressBlock[];
 }
 
 export function FooterWithGrid({
-  logoSrc,
-  logoAlt,
-  logoWidth = 100, // Default width
-  logoHeight = 50, // Default height
+  logo,
   linkSections: _linkSections, // eslint-disable-line @typescript-eslint/no-unused-vars
   copyrightNotices,
   addressBlocks,
@@ -63,13 +56,7 @@ export function FooterWithGrid({
           </div>
         )} */}
 
-        <Image 
-          src={logoSrc} 
-          alt={logoAlt} 
-          width={logoWidth} 
-          height={logoHeight} 
-          className="justify-start mb-4 md:mb-6 pt-10" 
-        />
+        {logo}
 
         {/* 대표변호사 정보를 로고 바로 아래에 배치 */}
         {copyrightNotices && copyrightNotices[0] && (

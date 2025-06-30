@@ -40,7 +40,7 @@ export default function ValuesSection() {
                     />
                 </h2>
                 <p className="text-muted-foreground max-w-xl text-left text-lg font-light md:text-xl py-2 md:py-6">
-                    법무법인(유한) 해광은 의뢰인에게 전문적인 법률서비스를 제공하고 의뢰인과 함께 성공하며 의뢰인의 신뢰를 얻을 수 있는 로펌이 될 것을 약속드립니다.  
+                    법무법인(유한) 해광은 의뢰인에게 성의있는 법률서비스를 제공하고 의뢰인의 신뢰를 얻어 의뢰인과 함께 성공하는 로펌이 될 것을 약속드립니다.  
                 </p>
             <dl className="mx-auto mt-6 md:mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             {values.map((value) => (

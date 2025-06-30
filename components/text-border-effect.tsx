@@ -31,7 +31,7 @@ export const TextBorderEffect = ({
 
   // 애니메이션 지연 및 지속 시간 계산
   const strokeAnimationDuration = duration * 0.7; // 전체 duration의 70%
-  const fillAnimationDelay = strokeAnimationDuration * 0.3; // stroke 애니메이션 중간부터 시작
+  const fillAnimationDelay = strokeAnimationDuration * 0.2; // stroke 애니메이션 중간부터 시작
   const fillAnimationDuration = duration * 0.2; // 전체 duration의 50%
 
   // 반응형 fontSize와 viewBox 설정
@@ -107,7 +107,7 @@ export const TextBorderEffect = ({
               },
               fill: {
                 duration: fillAnimationDuration,
-                delay: fillAnimationDelay + initialDelay + (justifiedLayout ? index * 0.2 : 0),
+                delay: fillAnimationDelay + initialDelay,
                 ease: "easeInOut",
               },
             }}

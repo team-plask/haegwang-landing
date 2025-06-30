@@ -19,7 +19,6 @@ export function BrandLoading({
   useEffect(() => {
     if (isVisible && onTimeout) {
       const timeoutTimer = setTimeout(() => {
-        console.log('BrandLoading: Maximum wait time exceeded, forcing completion');
         onTimeout();
       }, maxWaitTime);
 
