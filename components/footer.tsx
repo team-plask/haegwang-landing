@@ -1,5 +1,4 @@
 import React from "react";
-import { Logo } from "@/components/logo";
 
 export interface LinkItem {
   title: string;
@@ -11,22 +10,16 @@ export interface LinkSection {
   links: LinkItem[];
 }
 
-export interface AddressBlock {
-  lines: string[];
-}
-
 export interface FooterProps {
   logo: React.ReactNode;
   linkSections: LinkSection[];
   copyrightNotices: string[];
-  addressBlocks: AddressBlock[];
 }
 
 export function FooterWithGrid({
   logo,
   linkSections: _linkSections, // eslint-disable-line @typescript-eslint/no-unused-vars
   copyrightNotices,
-  addressBlocks,
 }: FooterProps) {
   return (
     <div className="bg-gray-50 dark:bg-neutral-800">
@@ -57,7 +50,7 @@ export function FooterWithGrid({
           </div>
         )} */}
 
-        <Logo width={200} height={60} className="mb-4" />
+        {logo}
 
         {/* 대표변호사 정보를 로고 바로 아래에 배치 */}
         {copyrightNotices && copyrightNotices[0] && (
