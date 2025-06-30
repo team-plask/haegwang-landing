@@ -78,19 +78,6 @@ export function FooterWithGrid({
             </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-4 pb-6 text-xs/5 text-neutral-500 dark:text-neutral-400 space-y-2 md:space-y-0">
-          {addressBlocks && addressBlocks.map((block, idx) => (
-            <p key={idx}>
-              {block.lines.map((line, lineIdx) => (
-                <React.Fragment key={lineIdx}>
-                  <span dangerouslySetInnerHTML={{ __html: line.replace(/\*(.*?)\*/g, "<strong>$1</strong>") }} />
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
-          ))}
-        </div>
-
         {/* Copyright는 맨 아래에 별도로 배치 */}
         {copyrightNotices && copyrightNotices[2] && (
           <div className="border-t border-neutral-200 dark:border-neutral-700 pt-4">
