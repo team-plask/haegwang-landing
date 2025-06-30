@@ -4,8 +4,6 @@ import { motion, useAnimation, type Variants } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const ease = [0.16, 1, 0.3, 1];
-
 interface HeroBadgeProps {
   href: string;
   text: string;
@@ -58,7 +56,7 @@ export default function HeroBadge({
       className={baseClassName}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8, duration: 0.8, ease }}
+      transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
       onHoverStart={() => controls.start("hover")}
       onHoverEnd={() => controls.start("initial")}
     >
