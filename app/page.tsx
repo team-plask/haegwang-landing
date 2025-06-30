@@ -67,15 +67,6 @@ export default async function Home() {
       rawMediaPromise
     ]);
 
-    if (practiceAreasError) {
-      console.error("Error fetching practice areas:", practiceAreasError);
-    }
-    if (teamMembersError) {
-      console.error("Error fetching team members:", teamMembersError);
-    }
-    if (rawMediaError) {
-      console.error("Error fetching media:", rawMediaError);
-    }
 
     const typedRawMedia = rawMediaResult as RawMediaItemFromQuery[] | null;
 
@@ -99,8 +90,6 @@ export default async function Home() {
       };
     }) || [];
 
-    console.log("Processed media data:", media);
-
     // Sort team members according to business rules
     const sortedTeamMembers = teamMembers ? sortLawyers(teamMembers) : null;
 
@@ -118,7 +107,6 @@ export default async function Home() {
       </>
     );
   } catch (error) {
-    console.error("Error loading homepage data:", error);
     // 에러 발생 시 기본 구조라도 보여주기
     return (
       <>

@@ -2,6 +2,7 @@
 
 import { Database } from "@/database.types";
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export type LawyerProfileFromDB = Pick<
@@ -31,13 +32,14 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
             {practice_areas && practice_areas.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {practice_areas.map((area) => (
-                  <Badge
-                    key={area.slug}
-                    variant="secondary"
-                    className="bg-white/20 hover:bg-blue-600 text-white px-3 py-1 text-sm"
-                  >
-                    #{area.area_name}
-                  </Badge>
+                  <Link key={area.slug} href={`/areas?slug=${area.slug}`}>
+                    <Badge
+                      variant="secondary"
+                      className="bg-white/20 hover:bg-white/50 text-white px-3 py-1 text-sm cursor-pointer transition-all duration-200 hover:scale-105"
+                    >
+                      #{area.area_name}
+                    </Badge>
+                  </Link>
                 ))}
               </div>
             )}
