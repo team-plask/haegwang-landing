@@ -70,13 +70,21 @@ export function FooterWithGrid({
           height={logoHeight} 
           className="justify-start mb-4 md:mb-6 pt-10" 
         />
-        {copyrightNotices && copyrightNotices.map((notice, idx) => (
-          <p key={idx} className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
-            {notice.includes("{year}") ? notice.replace("{year}", new Date().getFullYear().toString()) : notice}
-          </p>
-        ))}
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-4 text-xs/5 text-neutral-500 dark:text-neutral-400 space-y-2 md:space-y-0">
+        {/* 대표변호사 정보를 로고 바로 아래에 배치 */}
+        {copyrightNotices && copyrightNotices[0] && (
+          <div className="mb-4">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              <span dangerouslySetInnerHTML={{ 
+                __html: copyrightNotices[0]
+                  .replace(/\*(.*?)\*/g, "<strong>$1</strong>")
+                  .replace(/\s{2,}/g, '<span class="mx-4"></span>') 
+              }} />
+            </p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-4 pb-6 text-xs/5 text-neutral-500 dark:text-neutral-400 space-y-2 md:space-y-0">
           {addressBlocks && addressBlocks.map((block, idx) => (
             <p key={idx}>
               {block.lines.map((line, lineIdx) => (
@@ -88,6 +96,15 @@ export function FooterWithGrid({
             </p>
           ))}
         </div>
+
+        {/* Copyright는 맨 아래에 별도로 배치 */}
+        {copyrightNotices && copyrightNotices[2] && (
+          <div className="border-t border-neutral-200 dark:border-neutral-700 pt-4">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              {copyrightNotices[2].includes("{year}") ? copyrightNotices[2].replace("{year}", new Date().getFullYear().toString()) : copyrightNotices[2]}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -60,7 +60,9 @@ const footerAddressBlocks: AddressBlock[] = [
 ];
 
 const footerCopyrightNotices: string[] = [
-  "© {year} 법무법인(유한) 해광 All Rights Reserved.",
+  "*대표변호사* 이완희   *사업자등록번호* 753-81-01984",
+  "",
+  "© 2025 법무법인(유한) 해광 All Rights Reserved.",
 ];
 
 export default function FooterSection() {
