@@ -1,4 +1,5 @@
 import React from "react";
+import { Logo } from "@/components/logo";
 
 export interface LinkItem {
   title: string;
@@ -56,7 +57,7 @@ export function FooterWithGrid({
           </div>
         )} */}
 
-        {logo}
+        <Logo width={200} height={60} className="mb-4" />
 
         {/* 대표변호사 정보를 로고 바로 아래에 배치 */}
         {copyrightNotices && copyrightNotices[0] && (
@@ -70,6 +71,12 @@ export function FooterWithGrid({
             </p>
           </div>
         )}
+        <div className="mb-4">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              <span className="font-bold">주소</span> 서울특별시 서초구 서초대로320, 6,7,9층 (케이타워서초)
+              <span className="font-bold ml-4">대표번호</span> 02-535-0090
+            </p>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-4 pb-6 text-xs/5 text-neutral-500 dark:text-neutral-400 space-y-2 md:space-y-0">
           {addressBlocks && addressBlocks.map((block, idx) => (
