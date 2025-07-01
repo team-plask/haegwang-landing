@@ -217,7 +217,7 @@ export default async function LawyerProfilePage({ params }: { params: Promise<{ 
       )}
       {media_posts && media_posts.length > 0 && (
         <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8 py-6 md:py-12">
-        <SectionHeading title="언론 보도" subtitle={`${lawyerProfileAndSpecs.name} 변호사의 최신 뉴스를 확인하세요.`} />  
+        <SectionHeading title="언론 보도" />  
         <MediaListSection 
           media={media_posts} 
           currentPage={1} 

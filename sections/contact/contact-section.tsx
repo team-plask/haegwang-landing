@@ -36,7 +36,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
   return (
     <section className="w-full py-16">
       <div className="max-w-7xl mx-auto px-4">
-        <SectionHeading title={officeInfo.title} subtitle={officeInfo.subtitle} />
+        <SectionHeading title={officeInfo.title} />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* 지도 */}
           <div className="h-full order-1 lg:order-1 flex justify-center items-center">

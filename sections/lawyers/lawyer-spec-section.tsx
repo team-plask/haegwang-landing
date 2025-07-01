@@ -176,7 +176,7 @@ export function LawyerSpecSection({ lawyerSpecs }: { lawyerSpecs: LawyerSpecs })
   return (
     <section className="w-full mx-auto py-6 md:py-12">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
-        <SectionHeading title="주요이력" subtitle="Experience" />   
+        <SectionHeading title="주요이력" />   
         <VerticalTabs tabs={tabs} contents={contents} defaultValue="experience" />
       </div>
     </section>

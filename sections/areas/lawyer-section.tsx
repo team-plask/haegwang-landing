@@ -21,7 +21,7 @@ export function LawyerSection({ lawyers }: { lawyers: LawyerList[] | null | unde
     return (
         <section className="w-full mx-auto py-8 md:py-16">
           <div className="container mx-auto max-w-7xl px-4 md:px-8">
-            <SectionHeading title="업무 담당 변호사" subtitle=" " />
+            <SectionHeading title="업무 담당 변호사" />
             <Team members={mappedTeamMembers} />
           </div>
         </section>

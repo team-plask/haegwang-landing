@@ -78,7 +78,7 @@ export function SuccessSection({ success, showHeading = true }: { success: Succe
   return (
     <section className="w-full items-center justify-center py-8 md:py-16 mx-auto bg-gray-100">
       <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8">
-        {showHeading && <SectionHeading title="업무사례" subtitle="" />}
+        {showHeading && <SectionHeading title="업무사례" />}
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${showHeading ? 'mt-8' : ''}`}>
           {success && success.length > 0 && 
             success.map((postItem, index) => (
