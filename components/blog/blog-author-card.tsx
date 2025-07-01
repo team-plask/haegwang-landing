@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu } from "lucide-react";
 
@@ -8,6 +9,7 @@ export interface BlogAuthorCardProps {
   name: string | null;
   profile_picture_url: string | null;
   lawyer_type: string | null;
+  slug: string | null;
 }
 
 export default function BlogAuthorCard({ authors }: { authors: BlogAuthorCardProps[] }) {
@@ -27,27 +29,53 @@ export default function BlogAuthorCard({ authors }: { authors: BlogAuthorCardPro
             <ul className="space-y-4">
               {authors.map((author, index) => (
                 <li key={index}>
-                  <div className="group flex items-center gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-white p-3 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800/70 dark:hover:bg-neutral-800">
-                    {author.profile_picture_url ? (
-                      <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-neutral-100 dark:border-neutral-700">
-                        <Image 
-                          src={author.profile_picture_url}
-                          alt={author.name ?? 'lawyer'}
-                          width={56} 
-                          height={56} 
-                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                        />
+                  {author.slug ? (
+                    <Link href={`/lawyers/${author.slug}`} prefetch={true}>
+                      <div className="group flex items-center gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-white p-3 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800/70 dark:hover:bg-neutral-800 cursor-pointer">
+                        {author.profile_picture_url ? (
+                          <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-neutral-100 dark:border-neutral-700">
+                            <Image 
+                              src={author.profile_picture_url}
+                              alt={author.name ?? 'lawyer'}
+                              width={56} 
+                              height={56} 
+                              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xl font-semibold dark:bg-neutral-700">
+                            {author.name?.charAt(0) ?? 'L'}
+                          </div>
+                        )}
+                        <div className="flex flex-col">
+                          <span className="font-medium text-neutral-900 dark:text-white">{author.name ?? '법무법인 해광'}</span>
+                          <span className="text-sm text-neutral-500 dark:text-neutral-400">{author.lawyer_type ?? '변호사'}</span>
+                        </div>
                       </div>
-                    ) : (
-                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xl font-semibold dark:bg-neutral-700">
-                        {author.name?.charAt(0) ?? 'L'}
+                    </Link>
+                  ) : (
+                    <div className="group flex items-center gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-white p-3 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800/70 dark:hover:bg-neutral-800">
+                      {author.profile_picture_url ? (
+                        <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-neutral-100 dark:border-neutral-700">
+                          <Image 
+                            src={author.profile_picture_url}
+                            alt={author.name ?? 'lawyer'}
+                            width={56} 
+                            height={56} 
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xl font-semibold dark:bg-neutral-700">
+                          {author.name?.charAt(0) ?? 'L'}
+                        </div>
+                      )}
+                      <div className="flex flex-col">
+                        <span className="font-medium text-neutral-900 dark:text-white">{author.name ?? '법무법인 해광'}</span>
+                        <span className="text-sm text-neutral-500 dark:text-neutral-400">{author.lawyer_type ?? '변호사'}</span>
                       </div>
-                    )}
-                    <div className="flex flex-col">
-                      <span className="font-medium text-neutral-900 dark:text-white">{author.name ?? '법무법인 해광'}</span>
-                      <span className="text-sm text-neutral-500 dark:text-neutral-400">{author.lawyer_type ?? '변호사'}</span>
                     </div>
-                  </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -79,23 +107,48 @@ export default function BlogAuthorCard({ authors }: { authors: BlogAuthorCardPro
                     <h3 className="mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-100">참여 변호사</h3>
                     <ul className="space-y-2">
                       {authors.map((author, index) => (
-                        <li key={index} className="flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-700/50">
-                          {author.profile_picture_url ? (
-                            <Image 
-                              src={author.profile_picture_url}
-                              alt={author.name ?? 'lawyer'}
-                              width={32} 
-                              height={32} 
-                              className="rounded-full border border-neutral-200 object-cover dark:border-neutral-600"
-                            />
+                        <li key={index}>
+                          {author.slug ? (
+                            <Link href={`/lawyers/${author.slug}`} prefetch={true}>
+                              <div className="flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-700/50 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700">
+                                {author.profile_picture_url ? (
+                                  <Image 
+                                    src={author.profile_picture_url}
+                                    alt={author.name ?? 'lawyer'}
+                                    width={32} 
+                                    height={32} 
+                                    className="rounded-full border border-neutral-200 object-cover dark:border-neutral-600"
+                                  />
+                                ) : (
+                                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-sm dark:bg-neutral-600">
+                                    {author.name?.charAt(0) ?? 'L'}
+                                  </div>
+                                )}
+                                <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
+                                  {author.name ?? '법무법인 해광'}
+                                </span>
+                              </div>
+                            </Link>
                           ) : (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-sm dark:bg-neutral-600">
-                              {author.name?.charAt(0) ?? 'L'}
+                            <div className="flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-700/50">
+                              {author.profile_picture_url ? (
+                                <Image 
+                                  src={author.profile_picture_url}
+                                  alt={author.name ?? 'lawyer'}
+                                  width={32} 
+                                  height={32} 
+                                  className="rounded-full border border-neutral-200 object-cover dark:border-neutral-600"
+                                />
+                              ) : (
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-sm dark:bg-neutral-600">
+                                  {author.name?.charAt(0) ?? 'L'}
+                                </div>
+                              )}
+                              <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
+                                {author.name ?? '법무법인 해광'}
+                              </span>
                             </div>
                           )}
-                          <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
-                            {author.name ?? '법무법인 해광'}
-                          </span>
                         </li>
                       ))}
                     </ul>

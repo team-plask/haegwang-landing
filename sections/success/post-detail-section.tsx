@@ -81,7 +81,8 @@ export default function PostDetailSection({ post, authors }: PostDetailSectionPr
   const authorsList: BlogAuthorCardProps[] = authors?.map(author => ({
     name: author.lawyer.name,
     profile_picture_url: author.lawyer.profile_picture_url,
-    lawyer_type: author.lawyer.lawyer_type
+    lawyer_type: author.lawyer.lawyer_type,
+    slug: author.lawyer.slug
   })) || [];
 
   return (
