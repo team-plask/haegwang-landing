@@ -64,13 +64,7 @@ export function FooterWithGrid({
             </p>
           </div>
         )}
-        <div className="mb-4">
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              <span className="font-bold">주소</span> 서울특별시 서초구 서초대로320, 6,7,9층 (케이타워서초)
-              <span className="font-bold ml-4">대표번호</span> 02-535-0090
-            </p>
-        </div>
-
+        
         {/* Copyright는 맨 아래에 별도로 배치 */}
         {copyrightNotices && copyrightNotices[2] && (
           <div className="border-t border-neutral-200 dark:border-neutral-700 pt-4">

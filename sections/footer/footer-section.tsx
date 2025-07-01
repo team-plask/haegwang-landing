@@ -36,7 +36,7 @@ const footerLinkSections: LinkSection[] = [
 
 
 const footerCopyrightNotices: string[] = [
-  "*광고책임변호사* 이완희   *사업자등록번호* 753-81-01984",
+  "*광고책임변호사* 이완희  *사업자등록번호* 753-81-01984  *주소* 서울특별시 서초구 서초대로320, 6,7,9층 (케이타워서초)  *대표번호* 02-535-0090",
   "",
   "© 2025 법무법인(유한) 해광 All Rights Reserved.",
 ];
