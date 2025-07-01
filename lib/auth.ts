@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 
 export function useIsEmployee() {
-  // 모든 환경에서 true로 설정 (테스트용)
-  const [isEmployee, setIsEmployee] = useState(true);
+  // 개발 환경에서만 true, 프로덕션에서는 false
+  const [isEmployee, setIsEmployee] = useState(false);
 
   useEffect(() => {
-    // 모든 환경에서 항상 true
-    setIsEmployee(true);
+    // 개발 환경에서만 Vercel Toolbar 표시
+    setIsEmployee(process.env.NODE_ENV === 'development');
   }, []);
 
   return isEmployee;
