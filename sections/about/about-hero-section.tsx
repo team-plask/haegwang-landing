@@ -246,9 +246,6 @@ export default function AboutHero() {
             <h3 className="text-2xl md:text-3xl font-bold text-brand mb-4">
               법무법인(유한) 해광 소개서
             </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              법무법인(유한) 해광의 소개, 전문 분야, 구성원 정보를 담은 소개서를 다운받아 보세요.
-            </p>
             <a
               href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//Haegwang%20Brochure%202025.pdf"
               download="법무법인_해광_브로슈어_2025.pdf"
