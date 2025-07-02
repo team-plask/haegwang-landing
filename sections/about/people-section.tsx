@@ -3,6 +3,34 @@
 import { useRef, useState, useEffect } from 'react';
 
 export default function PeopleSection() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // 스크롤 속도 조절
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
   return (
     <section className="w-full mx-auto py-16 md:py-32">
       {/* Webkit 브라우저용 스크롤바 숨김 스타일 */}
@@ -94,11 +122,16 @@ export default function PeopleSection() {
       <div className="mx-auto max-w-7xl px-6 mt-20 lg:mt-32">
         {/* 스크롤 가능한 캐러셀 */}
         <div 
-          className="overflow-x-auto carousel-container cursor-grab active:cursor-grabbing"
+          ref={carouselRef}
+          className="overflow-x-auto carousel-container cursor-grab active:cursor-grabbing select-none"
           style={{
             scrollbarWidth: 'none', // Firefox
             msOverflowStyle: 'none', // IE and Edge
           }}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 pb-4 px-6">
             {/* 추가 이미지들 */}
@@ -107,6 +140,7 @@ export default function PeopleSection() {
                 alt="임성근, 이완희 변호사"
                 src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/5.png"
                 className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                draggable={false}
               />
             </div>
             <div className="flex-none">
@@ -114,6 +148,7 @@ export default function PeopleSection() {
                 alt="유헌종 변호사"
                 src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/7.png"
                 className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                draggable={false}
               />
             </div>
             <div className="flex-none">
@@ -121,6 +156,7 @@ export default function PeopleSection() {
                 alt="황철규, 김형욱, 최임열 변호사"
                 src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/8.png"
                 className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                draggable={false}
               />
             </div>
             <div className="flex-none">
@@ -128,6 +164,7 @@ export default function PeopleSection() {
                 alt="임성근 변호사" 
                 src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/3.png"
                 className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                draggable={false}
               />
             </div>
           </div>

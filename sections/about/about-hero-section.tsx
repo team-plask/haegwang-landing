@@ -212,7 +212,7 @@ export default function AboutHero() {
         aria-hidden="true"
   className="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl ring-1 shadow-indigo-600/10 ring-indigo-50 sm:-mr-80 lg:-mr-96"
 />
-  <div className="mx-auto max-w-7xl py-32 sm:py-40 px-4 md:px-0">
+  <div className="mx-auto max-w-7xl py-16 sm:py-24 px-4 md:px-0">
     <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
       {/* <h1 class="max-w-2xl text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl lg:col-span-2 xl:col-auto">We're changing the way people connect</h1> */}
       <h1 className="max-w-2xl text-4xl/12 font-semibold text-pretty tracking-tight text-brand sm:text-6xl/20 lg:col-span-1 ">
@@ -243,7 +243,7 @@ export default function AboutHero() {
         <div className="bg-gradient-to-r from-brand/5 to-brand/10 rounded-3xl p-8 md:p-12">
           <div className="text-center">
             
-            <h3 className="text-2xl md:text-3xl font-bold text-brand mb-4">
+            <h3 className="text-2xl md:text-3xl font-bold text-brand mb-4 md:mb-8">
               법무법인(유한) 해광 소개서
             </h3>
             <a
