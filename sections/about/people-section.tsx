@@ -3,43 +3,15 @@
 import { useRef, useState, useEffect } from 'react';
 
 export default function PeopleSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const checkScrollButtons = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
-    }
-  };
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-      setTimeout(checkScrollButtons, 300);
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-      setTimeout(checkScrollButtons, 300);
-    }
-  };
-
-  useEffect(() => {
-    // 컴포넌트 마운트 후 초기 스크롤 상태 체크
-    setTimeout(checkScrollButtons, 100);
-  }, []);
-
   return (
     <section className="w-full mx-auto py-16 md:py-32">
       {/* Webkit 브라우저용 스크롤바 숨김 스타일 */}
       <style jsx>{`
         .carousel-container::-webkit-scrollbar {
           display: none;
+        }
+        .carousel-container {
+          scroll-behavior: smooth;
         }
       `}</style>
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
@@ -120,83 +92,46 @@ export default function PeopleSection() {
 
       {/* 캐러셀 갤러리 섹션 */}
       <div className="mx-auto max-w-7xl px-6 mt-20 lg:mt-32">
-        
-        {/* 캐러셀 컨테이너 */}
-        <div className="relative">
-          {/* 좌측 네비게이션 버튼 */}
-          <button
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
-              canScrollLeft 
-                ? 'bg-white hover:bg-gray-50 text-gray-700 hover:shadow-xl' 
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          {/* 우측 네비게이션 버튼 */}
-          <button
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
-              canScrollRight 
-                ? 'bg-white hover:bg-gray-50 text-gray-700 hover:shadow-xl' 
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* 스크롤 가능한 캐러셀 */}
-          <div 
-            ref={scrollRef}
-            className="overflow-x-auto carousel-container"
-            style={{
-              scrollbarWidth: 'none', // Firefox
-              msOverflowStyle: 'none', // IE and Edge
-            }}
-            onScroll={checkScrollButtons}
-          >
-            <div className="flex gap-6 pb-4 px-16">
-              {/* 추가 이미지들 */}
-              <div className="flex-none">
-                <img
-                  alt="임성근, 이완희 변호사"
-                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/5.png"
-                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
-              <div className="flex-none">
-                <img
-                  alt="유헌종 변호사"
-                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/7.png"
-                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
-              <div className="flex-none">
-                <img
-                  alt="황철규, 김형욱, 최임열 변호사"
-                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/8.png"
-                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
-              <div className="flex-none">
-                <img
-                  alt="임성근 변호사" 
-                  src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/3.png"
-                  className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
+        {/* 스크롤 가능한 캐러셀 */}
+        <div 
+          className="overflow-x-auto carousel-container cursor-grab active:cursor-grabbing"
+          style={{
+            scrollbarWidth: 'none', // Firefox
+            msOverflowStyle: 'none', // IE and Edge
+          }}
+        >
+          <div className="flex gap-6 pb-4 px-6">
+            {/* 추가 이미지들 */}
+            <div className="flex-none">
+              <img
+                alt="임성근, 이완희 변호사"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/5.png"
+                className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
+            </div>
+            <div className="flex-none">
+              <img
+                alt="유헌종 변호사"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/7.png"
+                className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
+            </div>
+            <div className="flex-none">
+              <img
+                alt="황철규, 김형욱, 최임열 변호사"
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/8.png"
+                className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
+            </div>
+            <div className="flex-none">
+              <img
+                alt="임성근 변호사" 
+                src="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/about/3.png"
+                className="h-80 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
             </div>
           </div>
         </div>
-      
       </div>
 
     </section>

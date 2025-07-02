@@ -55,6 +55,7 @@ export default async function Home() {
         )
       `)
       .eq("post_type", "언론보도")
+      .order("published_at", { ascending: false })
       .limit(3);
 
     const [
