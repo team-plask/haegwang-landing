@@ -32,7 +32,7 @@ export function PracticeSection({ practiceAreas }: { practiceAreas: PracticeArea
         
         <div className="container max-w-7xl flex flex-col items-center justify-between mx-auto px-4 md:px-8 relative z-10">
             <Heading badge="업무분야" title="기업부터 법안까지" description="법무법인(유한) 해광은 기업부터 법안까지 다양한 업무를 진행합니다." textColor="white"/>
-            <InView viewOptions={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.4 }}>
+            <InView viewOptions={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: 0.2 }}>
               <BentoGrid>
                   {practiceAreas.map((area: PracticeAreasFromDB) => (
                   <BentoGridItem
