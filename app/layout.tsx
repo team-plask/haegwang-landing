@@ -94,6 +94,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head><meta name="naver-site-verification" content="73e6d0022a4d2d7de7191a843872b67c7a4656a2" /></head>
       <body
         className={`${pretendard.variable} ${geistMono.variable} antialiased`}
       >
