@@ -9,7 +9,7 @@ export const revalidate = 1800; // 30분 = 1800초
 
 export const metadata: Metadata = {
   title: '구성원 소개 - 법무법인 해광',
-  description: '법무법인 해광의 전문가 팀을 만나보세요. 각 분야 최고의 경력을 가진 변호사들이 여러분의 편에서 최선을 다할 것을 약속드립니다.',
+  //description: '법무법인 해광의 전문가 팀을 만나보세요. 각 분야 최고의 경력을 가진 변호사들이 여러분의 편에서 최선을 다할 것을 약속드립니다.',
 };
 
 async function getLawyersData(): Promise<TeamMembers> {

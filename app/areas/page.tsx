@@ -10,7 +10,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '업무 분야 - 법무법인 해광',
-  description: '법무법인 해광의 주요 업무 분야를 소개합니다. 각 분야별 전문 변호사 팀이 맞춤형 법률 서비스를 제공하여 최적의 해결책을 찾아드립니다.',
+  //description: '법무법인 해광의 주요 업무 분야를 소개합니다. 각 분야별 전문 변호사 팀이 맞춤형 법률 서비스를 제공하여 최적의 해결책을 찾아드립니다.',
 };
 
 // Define the structure as returned by Supabase for the lawyers part

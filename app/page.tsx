@@ -15,8 +15,8 @@ import { Database } from "@/database.types";
 export const revalidate = 600; // 10분 = 600초
 
 export const metadata: Metadata = {
-  title: '법무법인 해광 - 신뢰와 전문성으로 법률문제를 해결합니다',
-  description: '풍부한 재판 및 수사 경험을 갖춘 전문가들이 송무, 기업자문, 형사, 가사, 행정 등 다양한 법률 분야에서 최상의 솔루션을 제공합니다.',
+  title: '법무법인 해광 - 신뢰와 정성으로 법률문제를 해결합니다',
+  //description: '풍부한 재판 및 수사 경험을 갖춘 변호사들이 송무, 기업자문, 형사, 가사, 행정 등 다양한 법률 분야에서 최상의 솔루션을 제공합니다.',
 };
 
 // Supabase Posts 테이블의 rawMedia 아이템 타입을 정의합니다.

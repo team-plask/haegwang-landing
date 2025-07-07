@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '성공 사례 - 법무법인 해광',
-  description: '법무법인 해광의 주요 승소 사례 및 성공적인 업무 수행 결과를 소개합니다. 저희의 전문성과 실력을 실제 사례를 통해 확인하세요.',
+  //description: '법무법인 해광의 주요 승소 사례 및 성공적인 업무 수행 결과를 소개합니다. 저희의 전문성과 실력을 실제 사례를 통해 확인하세요.',
 };
 
 // Interface for the raw post structure from Supabase, where practice_area might be an array

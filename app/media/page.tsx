@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '언론 보도 - 법무법인 해광',
-  description: '법무법인 해광 및 소속 변호사들의 언론 보도 내용을 확인하세요. 저희의 전문성과 활동을 다양한 미디어를 통해 소개합니다.',
+  //description: '법무법인 해광 및 소속 변호사들의 언론 보도 내용을 확인하세요. 저희의 전문성과 활동을 다양한 미디어를 통해 소개합니다.',
 };
 
 const POSTS_PER_PAGE = 10;
