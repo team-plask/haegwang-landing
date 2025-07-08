@@ -64,7 +64,7 @@ export default async function AreasPage() {
       <>
         <PageHeader
           title="업무 영역"
-          subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
+          subtitle="해광의 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
         />
         <div className="p-4 text-center">등록된 업무 분야 정보가 없습니다.</div>
       </>
@@ -111,7 +111,7 @@ export default async function AreasPage() {
     <>
       <PageHeader
         title="업무 분야"
-        subtitle="해광의 전문 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
+        subtitle="해광의 변호사들이 당신의 성공적인 문제 해결을 돕겠습니다."
       />
       <ReusableTabs
         tabs={tabDefinitions}
