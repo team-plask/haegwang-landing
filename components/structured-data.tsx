@@ -15,7 +15,7 @@ export function StructuredData({ type = 'organization', data = {} }: StructuredD
         "alternateName": "해광 법무법인",
         "url": "https://lawlsc.co.kr",
         "logo": "https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/media_thumnails/default.png",
-        "description": "신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 다양한 법률 서비스를 제공합니다.",
+        //"description": "신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 다양한 법률 서비스를 제공합니다.",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "서울특별시 서초구 서초대로320, 6층, 7층, 9층 (서초동, 케이타워서초)",
@@ -48,7 +48,7 @@ export function StructuredData({ type = 'organization', data = {} }: StructuredD
         "@type": "WebSite",
         "name": "법무법인(유한) 해광",
         "url": "https://lawlsc.co.kr",
-        "description": "신뢰할 수 있는 법률 서비스를 제공하는 법무법인 해광의 공식 웹사이트입니다.",
+        //"description": "신뢰할 수 있는 법률 서비스를 제공하는 법무법인 해광의 공식 웹사이트입니다.",
         "inLanguage": "ko-KR",
         "potentialAction": {
           "@type": "SearchAction",

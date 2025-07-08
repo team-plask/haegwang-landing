@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     default: '법무법인(유한) 해광',
     template: '%s | 법무법인(유한) 해광'
   },
-  description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 전문적인 법률 서비스를 제공합니다.',
+  //description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 다양한 법률 서비스를 제공합니다.',
   keywords: ['법무법인', '해광', '변호사', '법률상담', '소송', '기업법무', '민사소송', '형사변호', '가정법무', '법률서비스'],
   authors: [{ name: '법무법인(유한) 해광' }],
   creator: '법무법인(유한) 해광',
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: 'https://lawlsc.co.kr',
     title: '법무법인(유한) 해광',
-    description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 전문적인 법률 서비스를 제공합니다.',
+    //description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다. 기업법무, 민사소송, 형사변호, 가정법무 등 다양한 법률 서비스를 제공합니다.',
     siteName: '법무법인(유한) 해광',
     images: [
       {
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '법무법인(유한) 해광',
-    description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다.',
+    //description: '신뢰할 수 있는 법률 서비스, 법무법인(유한) 해광입니다.',
     images: ['https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/lawyers/media_thumnails/default.png'],
   },
   verification: {
