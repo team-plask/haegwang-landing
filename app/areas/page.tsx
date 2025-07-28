@@ -4,7 +4,7 @@ import { PracticeInfoSection, type PracticeInfo } from "@/sections/areas/practic
 import { ReusableTabs, type TabDefinition } from "@/components/reusable-tabs";
 import React from "react"; // Import React for JSX
 import { LawyerSection, type LawyerList } from "@/sections/areas/lawyer-section";
-import { SuccessSection, type PostCardFromDB } from "@/sections/areas/success-section";
+import { type PostCardFromDB } from "@/sections/areas/success-section";
 import { sortLawyers } from "@/utils/lawyer-sorting";
 import type { Metadata } from 'next';
 
@@ -93,12 +93,10 @@ export default async function AreasPage() {
   const tabComponents: Record<string, React.ReactNode> = {};
   practiceAreas.forEach(area => {
     const areaLawyers = area.lawyers || []; // Now area.lawyers is correctly LawyerList[]
-    const areaSuccessStories = area.posts ? area.posts.filter(post => post.post_type === '승소사례') : [];
 
     tabComponents[area.slug] = (
       <>
         <PracticeInfoSection practiceInfo={area} />
-        {areaSuccessStories.length > 0 && <SuccessSection success={areaSuccessStories} />}
         {areaLawyers.length > 0 && <LawyerSection lawyers={areaLawyers} />}
       </>
     );
