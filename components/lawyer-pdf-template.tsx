@@ -160,12 +160,12 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
           )}
 
           {/* 로고 - 왼쪽 상단 */}
-          <View style={tw("absolute left-8 top-8")}>
+          {/* <View style={tw("absolute left-8 top-8")}>
             <Image 
               src="/logo/logo_white.png" 
-              style={tw("h-6 mb-4")}
+              style={tw("h-6 mb-8")}
             />
-          </View>
+          </View> */}
 
           {/* 내부 컨텐츠를 위한 여백 컨테이너 */}
           <View style={tw("mx-8")}>
@@ -215,23 +215,8 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
           </View>
         </View>
 
-        {/* 하단 흰색 배경 섹션들 - 여백 적용 */}
-        <View style={tw("px-16 pt-12 pb-8")}>
-          {/* 학력 */}
-          {educationData.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
-                학력
-              </Text>
-              {educationData.map((item, index) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={tw("text-sm text-gray-600 flex-1 leading-relaxed")}>
-                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
+        {/* 하단 흰색 배경 섹션들 - 여백 적용, 푸터를 위한 하단 여백 추가 */}
+        <View style={tw("px-16 pt-12 pb-20")}>
 
           {/* 주요 경력 */}
           {experienceData.experience.length > 0 && (
@@ -287,6 +272,22 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
             </View>
           )}
 
+          {/* 학력 */}
+          {educationData.length > 0 && (
+            <View style={tw("mb-8")} break={false}>
+              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+                학력
+              </Text>
+              {educationData.map((item, index) => (
+                <View key={index} style={tw("flex-row mb-3")}>
+                  <Text style={tw("text-sm text-gray-600 flex-1 leading-relaxed")}>
+                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+
           {/* 업무 사례 */}
           {casesData.length > 0 && (
             <View style={tw("mb-8")} break={false}>
@@ -304,21 +305,31 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
           )}
         </View>
         
-        {/* 페이지 네이션 - 하단 고정 */}
-        <Text 
-          style={[
-            tw("text-xs text-gray-500"), 
-            { 
-              position: 'absolute', 
-              bottom: 20, 
-              right: 50, 
-              left: 50, 
-              textAlign: 'center' 
-            }
-          ]} 
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+        {/* 각 페이지 하단 푸터 - 고정, 전체 너비 브랜드 색상 배경 */}
+        <View 
+          style={{
+            position: 'absolute', 
+            bottom: 0, 
+            right: 0, 
+            left: 0,
+            paddingVertical: 30,
+            paddingHorizontal: 30,
+            marginTop: 20,
+          }} 
           fixed
-        />
+        >
+          {/* 웹사이트 주소와 페이지 번호 */}
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+            <Image 
+                src={"/logo/logo.png"} 
+                style={tw("h-6")}
+              />
+          </View>
+        </View>
       </Page>
     </Document>
   );
