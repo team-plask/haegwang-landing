@@ -1,6 +1,6 @@
 "use client";
 
-import { Database } from "@/database.types";
+import { Database, Json } from "@/database.types";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -13,12 +13,48 @@ export type LawyerProfileFromDB = Pick<
   practice_areas: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "area_name" | "slug">[];
 };
 
+interface EducationItem {
+  title: string;
+  description?: string;
+}
+
+interface ExperienceData {
+  experience: Array<{ title: string; description?: string }>;
+  award: Array<{ title: string; description?: string }>;
+}
+
+interface AwardsPublicationItem {
+  title?: string;
+  description?: string;
+  type?: string;
+  issuer_or_publisher?: string;
+  year?: string;
+}
+
+interface EducationItem {
+  title: string;
+  description?: string;
+}
+
+interface ExperienceData {
+  experience: Array<{ title: string; description?: string }>;
+  award: Array<{ title: string; description?: string }>;
+}
+
+interface AwardsPublicationItem {
+  title?: string;
+  description?: string;
+  type?: string;
+  issuer_or_publisher?: string;
+  year?: string;
+}
+
 interface LawyerProfileSectionProps {
   lawyer: LawyerProfileFromDB;
   lawyerSpecs?: {
-    education: any;
-    experience: any;
-    awards_publications: any;
+    education: Json;
+    experience: Json;
+    awards_publications: Json;
   };
   successStories?: Array<{
     id: string;

@@ -4,6 +4,7 @@ import React from 'react';
 import { Document, Page, Text, View, Image, Font } from '@react-pdf/renderer';
 import { createTw } from 'react-pdf-tailwind';
 import { LawyerProfileFromDB } from '@/sections/lawyers/lawyer-profile-section';
+import { Json } from '@/database.types';
 
 // 로컬 TTF 파일 사용 - 다양한 weight 등록
 Font.register({
@@ -43,11 +44,13 @@ const tw = createTw({
     }
 });
 
+
+
 interface LawyerPDFTemplateProps {
   lawyer: LawyerProfileFromDB & {
-    education?: any;
-    experience?: any;
-    awards_publications?: any;
+    education?: Json;
+    experience?: Json;
+    awards_publications?: Json;
     cases?: Array<{
       id: string;
       title: string;
@@ -62,21 +65,25 @@ interface LawyerPDFTemplateProps {
 
 export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
   // 데이터 포맷팅 함수들
-  const formatEducationData = (education: any) => {
+  const formatEducationData = (education: Json) => {
     if (!education || !Array.isArray(education)) return [];
-    return education.map((item: any) => ({
-      title: item.title || '',
-      description: item.description || '',
-    }));
+    return education.map((item) => {
+      const typedItem = item as { title?: string; description?: string };
+      return {
+        title: typedItem.title || '',
+        description: typedItem.description || '',
+      };
+    });
   };
 
-  const formatExperienceData = (experience: any) => {
+  const formatExperienceData = (experience: Json) => {
     if (!experience) return { experience: [], award: [] };
     
-    if (typeof experience === 'object' && 'experience' in experience) {
+    if (typeof experience === 'object' && experience !== null && 'experience' in experience) {
+      const exp = experience as { experience?: unknown[]; award?: unknown[] };
       return {
-        experience: Array.isArray(experience.experience) ? experience.experience : [],
-        award: Array.isArray(experience.award) ? experience.award : [],
+        experience: Array.isArray(exp.experience) ? exp.experience : [],
+        award: Array.isArray(exp.award) ? exp.award : [],
       };
     }
     
@@ -87,7 +94,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
     return { experience: [], award: [] };
   };
 
-  const formatAwardsPublicationsData = (awardsPublications: any) => {
+  const formatAwardsPublicationsData = (awardsPublications: Json) => {
     if (!awardsPublications || !Array.isArray(awardsPublications)) return [];
     
     const firstEntry = awardsPublications[0];
@@ -98,15 +105,21 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
       !('type' in firstEntry);
 
     if (isSimpleFormat) {
-      return awardsPublications.map((item: any) => ({
-        title: item.title || '',
-        description: item.description || '',
-      }));
+      return awardsPublications.map((item) => {
+        const typedItem = item as { title?: string; description?: string };
+        return {
+          title: typedItem.title || '',
+          description: typedItem.description || '',
+        };
+      });
     } else {
-      return awardsPublications.map((item: any) => ({
-        title: `${item.type === "award" ? "수상" : item.type === "book" ? "저서" : "논문/활동"}: ${item.title} (${item.issuer_or_publisher}, ${item.year})`,
-        description: '',
-      }));
+      return awardsPublications.map((item) => {
+        const typedItem = item as { title?: string; type?: string; issuer_or_publisher?: string; year?: string };
+        return {
+          title: `${typedItem.type === "award" ? "수상" : typedItem.type === "book" ? "저서" : "논문/활동"}: ${typedItem.title} (${typedItem.issuer_or_publisher}, ${typedItem.year})`,
+          description: '',
+        };
+      });
     }
   };
 
@@ -126,9 +139,9 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
     }));
   };
 
-  const educationData = formatEducationData(lawyer.education);
-  const experienceData = formatExperienceData(lawyer.experience);
-  const awardsData = formatAwardsPublicationsData(lawyer.awards_publications);
+  const educationData = formatEducationData(lawyer.education || null);
+  const experienceData = formatExperienceData(lawyer.experience || null);
+  const awardsData = formatAwardsPublicationsData(lawyer.awards_publications || null);
   const casesData = formatCasesData(lawyer.cases);
 
   return (
@@ -226,13 +239,16 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
                 주요 경력
               </Text>
-              {experienceData.experience.map((item: any, index: number) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed"), {marginBottom: -2}]}>
-                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
-                  </Text>
-                </View>
-              ))}
+              {experienceData.experience.map((item, index: number) => {
+                const typedItem = item as { title?: string; description?: string };
+                return (
+                  <View key={index} style={tw("flex-row mb-3")}>
+                    <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed"), {marginBottom: -2}]}>
+                     •  {typedItem.title}{typedItem.description ? ` - ${typedItem.description}` : ''}
+                    </Text>
+                  </View>
+                );
+              })}
             </View>
           )}
 
@@ -242,13 +258,16 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
                 수상 경력
               </Text>
-              {experienceData.award.map((item: any, index: number) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
-                  </Text>
-                </View>
-              ))}
+              {experienceData.award.map((item, index: number) => {
+                const typedItem = item as { title?: string; description?: string };
+                return (
+                  <View key={index} style={tw("flex-row mb-3")}>
+                    <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
+                     •  {typedItem.title}{typedItem.description ? ` - ${typedItem.description}` : ''}
+                    </Text>
+                  </View>
+                );
+              })}
             </View>
           )}
 

@@ -6,12 +6,24 @@ import { Download } from "lucide-react";
 import { pdf } from '@react-pdf/renderer';
 import { LawyerPDFTemplate } from '@/components/lawyer-pdf-template';
 import { LawyerProfileFromDB } from '@/sections/lawyers/lawyer-profile-section';
+import { Json } from '@/database.types';
+
+
 
 interface LawyerPDFDownloadProps {
   lawyer: LawyerProfileFromDB & {
-    education?: any;
-    experience?: any;
-    awards_publications?: any;
+    education?: Json;
+    experience?: Json;
+    awards_publications?: Json;
+    cases?: Array<{
+      id: string;
+      title: string;
+      practice_area?: {
+        id: string;
+        area_name: string;
+        slug: string;
+      } | null;
+    }>;
   };
 }
 
