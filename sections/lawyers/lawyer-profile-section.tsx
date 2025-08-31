@@ -4,6 +4,7 @@ import { Database } from "@/database.types";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { LawyerPDFDownload } from "@/components/lawyer-pdf-download";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
@@ -12,8 +13,33 @@ export type LawyerProfileFromDB = Pick<
   practice_areas: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "area_name" | "slug">[];
 };
 
-export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }) => {
+interface LawyerProfileSectionProps {
+  lawyer: LawyerProfileFromDB;
+  lawyerSpecs?: {
+    education: any;
+    experience: any;
+    awards_publications: any;
+  };
+  successStories?: Array<{
+    id: string;
+    title: string;
+    practice_area?: {
+      id: string;
+      area_name: string;
+      slug: string;
+    } | null;
+  }>;
+}
+
+export const LawyerProfileSection = ({ lawyer, lawyerSpecs, successStories }: LawyerProfileSectionProps) => {
   const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
+
+  // PDF용 데이터 준비
+  const pdfLawyerData = lawyerSpecs ? {
+    ...lawyer,
+    ...lawyerSpecs,
+    cases: successStories || [],
+  } : lawyer;
 
   return (
     <section className="w-full bg-brand text-white relative overflow-hidden">
@@ -60,6 +86,13 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
                 </div>
               )}
             </div>
+
+            {/* PDF 다운로드 버튼 추가 */}
+            {lawyerSpecs && (
+              <div className="pt-4">
+                <LawyerPDFDownload lawyer={pdfLawyerData} />
+              </div>
+            )}
           </div>
 
           <div className="relative w-full flex justify-center md:justify-end items-end h-full max-h-[450px] md:max-h-[500px]">
@@ -81,7 +114,7 @@ export const LawyerProfileSection = ({ lawyer }: { lawyer: LawyerProfileFromDB }
             )}
           </div>
         </div>
-        </div>
+      </div>
     </section>
   );
 };

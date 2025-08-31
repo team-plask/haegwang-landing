@@ -207,10 +207,20 @@ export default async function LawyerProfilePage({ params }: { params: Promise<{ 
     awards_publications: lawyerProfileAndSpecs.awards_publications,
   }];
 
+  // PDF 생성을 위한 스펙 데이터
+  const lawyerSpecsForPDF = {
+    education: lawyerProfileAndSpecs.education,
+    experience: lawyerProfileAndSpecs.experience,
+    awards_publications: lawyerProfileAndSpecs.awards_publications,
+  };
 
   return (
     <>
-      <LawyerProfileSection lawyer={lawyerProfileAndSpecs} />
+      <LawyerProfileSection 
+        lawyer={lawyerProfileAndSpecs} 
+        lawyerSpecs={lawyerSpecsForPDF}
+        successStories={success_stories}
+      />
       <LawyerSpecSection lawyerSpecs={lawyerSpecsArray} />
       {success_stories && success_stories.length > 0 && (
         <SuccessSection success={success_stories} />
