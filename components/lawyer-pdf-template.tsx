@@ -6,13 +6,14 @@ import { createTw } from 'react-pdf-tailwind';
 import { LawyerProfileFromDB } from '@/sections/lawyers/lawyer-profile-section';
 import { Json } from '@/database.types';
 
-// 로컬 TTF 파일 사용 - 다양한 weight 등록
+// 로컬 Noto Sans KR 폰트 사용 - 한자 지원 완벽
 Font.register({
-  family: 'Pretendard',
+  family: 'NotoSansKR',
   fonts: [
-    { src: '/font/PretendardVariable.ttf', fontWeight: 'normal' },
-    { src: '/font/PretendardBold.ttf', fontWeight: 'bold' },
-    { src: '/font/PretendardSemiBold.ttf', fontWeight: 600 },
+    { src: '/font/NotoSansKR-Regular.ttf', fontWeight: 'normal' },
+    { src: '/font/NotoSansKR-Medium.ttf', fontWeight: 500 },
+    { src: '/font/NotoSansKR-SemiBold.ttf', fontWeight: 600 },
+    { src: '/font/NotoSansKR-Bold.ttf', fontWeight: 'bold' },
   ]
 });
 
@@ -25,10 +26,10 @@ Font.registerEmojiSource({
   url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/',
 });
 
-// Tailwind 설정 - 다양한 fontWeight 추가
+// Tailwind 설정 - Noto Sans KR 단일 폰트 사용
 const tw = createTw({
     fontFamily: {
-      sans: ['Pretendard', 'Arial', 'sans-serif'],
+      sans: ['NotoSansKR', 'Arial', 'sans-serif'],
     },
     colors: {
       brand: '#1a365d',
@@ -78,6 +79,16 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
       .replace(/！/g, '!')   // 전각 느낌표를 반각으로
       .replace(/：/g, ':')   // 전각 콜론을 반각으로
       .replace(/；/g, ';');  // 전각 세미콜론을 반각으로
+  };
+
+  // 한자 포함 여부 확인 함수
+  const hasChineseCharacters = (text: string) => {
+    return /[\u4e00-\u9fff\u3400-\u4dbf]/.test(text);
+  };
+
+  // 모든 텍스트에 Noto Sans KR 사용 (한자 지원)
+  const getFontFamily = (text: string) => {
+    return 'NotoSansKR';
   };
 
   // 데이터 포맷팅 함수들
@@ -162,7 +173,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
 
   return (
     <Document>
-      <Page size="A4" style={{ fontFamily: 'Pretendard', paddingTop: 50, paddingBottom: 50, paddingLeft: 0, paddingRight: 0 }} wrap={true}>
+      <Page size="A4" style={{ fontFamily: 'NotoSansKR', paddingTop: 30, paddingBottom: 30, paddingLeft: 0, paddingRight: 0 }} wrap={true}>
         {/* 상단 브랜드 섹션 - 파란색 배경 (여백 없이 전체 너비, 음수 마진으로 상단 여백 무시) */}
         <View style={[tw("bg-brand text-white p-8 relative"), { marginTop: -50, marginLeft: 0, marginRight: 0 }]}>
           {/* 프로필 이미지 - 오른쪽 오버레이 */}
@@ -202,8 +213,8 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                 <View style={tw("mb-6")}>
                   <View style={tw("flex-row flex-wrap")}>
                     {lawyer.practice_areas.map((area, index) => (
-                      <View key={index} style={tw("bg-backgroundBrand px-3 py-2 rounded-full mr-2 mb-2")}>
-                        <Text style={tw("text-xs text-white font-semibold")}>
+                      <View key={index} style={tw("bg-backgroundBrand px-3 py-1 rounded-full mr-2 mb-2")}>
+                        <Text style={tw("text-xs text-white font-semibold pb-2")}>
                           #{sanitizeText(area.area_name)}
                         </Text>
                       </View>
@@ -232,56 +243,61 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
         </View>
 
         {/* 하단 흰색 배경 섹션들 - 여백 적용, 푸터를 위한 하단 여백 추가 */}
-        <View style={tw("px-16 pt-12 pb-20")}>
+        <View style={tw("px-12 pt-12")}>
 
           {/* 주요 경력 */}
           {experienceData.experience.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+            <>
+              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
                 주요 경력
               </Text>
               {experienceData.experience.map((item, index: number) => {
                 const typedItem = item as { title?: string; description?: string };
                 return (
-                  <View key={index} style={tw("flex-row mb-3")}>
-                    <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed"), {marginBottom: -2}]}>
-                     •  {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
+                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
+                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                      {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
                     </Text>
                   </View>
                 );
               })}
-            </View>
+              <View style={{marginBottom: 32}} />
+            </>
           )}
 
           {/* 수상 경력 */}
           {experienceData.award.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+            <>
+              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
                 수상 경력
               </Text>
               {experienceData.award.map((item, index: number) => {
                 const typedItem = item as { title?: string; description?: string };
                 return (
-                  <View key={index} style={tw("flex-row mb-3")}>
-                    <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                     •  {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
+                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
+                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                      {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
                     </Text>
                   </View>
                 );
               })}
-            </View>
+              <View style={{marginBottom: 32}} />
+            </>
           )}
 
           {/* 논문/저서 */}
           {awardsData.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+            <View style={tw("mb-8")}>
+              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
                 논문/저서
               </Text>
               {awardsData.map((item, index) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                   •  {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
+                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
+                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                    {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
                   </Text>
                 </View>
               ))}
@@ -290,35 +306,41 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
 
           {/* 학력 */}
           {educationData.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+            <>
+              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
                 학력
               </Text>
               {educationData.map((item, index) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={tw("text-sm text-gray-600 flex-1 leading-relaxed")}>
-                   •  {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
+                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
+                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                    {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
                   </Text>
                 </View>
               ))}
-            </View>
+              <View style={{marginBottom: 20}} />
+            </>
           )}
 
           {/* 업무 사례 */}
           {casesData.length > 0 && (
-            <View style={tw("mb-8")} break={false}>
-              <Text style={tw("text-xl text-gray-800 mb-2 pb-2 border-b border-gray-300 font-bold")}>
+            <View style={{marginBottom: 20}}>
+              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
                 업무 사례
               </Text>
               {casesData.map((item, index) => (
-                <View key={index} style={tw("flex-row mb-3")}>
-                  <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                   •  {sanitizeText(item.title)}{item.area ? ` (${sanitizeText(item.area)})` : ''}
+                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
+                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                    {sanitizeText(item.title)}{item.area ? ` (${sanitizeText(item.area)})` : ''}
                   </Text>
                 </View>
               ))}
             </View>
           )}
+          
+          {/* 하단 여백 최소화 */}
+          <View style={{marginBottom: 20}} />
         </View>
         
         {/* 각 페이지 하단 푸터 - 고정, 전체 너비 브랜드 색상 배경 */}
