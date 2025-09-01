@@ -81,15 +81,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
       .replace(/；/g, ';');  // 전각 세미콜론을 반각으로
   };
 
-  // 한자 포함 여부 확인 함수
-  const hasChineseCharacters = (text: string) => {
-    return /[\u4e00-\u9fff\u3400-\u4dbf]/.test(text);
-  };
 
-  // 모든 텍스트에 Noto Sans KR 사용 (한자 지원)
-  const getFontFamily = (text: string) => {
-    return 'NotoSansKR';
-  };
 
   // 데이터 포맷팅 함수들
   const formatEducationData = (education: Json) => {
