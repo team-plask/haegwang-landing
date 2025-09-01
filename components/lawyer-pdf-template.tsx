@@ -9,25 +9,26 @@ import { Json } from '@/database.types';
 // 로컬 TTF 파일 사용 - 다양한 weight 등록
 Font.register({
   family: 'Pretendard',
-  src: '/font/PretendardVariable.ttf'
+  fonts: [
+    { src: '/font/PretendardVariable.ttf', fontWeight: 'normal' },
+    { src: '/font/PretendardBold.ttf', fontWeight: 'bold' },
+    { src: '/font/PretendardSemiBold.ttf', fontWeight: 600 },
+  ]
 });
 
-Font.register({
-  family: 'PretendardBold',
-  src: '/font/PretendardBold.ttf'
-});
+// 시스템 폰트를 fallback으로 등록
+Font.registerHyphenationCallback(word => [word]);
 
-Font.register({
-  family: 'PretendardSemiBold',
-  src: '/font/PretendardSemiBold.ttf'
+// 이모지 및 특수문자 지원을 위한 추가 폰트
+Font.registerEmojiSource({
+  format: 'png',
+  url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/',
 });
 
 // Tailwind 설정 - 다양한 fontWeight 추가
 const tw = createTw({
     fontFamily: {
-      sans: ['Pretendard'],
-      bold: ['PretendardBold'],
-      semibold: ['PretendardSemiBold'],
+      sans: ['Pretendard', 'Arial', 'sans-serif'],
     },
     colors: {
       brand: '#1a365d',
@@ -64,6 +65,21 @@ interface LawyerPDFTemplateProps {
 }
 
 export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
+  // 특수문자 처리 함수
+  const sanitizeText = (text: string) => {
+    if (!text) return '';
+    // 문제가 되는 특수문자들을 일반 문자로 치환
+    return text
+      .replace(/｢/g, '「')  // 전각 왼쪽 괄호를 반각으로
+      .replace(/｣/g, '」')  // 전각 오른쪽 괄호를 반각으로
+      .replace(/，/g, ',')   // 전각 쉼표를 반각으로
+      .replace(/．/g, '.')   // 전각 마침표를 반각으로
+      .replace(/？/g, '?')   // 전각 물음표를 반각으로
+      .replace(/！/g, '!')   // 전각 느낌표를 반각으로
+      .replace(/：/g, ':')   // 전각 콜론을 반각으로
+      .replace(/；/g, ';');  // 전각 세미콜론을 반각으로
+  };
+
   // 데이터 포맷팅 함수들
   const formatEducationData = (education: Json) => {
     if (!education || !Array.isArray(education)) return [];
@@ -151,10 +167,10 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
         <View style={[tw("bg-brand text-white p-8 relative"), { marginTop: -50, marginLeft: 0, marginRight: 0 }]}>
           {/* 프로필 이미지 - 오른쪽 오버레이 */}
           {lawyer.profile_original_url && (
-            <View style={tw("absolute right-8 top-8 bottom-0 w-64")}>
+            <View style={tw("absolute right-8 top-12 bottom-0 w-72")}>
               <Image 
                 src={lawyer.profile_original_url} 
-                style={tw("w-full h-full object-cover object-top rounded-lg")}
+                style={tw("object-cover object-top rounded-lg")}
               />
             </View>
           )}
@@ -174,10 +190,10 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               {/* 이름과 직책 */}
               <View style={tw("mb-6")}>
                 <Text style={tw("text-5xl text-white mb-4 font-bold")}>
-                  {lawyer.name}
+                  {sanitizeText(lawyer.name)}
                 </Text>
                 <Text style={tw("text-xl text-gray-300")}>
-                  {lawyer.lawyer_type || '변호사'}
+                  {sanitizeText(lawyer.lawyer_type || '변호사')}
                 </Text>
               </View>
 
@@ -188,7 +204,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                     {lawyer.practice_areas.map((area, index) => (
                       <View key={index} style={tw("bg-backgroundBrand px-3 py-2 rounded-full mr-2 mb-2")}>
                         <Text style={tw("text-xs text-white font-semibold")}>
-                          #{area.area_name}
+                          #{sanitizeText(area.area_name)}
                         </Text>
                       </View>
                     ))}
@@ -201,13 +217,13 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                 {lawyer.phone_number && (
                   <View style={tw("flex-row items-center mb-3")}>
                     <Text style={tw("text-sm text-gray-300 w-16 font-semibold")}>Tel</Text>
-                    <Text style={tw("text-sm text-gray-300")}>{lawyer.phone_number}</Text>
+                    <Text style={tw("text-sm text-gray-300")}>{sanitizeText(lawyer.phone_number)}</Text>
                   </View>
                 )}
                 {lawyer.email && (
                   <View style={tw("flex-row items-center mb-3")}>
                     <Text style={tw("text-sm text-gray-300 w-16 font-semibold")}>E-mail</Text>
-                    <Text style={tw("text-sm text-gray-300")}>{lawyer.email.toLowerCase()}</Text>
+                    <Text style={tw("text-sm text-gray-300")}>{sanitizeText(lawyer.email.toLowerCase())}</Text>
                   </View>
                 )}
               </View>
@@ -229,7 +245,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                 return (
                   <View key={index} style={tw("flex-row mb-3")}>
                     <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed"), {marginBottom: -2}]}>
-                     •  {typedItem.title}{typedItem.description ? ` - ${typedItem.description}` : ''}
+                     •  {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
                     </Text>
                   </View>
                 );
@@ -248,7 +264,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                 return (
                   <View key={index} style={tw("flex-row mb-3")}>
                     <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                     •  {typedItem.title}{typedItem.description ? ` - ${typedItem.description}` : ''}
+                     •  {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
                     </Text>
                   </View>
                 );
@@ -265,7 +281,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               {awardsData.map((item, index) => (
                 <View key={index} style={tw("flex-row mb-3")}>
                   <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
+                   •  {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
                   </Text>
                 </View>
               ))}
@@ -281,7 +297,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               {educationData.map((item, index) => (
                 <View key={index} style={tw("flex-row mb-3")}>
                   <Text style={tw("text-sm text-gray-600 flex-1 leading-relaxed")}>
-                   •  {item.title}{item.description ? ` - ${item.description}` : ''}
+                   •  {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
                   </Text>
                 </View>
               ))}
@@ -297,7 +313,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
               {casesData.map((item, index) => (
                 <View key={index} style={tw("flex-row mb-3")}>
                   <Text style={[tw("text-sm text-gray-600 flex-1 leading-relaxed")]}>
-                   •  {item.title}{item.area ? ` (${item.area})` : ''}
+                   •  {sanitizeText(item.title)}{item.area ? ` (${sanitizeText(item.area)})` : ''}
                   </Text>
                 </View>
               ))}
