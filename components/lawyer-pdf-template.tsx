@@ -165,7 +165,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
 
   return (
     <Document>
-      <Page size="A4" style={{ fontFamily: 'NotoSansKR', paddingTop: 30, paddingBottom: 30, paddingLeft: 0, paddingRight: 0 }} wrap={true}>
+      <Page size="A4" style={{ fontFamily: 'NotoSansKR', paddingTop: 30, paddingBottom: 60, paddingLeft: 0, paddingRight: 0 }} wrap>
         {/* 상단 브랜드 섹션 - 파란색 배경 (여백 없이 전체 너비, 음수 마진으로 상단 여백 무시) */}
         <View style={[tw("bg-brand text-white p-8 relative"), { marginTop: -50, marginLeft: 0, marginRight: 0 }]}>
           {/* 프로필 이미지 - 오른쪽 오버레이 */}
@@ -235,104 +235,127 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
         </View>
 
         {/* 하단 흰색 배경 섹션들 - 여백 적용, 푸터를 위한 하단 여백 추가 */}
-        <View style={tw("px-12 pt-12")}>
+        <View style={tw("pl-12 pr-20 pt-12")}>
 
           {/* 주요 경력 */}
           {experienceData.experience.length > 0 && (
             <>
-              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
+              <Text 
+                style={[tw("text-xl text-brand mb-8 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]}
+                minPresenceAhead={40}
+              >
                 주요 경력
               </Text>
-              {experienceData.experience.map((item, index: number) => {
-                const typedItem = item as { title?: string; description?: string };
-                return (
-                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
-                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
-                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
-                      {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
-                    </Text>
-                  </View>
-                );
-              })}
-              <View style={{marginBottom: 32}} />
+              <View>
+                {experienceData.experience.map((item, index: number) => {
+                  const typedItem = item as { title?: string; description?: string };
+                  return (
+                    <View key={index} style={[tw("flex-row"), {marginBottom: 8}]} wrap={false}>
+                      <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                      <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                        {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
+              <View style={tw("mb-8")} />
             </>
           )}
 
           {/* 수상 경력 */}
           {experienceData.award.length > 0 && (
             <>
-              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
+              <Text 
+                style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]}
+                minPresenceAhead={40}
+              >
                 수상 경력
               </Text>
-              {experienceData.award.map((item, index: number) => {
-                const typedItem = item as { title?: string; description?: string };
-                return (
-                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
-                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
-                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
-                      {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
-                    </Text>
-                  </View>
-                );
-              })}
-              <View style={{marginBottom: 32}} />
+              <View>
+                {experienceData.award.map((item, index: number) => {
+                  const typedItem = item as { title?: string; description?: string };
+                  return (
+                    <View key={index} style={[tw("flex-row"), {marginBottom: 8}]} wrap={false}>
+                      <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                      <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                        {sanitizeText(typedItem.title || '')}{typedItem.description ? ` - ${sanitizeText(typedItem.description)}` : ''}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
+              <View style={tw("mb-8")} />
             </>
           )}
 
           {/* 논문/저서 */}
           {awardsData.length > 0 && (
-            <View style={tw("mb-8")}>
-              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
+            <>
+              <Text 
+                style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]}
+                minPresenceAhead={40}
+              >
                 논문/저서
               </Text>
-              {awardsData.map((item, index) => (
-                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
-                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
-                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
-                    {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
-                  </Text>
-                </View>
-              ))}
-            </View>
+              <View>
+                {awardsData.map((item, index) => (
+                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]} wrap={false}>
+                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                      {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={tw("mb-8")} />
+            </>
           )}
 
           {/* 학력 */}
           {educationData.length > 0 && (
             <>
-              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
+              <Text 
+                style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]}
+                minPresenceAhead={40}
+              >
                 학력
               </Text>
-              {educationData.map((item, index) => (
-                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
-                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
-                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
-                    {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
-                  </Text>
-                </View>
-              ))}
-              <View style={{marginBottom: 20}} />
+              <View>
+                {educationData.map((item, index) => (
+                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]} wrap={false}>
+                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                      {sanitizeText(item.title)}{item.description ? ` - ${sanitizeText(item.description)}` : ''}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={tw("mb-8")} />
             </>
           )}
 
           {/* 업무 사례 */}
           {casesData.length > 0 && (
-            <View style={{marginBottom: 20}}>
-              <Text style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]} break={false}>
+            <View style={tw("mb-8")}>
+              <Text 
+                style={[tw("text-xl text-brand mb-6 border-b border-gray-300 font-bold"), {fontFamily: 'NotoSansKR'}]}
+                minPresenceAhead={40}
+              >
                 업무 사례
               </Text>
-              {casesData.map((item, index) => (
-                <View key={index} style={[tw("flex-row"), {marginBottom: 8}]}>
-                  <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
-                  <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
-                    {sanitizeText(item.title)}{item.area ? ` (${sanitizeText(item.area)})` : ''}
-                  </Text>
-                </View>
-              ))}
+              <View>
+                {casesData.map((item, index) => (
+                  <View key={index} style={[tw("flex-row"), {marginBottom: 8}]} wrap={false}>
+                    <Text style={[tw("text-sm text-gray-800"), {width: 12, flexShrink: 0, fontFamily: 'NotoSansKR'}]}>•</Text>
+                    <Text style={[tw("text-sm text-gray-800 leading-relaxed"), {flex: 1, paddingLeft: 8, fontFamily: 'NotoSansKR'}]}>
+                      {sanitizeText(item.title)}{item.area ? ` (${sanitizeText(item.area)})` : ''}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           )}
-          
-          {/* 하단 여백 최소화 */}
-          <View style={{marginBottom: 20}} />
         </View>
         
         {/* 각 페이지 하단 푸터 - 고정, 전체 너비 브랜드 색상 배경 */}
