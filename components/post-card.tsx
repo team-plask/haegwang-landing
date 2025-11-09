@@ -87,7 +87,7 @@ export const PostCard = ({ post, index }: { post: Post; index: number }) => {
             {post.practice_area_name}
           </p>
         )}
-        <p className="line-clamp-2 text-lg font-bold mb-4 text-neutral-800 dark:text-neutral-100">
+        <p className="line-clamp-2 text-lg font-bold mb-4 text-neutral-800 dark:text-neutral-100 h-14 flex items-start">
           {post.title}
         </p>
         <p className="line-clamp-3 text-left text-sm mt-2 text-neutral-600 dark:text-neutral-400">

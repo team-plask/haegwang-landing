@@ -70,13 +70,13 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
     .select(`
       id, name, lawyer_type, profile_original_url, slug,
       phone_number, fax_number, email, introduction,
-      education, experience, awards_publications,
+      education, experience, awards_publications, youtube, blog,
       practice_areas:lawyer_practice_areas!left(
         practice_areas!inner(area_name, slug)
       ),
       authored_posts:post_authors!left(
         post:posts!inner(
-          id, title, content_payload, external_link, post_type, slug, thumbnail_url,
+          id, title, content_payload, external_link, post_type, slug, thumbnail_url, published_at,
           practice_area:practice_area_id!left(id, area_name, slug),
           all_authors_for_post:post_authors!inner(
             lawyers!inner(name, profile_original_url, profile_picture_url, id, slug)
@@ -129,9 +129,22 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
           post_type: postData.post_type as Database["public"]["Enums"]["post_type_enum"],
           practice_area: postData.practice_area,
           post_authors: allAuthorsForThisPost,
-        };
+          published_at: postData.published_at,
+        } as PostCardFromDB & { published_at: string };
       })
-      .filter((post): post is PostCardFromDB => post !== null);
+      .filter((post): post is PostCardFromDB & { published_at: string } => post !== null)
+      .sort((a, b) => {
+        // Sort by published_at in descending order (latest first)
+        const dateA = new Date(a.published_at || 0).getTime();
+        const dateB = new Date(b.published_at || 0).getTime();
+        return dateB - dateA;
+      })
+      .map(post => {
+        // Remove published_at from the final result to match PostCardFromDB type
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { published_at, ...postWithoutDate } = post;
+        return postWithoutDate as PostCardFromDB;
+      });
 
     // Transform media posts (언론보도, 법인소식, 블로그)
     transformedMediaPosts = data.authored_posts
@@ -157,9 +170,22 @@ async function getLawyerBySlug(slug: string): Promise<LawyerPageData | null> {
           post_type: postData.post_type as Database["public"]["Enums"]["post_type_enum"],
           practice_area: postData.practice_area,
           post_authors: allAuthorsForThisPost,
-        };
+          published_at: postData.published_at,
+        } as MediaPostCardFromDB & { published_at: string };
       })
-      .filter((post): post is NonNullable<typeof post> => post !== null);
+      .filter((post): post is MediaPostCardFromDB & { published_at: string } => post !== null)
+      .sort((a, b) => {
+        // Sort by published_at in descending order (latest first)
+        const dateA = new Date(a.published_at || 0).getTime();
+        const dateB = new Date(b.published_at || 0).getTime();
+        return dateB - dateA;
+      })
+      .map(post => {
+        // Remove published_at from the final result to match MediaPostCardFromDB type
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { published_at, ...postWithoutDate } = post;
+        return postWithoutDate as MediaPostCardFromDB;
+      });
   }
 
   // Exclude original 'authored_posts' and 'practice_areas' before spreading, then add transformed versions

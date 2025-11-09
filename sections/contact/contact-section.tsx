@@ -9,7 +9,7 @@ interface OfficeInfo {
   title: string;
   subtitle: string;
   address: string;
-  subwayInfo: {
+  subwayInfo?: {
     lines: Array<{ line: string; color: string; bgColor: string }>;
     description: string;
   };
@@ -87,6 +87,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
             </div>
 
             {/* 지하철 정보 */}
+            {officeInfo.subwayInfo && (
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <div className="flex items-start space-x-3">
                 <div className="flex-shrink-0">
@@ -98,7 +99,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">지하철</h3>
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
-                      {officeInfo.subwayInfo.lines.map((line, index) => (
+                      {officeInfo.subwayInfo?.lines.map((line, index) => (
                         <span 
                           key={index}
                           className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${line.bgColor} ${line.color}`}
@@ -107,11 +108,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({ officeInfo }) => {
                         </span>
                       ))}
                     </div>
-                    <p className="text-gray-700">{officeInfo.subwayInfo.description}</p>
+                    <p className="text-gray-700">{officeInfo.subwayInfo?.description}</p>
                   </div>
                 </div>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 연락처 정보 */}
             <div className="bg-white p-6 rounded-lg shadow-sm border">

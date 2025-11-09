@@ -56,19 +56,30 @@ const officesData = [
     fax: "051-714-2104",
     parking: "건물 후면 주차장",
     mapCenter: { lat: 35.1918406080859, lng: 129.074690763385 }
+  },
+  {
+    title: "청주 분사무소",
+    subtitle: "청주 분사무소 주소와 연락처를 안내해드립니다.",
+    address: "충청북도 청주시 서원구 구룡산로 366\n3층 (수곡동, 세명빌딩)",
+    phone: "043-288-3441",
+    fax: "043-288-3446",
+    parking: "건물 후면 주차장",
+    mapCenter: { lat: 36.6181394772341, lng: 127.485042328829 }
   }
 ];
 
 const tabs: TabDefinition[] = [
   { id: "seoul", title: "서울", iconName: "Building" },
   { id: "daegu", title: "대구", iconName: "MapPin" },
-  { id: "busan", title: "부산", iconName: "Anchor" }
+  { id: "busan", title: "부산", iconName: "Anchor" },
+  { id: "chuncheon", title: "청주", iconName: "Building" }
 ];
 
 const tabComponents = {
   seoul: <ContactSection officeInfo={officesData[0]} />,
   daegu: <ContactSection officeInfo={officesData[1]} />,
-  busan: <ContactSection officeInfo={officesData[2]} />
+  busan: <ContactSection officeInfo={officesData[2]} />,
+  chuncheon: <ContactSection officeInfo={officesData[3]} />
 };
 
 export default function ContactPage() {

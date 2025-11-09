@@ -4,11 +4,13 @@ import { Database, Json } from "@/database.types";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { LawyerPDFDownload } from "@/components/lawyer-pdf-download";
+import { ExternalLink } from "lucide-react";
 
 export type LawyerProfileFromDB = Pick<
   Database["public"]["Tables"]["lawyers"]["Row"],
-  "id" | "name" | "lawyer_type" | "profile_original_url" | "slug" | "phone_number" | "fax_number" | "email" | "introduction"
+  "id" | "name" | "lawyer_type" | "profile_original_url" | "slug" | "phone_number" | "fax_number" | "email" | "introduction" | "youtube" | "blog"
 > & {
   practice_areas: Pick<Database["public"]["Tables"]["practice_areas"]["Row"], "area_name" | "slug">[];
 };
@@ -68,7 +70,7 @@ interface LawyerProfileSectionProps {
 }
 
 export const LawyerProfileSection = ({ lawyer, lawyerSpecs, successStories }: LawyerProfileSectionProps) => {
-  const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction } = lawyer;
+  const { name, lawyer_type, profile_original_url, phone_number, fax_number, email, practice_areas, introduction, youtube, blog } = lawyer;
 
   // PDF용 데이터 준비
   const pdfLawyerData = lawyerSpecs ? {
@@ -82,10 +84,10 @@ export const LawyerProfileSection = ({ lawyer, lawyerSpecs, successStories }: La
       <div className="container mx-auto max-w-7xl md:h-[500px] pt-30 md:pt-0 md:mt-20 px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center h-full">
           <div className="md:col-span-2 space-y-6">
-            <div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-2">{name}</h1>
-              <p className="text-xl md:text-2xl text-gray-300">{lawyer_type}</p>
-            </div>
+              <div>
+                <h1 className="text-5xl md:text-7xl font-bold mb-2">{name}</h1>
+                <p className="text-xl md:text-2xl text-gray-300">{lawyer_type}</p>
+              </div>
 
             {introduction && (
               <p className="text-lg text-gray-200">{introduction}</p>
@@ -121,11 +123,28 @@ export const LawyerProfileSection = ({ lawyer, lawyerSpecs, successStories }: La
                   </a>
                 </div>
               )}
+              {(youtube || blog) && (
+                <div className="flex items-center gap-3">
+                  <span className="font-semibold w-16">SNS</span>
+                  <div className="flex items-center gap-4">
+                    {youtube && (
+                      <a href={youtube} target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors flex items-center gap-1 underline">
+                        유튜브 <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                    {blog && (
+                      <a href={blog} target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors flex items-center gap-1 underline">
+                        블로그 <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* PDF 다운로드 버튼 추가 */}
             {lawyerSpecs && (
-              <div className="pt-4">
+              <div className="pb-4">
                 <LawyerPDFDownload lawyer={pdfLawyerData} />
               </div>
             )}

@@ -200,6 +200,15 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
                 </Text>
               </View>
 
+              {/* 소개글 */}
+              {lawyer.introduction && (
+                <View style={tw("mb-6")}>
+                  <Text style={tw("text-sm text-gray-300 leading-relaxed")}>
+                    {sanitizeText(lawyer.introduction)}
+                  </Text>
+                </View>
+              )}
+
               {/* 전문분야 배지들 */}
               {lawyer.practice_areas && lawyer.practice_areas.length > 0 && (
                 <View style={tw("mb-6")}>
@@ -236,7 +245,6 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
 
         {/* 하단 흰색 배경 섹션들 - 여백 적용, 푸터를 위한 하단 여백 추가 */}
         <View style={tw("pl-12 pr-20 pt-12")}>
-
           {/* 주요 경력 */}
           {experienceData.experience.length > 0 && (
             <>
