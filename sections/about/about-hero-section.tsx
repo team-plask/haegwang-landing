@@ -197,6 +197,16 @@ const timelineData = [
             </div>
           </div>
         </div>
+        <div>
+          <div className="flex items-center mb-3">
+            <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded">11월</span>
+          </div>
+          <div className="space-y-3">
+            <div className="text-gray-900 leading-relaxed text-md md:text-lg">
+            노계성, 민경준 구성원변호사 영입
+            </div>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -247,7 +257,7 @@ export default function AboutHero() {
               법무법인(유한) 해광 소개서
             </h3>
             <a
-              href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source//Haegwang%20Brochure%202025.pdf"
+              href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/Haegwang%20Brochure%202025_new.pdf"
               download="법무법인_해광_브로슈어_2025.pdf"
               className="inline-flex items-center gap-3 bg-brand hover:bg-brand/90 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-200 hover:shadow-lg hover:scale-105 group"
             >
