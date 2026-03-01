@@ -42,12 +42,18 @@ export default function Team({ members: teamData }: { members: TeamMember[] }) {
         router.prefetch(`/lawyers/${slug}`);
     };
 
+    // 경영총괄대표변호사는 대표변호사 그룹으로 묶어서 표시
+    const roleGroupMap: Record<string, string> = {
+        '경영총괄대표변호사': '대표변호사',
+    };
+
     const groupedMembers = members.reduce((acc, member) => {
-        const role = member.role || 'Unassigned'; // Group members with null/undefined roles under 'Unassigned'
-        if (!acc[role]) {
-            acc[role] = [];
+        const role = member.role || 'Unassigned';
+        const groupKey = roleGroupMap[role] || role;
+        if (!acc[groupKey]) {
+            acc[groupKey] = [];
         }
-        acc[role].push(member);
+        acc[groupKey].push(member);
         return acc;
     }, {} as Record<string, TeamMember[]>);
 

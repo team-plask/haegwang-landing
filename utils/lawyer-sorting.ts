@@ -16,6 +16,7 @@ export function sortLawyers<T extends LawyerWithOrder>(lawyers: T[]): T[] {
   return lawyers.sort((a, b) => {
     // 1. Sort by lawyer_type priority
     const typeOrder = {
+      '경영총괄대표변호사': 1,
       '대표변호사': 1,
       '구성원변호사': 2,
       '소속변호사': 3
