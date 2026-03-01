@@ -5,11 +5,11 @@ export default function ContactSection() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-brand sm:text-5xl">Contact</h2>
             <p className="mt-4 text-lg/8 text-gray-600">
-              법무법인(유한) 해광은 서울, 대구, 부산, 청주에 위치하고 있습니다. 
+              법무법인(유한) 해광은 서울, 부산, 청주에 위치하고 있습니다. 
             </p>
           </div>
           
-          <div className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-8 text-sm sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 xl:grid-cols-4">
+          <div className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-8 text-sm sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div>
                 <h3 className="border-l border-indigo-600 pl-6 font-semibold text-gray-900">서울 주사무소</h3>
                 <address className="border-l border-gray-200 pt-2 pl-6 text-gray-600 not-italic">
@@ -17,14 +17,6 @@ export default function ContactSection() {
                   <p>TEL. 02-535-0090 / 02-3487-0991 / 02-525-2292</p>
                   <p>FAX. 02-535-0091 / 02-3487-0997 / 02-525-2293</p>
                 </address>
-            </div>
-            <div>
-              <h3 className="border-l border-indigo-600 pl-6 font-semibold text-gray-900">대구 분사무소</h3>
-              <address className="border-l border-gray-200 pt-2 pl-6 text-gray-600 not-italic">
-                <p>대구광역시 수성구 동대구로 348-13 602, 702호 (청담빌딩)</p>
-                <p>TEL. 053-751-8338</p>
-                <p>FAX. 053-751-8339</p>
-              </address>
             </div>
             <div>
               <h3 className="border-l border-indigo-600 pl-6 font-semibold text-gray-900">부산 분사무소</h3>

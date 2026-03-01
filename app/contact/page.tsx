@@ -27,21 +27,6 @@ const officesData = [
     mapCenter: { lat: 37.4942200198785, lng: 127.01657607757 }
   },
   {
-    title: "대구 분사무소",
-    subtitle: "대구 분사무소 주소와 연락처를 안내해드립니다.",
-    address: "대구광역시 동대구로 348-13\n602호, 702호 (범어동, 청담빌딩)",
-    subwayInfo: {
-      lines: [
-        { line: "2호선", color: "text-green-800", bgColor: "bg-green-100" }
-      ],
-      description: "범어역 10번 출구에서 300m"
-    },
-    phone: "053-751-8338",
-    fax: "053-751-8339",
-    parking: "건물 지하 주차장",
-    mapCenter: { lat: 35.8616365285967, lng: 128.628627402457 }
-  },
-  {
     title: "부산 분사무소",
     subtitle: "부산 분사무소 주소와 연락처를 안내해드립니다.",
     address: "부산광역시 연제구 법원로 34\n1303호, 1304호 (거제동, 정림빌딩)",
@@ -70,16 +55,14 @@ const officesData = [
 
 const tabs: TabDefinition[] = [
   { id: "seoul", title: "서울", iconName: "Building" },
-  { id: "daegu", title: "대구", iconName: "MapPin" },
   { id: "busan", title: "부산", iconName: "Anchor" },
   { id: "chuncheon", title: "청주", iconName: "Building" }
 ];
 
 const tabComponents = {
   seoul: <ContactSection officeInfo={officesData[0]} />,
-  daegu: <ContactSection officeInfo={officesData[1]} />,
-  busan: <ContactSection officeInfo={officesData[2]} />,
-  chuncheon: <ContactSection officeInfo={officesData[3]} />
+  busan: <ContactSection officeInfo={officesData[1]} />,
+  chuncheon: <ContactSection officeInfo={officesData[2]} />
 };
 
 export default function ContactPage() {
