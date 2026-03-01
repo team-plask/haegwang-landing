@@ -171,6 +171,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
           {/* 프로필 이미지 - 오른쪽 오버레이 */}
           {lawyer.profile_original_url && (
             <View style={tw("absolute right-8 top-12 bottom-0 w-72")}>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image 
                 src={lawyer.profile_original_url} 
                 style={tw("object-cover object-top rounded-lg")}
@@ -385,6 +386,7 @@ export const LawyerPDFTemplate = ({ lawyer }: LawyerPDFTemplateProps) => {
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image 
                 src={"/logo/logo.png"} 
                 style={tw("h-6")}
