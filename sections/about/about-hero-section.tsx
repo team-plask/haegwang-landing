@@ -257,7 +257,7 @@ export default function AboutHero() {
               법무법인(유한) 해광 소개서
             </h3>
             <a
-              href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/Haegwang%20Brochure%202025_new.pdf"
+              href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/260323_brochure.pdf"
               download="법무법인_해광_브로슈어_2025.pdf"
               className="inline-flex items-center gap-3 bg-brand hover:bg-brand/90 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-200 hover:shadow-lg hover:scale-105 group"
             >

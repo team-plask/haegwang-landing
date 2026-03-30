@@ -1,0 +1,182 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1774840083820,
+  "projectRoot": "/Users/seodonghui/haegwang-landing",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "15.3.9",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.0.0",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.0.0",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev --turbopack",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "components",
+      "lib",
+      "public"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 6,
+      "lastAccessed": 1774840083654,
+      "keyFiles": [
+        "globals.css",
+        "layout.tsx",
+        "page.tsx",
+        "robots.ts",
+        "sitemap.ts"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 32,
+      "lastAccessed": 1774840083656,
+      "keyFiles": [
+        "background-video.tsx",
+        "bento-grid.tsx",
+        "contact.tsx",
+        "footer.tsx",
+        "grid-background.tsx"
+      ]
+    },
+    "hooks": {
+      "path": "hooks",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1774840083787,
+      "keyFiles": [
+        "use-page-loading.tsx",
+        "useKakaoMaps.ts"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 2,
+      "lastAccessed": 1774840083794,
+      "keyFiles": [
+        "auth.ts",
+        "utils.ts"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 3,
+      "lastAccessed": 1774840083799,
+      "keyFiles": [
+        "favicon.ico",
+        "logo_mockup2_expand.png"
+      ]
+    },
+    "sections": {
+      "path": "sections",
+      "purpose": null,
+      "fileCount": 8,
+      "lastAccessed": 1774840083801,
+      "keyFiles": [
+        "contact-section.tsx",
+        "hero-section.tsx",
+        "media-list-section.tsx",
+        "media-section.tsx",
+        "practice-section.tsx"
+      ]
+    },
+    "supabase": {
+      "path": "supabase",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1774840083801,
+      "keyFiles": [
+        "config.toml"
+      ]
+    },
+    "types": {
+      "path": "types",
+      "purpose": "Type definitions",
+      "fileCount": 2,
+      "lastAccessed": 1774840083814,
+      "keyFiles": [
+        "kakao.d.ts",
+        "search.ts"
+      ]
+    },
+    "utils": {
+      "path": "utils",
+      "purpose": "Utility functions",
+      "fileCount": 2,
+      "lastAccessed": 1774840083817,
+      "keyFiles": [
+        "lawyer-sorting.ts"
+      ]
+    },
+    "app/api": {
+      "path": "app/api",
+      "purpose": "API routes",
+      "fileCount": 0,
+      "lastAccessed": 1774840083818,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
