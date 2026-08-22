@@ -199,11 +199,38 @@ const timelineData = [
         </div>
         <div>
           <div className="flex items-center mb-3">
+            <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded">10월</span>
+          </div>
+          <div className="space-y-3">
+            <div className="text-gray-900 leading-relaxed text-md md:text-lg">
+              청주 분사무소 개소
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center mb-3">
             <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded">11월</span>
           </div>
           <div className="space-y-3">
             <div className="text-gray-900 leading-relaxed text-md md:text-lg">
             노계성, 민경준 구성원변호사 영입
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "2026년",
+    content: (
+      <div className="space-y-6">
+        <div>
+          <div className="flex items-center mb-3">
+            <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded">8월</span>
+          </div>
+          <div className="space-y-3">
+            <div className="text-gray-900 leading-relaxed text-md md:text-lg">
+              강지성(전 부산서부지청장) 대표변호사 영입
             </div>
           </div>
         </div>
@@ -233,7 +260,7 @@ export default function AboutHero() {
         민사, 형사, 상사, 가사 송무와 수사대응 부문에서 놀라운 성과를 거두어 온 법무법인(유한) 해광이 각 분야의 전문가를 대거 영입하여 지식재산권, 공정거래, 조세, 금융, 회생, 파산, 부동산, 건설, 입법, 대관업무 분야까지 종합적인 법률 서비스를 제공하고자 합니다. 
         </p>
         <p className="text-md lg:text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 py-2">
-        서울고등법원, 서울중앙지방법원 부장판사 출신의 변호사들이 의기투합하여 2021년 설립한 후 송무와 수사대응 분야에서 인정받아 온 법무법인(유한) 해광은 그동안 눈부신 성장을 계속하여 2024년에는 매출액 200억 원을 돌파하는 성과를 거두었습니다. 
+        서울고등법원, 서울중앙지방법원 부장판사 출신의 변호사들이 의기투합하여 2021년 설립한 후 송무와 수사대응 분야에서 인정받아 온 법무법인(유한) 해광은 그동안 눈부신 성장을 계속하여 2025년에는 매출액 280억 원을 돌파하는 성과를 거두었습니다. 
         </p>
         <p className="text-md lg:text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 py-2">
         이에 힘입어 법무법인(유한) 해광은 2025년 새롭게 변호사로 출발하는 전직 부장판사 5인을 새로 영입하고 서울고등법원장을 역임한 윤준 변호사와 MOU를 체결하여 협력하기로 하는 등 송무 및 기업자문 역량을 더욱 강화하였습니다. 
@@ -257,8 +284,8 @@ export default function AboutHero() {
               법무법인(유한) 해광 소개서
             </h3>
             <a
-              href="https://gjfljnsvnrortuzjykdi.supabase.co/storage/v1/object/public/source/260323_brochure.pdf"
-              download="법무법인_해광_브로슈어_2025.pdf"
+              href="/lawlsc_brochure.pdf"
+              download="법무법인_해광_브로슈어_2026.pdf"
               className="inline-flex items-center gap-3 bg-brand hover:bg-brand/90 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-200 hover:shadow-lg hover:scale-105 group"
             >
               <svg className="h-5 w-5 transition-transform group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
