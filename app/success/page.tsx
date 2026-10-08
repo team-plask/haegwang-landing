@@ -6,6 +6,10 @@ import { SuccessSection, type PostCardFromDB } from "@/sections/areas/success-se
 import { type PracticeInfo } from "@/sections/areas/practice-info-section"; // For practice area type
 import { type Database } from "@/database.types";
 import type { Metadata } from 'next';
+import { diversifyByAuthor } from "@/utils/diversify-posts";
+
+// 방문할 때마다 순서가 새로 섞이도록 매 요청마다 렌더링
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: '성공 사례 - 법무법인 해광',
@@ -90,8 +94,10 @@ export default async function SuccessStoriesPage() {
   const tabComponents: Record<string, React.ReactNode> = {};
   practiceAreas.forEach(area => {
     // Filter success posts for the current practice area using practice_area.slug
-    const areaSuccessStories = allSuccessPosts.filter(
-      post => post.practice_area?.slug === area.slug
+    // 시간순이 아니라 무작위 + 변호사별로 번갈아 보이도록 정렬
+    const areaSuccessStories = diversifyByAuthor(
+      allSuccessPosts.filter(post => post.practice_area?.slug === area.slug),
+      post => post.post_authors[0]?.lawyers.id ?? "unknown"
     );
 
     // Only add component if there are stories for this area
