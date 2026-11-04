@@ -125,6 +125,13 @@ export default async function SuccessStoriesPage() {
 
   const queryParamName = "practice_area_slug"; // Using a more specific query param name
 
+  // 처음 들어오면 아무 분야도 선택하지 않은 상태로 전체 업무사례를 보여줍니다.
+  // 전체 목록도 변호사별로 고르게 섞어 배치합니다.
+  const allSuccessStoriesMixed = diversifyByAuthor(
+    allSuccessPosts,
+    post => post.post_authors[0]?.lawyers.id ?? "unknown"
+  );
+
   return (
     <>
       <PageHeader
@@ -138,6 +145,9 @@ export default async function SuccessStoriesPage() {
           queryParamName={queryParamName}
           defaultTabId={defaultInitialTabId}
           layout="grid"
+          noSelectionContent={
+            <SuccessSection success={allSuccessStoriesMixed} showHeading={false} />
+          }
         />
       ) : (
          <div className="p-4 text-center">등록된 업무사례가 없습니다.</div>
