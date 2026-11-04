@@ -41,6 +41,8 @@ interface ReusableTabsProps {
   queryParamName?: string;
   defaultTabId?: string;
   layout?: 'scroll' | 'grid'; // Add layout option
+  // 지정하면 처음(쿼리 없음)에는 아무 탭도 선택하지 않고 이 내용을 보여줍니다.
+  noSelectionContent?: React.ReactNode;
 }
 
 export function ReusableTabs({
@@ -49,15 +51,20 @@ export function ReusableTabs({
   queryParamName = "tab", // Default query parameter name
   defaultTabId,
   layout = 'grid', // Default to grid layout
+  noSelectionContent,
 }: ReusableTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
+  const allowNoSelection = noSelectionContent !== undefined;
 
   const getActiveTabId = () => {
     const currentQueryTab = searchParams.get(queryParamName);
     if (currentQueryTab && tabs.find(t => t.id === currentQueryTab)) {
       return currentQueryTab;
+    }
+    if (allowNoSelection) {
+      return undefined;
     }
     if (defaultTabId && tabs.find(t => t.id === defaultTabId)) {
       return defaultTabId;
@@ -76,7 +83,9 @@ export function ReusableTabs({
       }
     } else {
       // If query param is not set or invalid, try default or first tab
-      const newFallbackId = (defaultTabId && tabs.find(t => t.id === defaultTabId)) ? defaultTabId : (tabs.length > 0 ? tabs[0].id : undefined);
+      const newFallbackId = allowNoSelection
+        ? undefined
+        : (defaultTabId && tabs.find(t => t.id === defaultTabId)) ? defaultTabId : (tabs.length > 0 ? tabs[0].id : undefined);
       if (activeTabId !== newFallbackId) {
         setActiveTabId(newFallbackId);
         // Optionally, update URL if it was invalid/missing to reflect the actual active tab
@@ -86,7 +95,7 @@ export function ReusableTabs({
         // router.replace(newUrl.pathname + newUrl.search, { scroll: false });
       }
     }
-  }, [searchParams, queryParamName, tabs, defaultTabId, activeTabId]);
+  }, [searchParams, queryParamName, tabs, defaultTabId, activeTabId, allowNoSelection]);
 
   const handleTabChange = (newTabId: string) => {
     setActiveTabId(newTabId); // Optimistic update for immediate UI feedback
@@ -119,7 +128,7 @@ export function ReusableTabs({
             : 'container max-w-7xl mx-auto'
         )}>
           <RadioGroup
-            value={activeTabId}
+            value={activeTabId ?? ""}
             onValueChange={handleTabChange}
             className={
               layout === 'scroll' 
@@ -180,6 +189,8 @@ export function ReusableTabs({
       <div className="min-h-[400px]">
         {ActiveComponent ? (
           <div className="animate-in fade-in duration-300">{ActiveComponent}</div>
+        ) : allowNoSelection && !activeTabId ? (
+          <div className="animate-in fade-in duration-300">{noSelectionContent}</div>
         ) : (
           <div className="flex items-center justify-center h-[400px] text-gray-500">
             컨텐츠를 선택해주세요.
